@@ -19,6 +19,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Linq;
 
 namespace UniversalBeaconLibrary.Beacon
 {
@@ -34,6 +35,7 @@ namespace UniversalBeaconLibrary.Beacon
                 if (_rangingData == value) return;
                 _rangingData = value;
                 UpdatePayload();
+                OnPropertyChanged();
             }
         }
 
@@ -50,9 +52,11 @@ namespace UniversalBeaconLibrary.Beacon
                     _namespaceId = null;
                     return;
                 }
+                if (_namespaceId != null && _namespaceId.SequenceEqual(value)) return;
                 _namespaceId = new byte[value.Length];
                 Array.Copy(value, _namespaceId, value.Length);
                 UpdatePayload();
+                OnPropertyChanged();
             }
         }
 
@@ -68,9 +72,11 @@ namespace UniversalBeaconLibrary.Beacon
                     _instanceId = null;
                     return;
                 }
+                if (_instanceId != null && _instanceId.SequenceEqual(value)) return;
                 _instanceId = new byte[value.Length];
                 Array.Copy(value, _instanceId, value.Length);
                 UpdatePayload();
+                OnPropertyChanged();
             }
         }
 
@@ -106,6 +112,10 @@ namespace UniversalBeaconLibrary.Beacon
         private void UpdatePayload()
         {
             // TODO 
+        }
+        public override void Update(BeaconFrameBase otherFrame)
+        {
+            ParsePayload();
         }
 
         public override bool IsValid()

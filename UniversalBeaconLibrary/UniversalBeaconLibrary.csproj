@@ -122,6 +122,7 @@
     <Compile Include="Beacon\UidEddystoneFrame.cs" />
     <Compile Include="Beacon\UnknownBeaconFrame.cs" />
     <Compile Include="Beacon\UrlEddystoneFrame.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Properties\UniversalBeaconLibrary.rd.xml" />
   </ItemGroup>

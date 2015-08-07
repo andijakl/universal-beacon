@@ -14,6 +14,7 @@
 // limitations under the License. 
 
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Windows.Devices.Bluetooth.Advertisement;
 using Windows.Storage.Streams;
@@ -28,12 +29,12 @@ namespace WindowsBeacons
     {
         // Bluetooth Beacons
         private readonly BluetoothLEAdvertisementWatcher _watcher;
-        private BluetoothLEAdvertisementPublisher _publisher;
+        //private BluetoothLEAdvertisementPublisher _publisher;
 
         private readonly BeaconManager _beaconManager;
 
         // UI
-        private readonly CoreDispatcher _dispatcher;
+        private CoreDispatcher _dispatcher;
 
         public MainPage()
         {
@@ -41,11 +42,13 @@ namespace WindowsBeacons
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
             _watcher = new BluetoothLEAdvertisementWatcher();
             _beaconManager = new BeaconManager();
+            BeaconListView.ItemsSource = _beaconManager.BluetoothBeacons;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
             // Start watching
             _watcher.Received += WatcherOnReceived;
             _watcher.Start();
@@ -61,9 +64,9 @@ namespace WindowsBeacons
 
         #region Bluetooth Beacons
         
-        private void WatcherOnReceived(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs eventArgs)
+        private async void WatcherOnReceived(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs eventArgs)
         {
-            _beaconManager.ReceivedAdvertisement(eventArgs);
+            await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => _beaconManager.ReceivedAdvertisement(eventArgs));
         }
 
         #endregion

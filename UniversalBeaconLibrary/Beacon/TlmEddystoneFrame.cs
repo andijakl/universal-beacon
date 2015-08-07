@@ -39,6 +39,7 @@ namespace UniversalBeaconLibrary.Beacon
                 if (_version == value) return;
                 _version = value;
                 UpdatePayload();
+                OnPropertyChanged();
             }
         }
 
@@ -50,6 +51,7 @@ namespace UniversalBeaconLibrary.Beacon
                 if (_batteryInMilliV == value) return;
                 _batteryInMilliV = value;
                 UpdatePayload();
+                OnPropertyChanged();
             }
         }
 
@@ -61,6 +63,7 @@ namespace UniversalBeaconLibrary.Beacon
                 if (Math.Abs(_temperatureInC - value) < 0.0001) return;
                 _temperatureInC = value;
                 UpdatePayload();
+                OnPropertyChanged();
             }
         }
 
@@ -72,6 +75,7 @@ namespace UniversalBeaconLibrary.Beacon
                 if (_advertisementFrameCount == value) return;
                 _advertisementFrameCount = value;
                 UpdatePayload();
+                OnPropertyChanged();
             }
         }
 
@@ -83,6 +87,7 @@ namespace UniversalBeaconLibrary.Beacon
                 if (_timeSincePowerUp == value) return;
                 _timeSincePowerUp = value;
                 UpdatePayload();
+                OnPropertyChanged();
             }
         }
 
@@ -145,6 +150,11 @@ namespace UniversalBeaconLibrary.Beacon
         private void UpdatePayload()
         {
             // TODO
+        }
+
+        public override void Update(BeaconFrameBase otherFrame)
+        {
+            ParsePayload();
         }
 
         public override bool IsValid()

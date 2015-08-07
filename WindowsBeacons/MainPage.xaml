@@ -5,18 +5,51 @@
     xmlns:local="using:WindowsBeacons"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converter="using:WindowsBeacons.Converter"
     mc:Ignorable="d">
+    
+    <Page.Resources>
+        <converter:BeaconTypeToTextConverter x:Key="BeaconTypeToTextConverter"/>
+        <DataTemplate x:Name="BeaconInfoTemplate">
+            <Grid Margin="0,10,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <!-- Beacon type -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+                           Text="{Binding BeaconType, Mode=OneWay, Converter={StaticResource BeaconTypeToTextConverter}}"/>
+                <!-- Bluetooth MAC address -->
+                <TextBlock Grid.Row="1" Grid.Column="0"
+                           Text="Address: " />
+                <TextBlock Grid.Row="1" Grid.Column="1"
+                           Text="{Binding BluetoothAddressAsString, Mode=OneWay}"/>
+                <!-- Timestamp of last update -->
+                <TextBlock Grid.Row="2" Grid.Column="0"
+                           Text="Updated: " />
+                <TextBlock Grid.Row="2"  Grid.Column="1"
+                           Text="{Binding Timestamp, Mode=OneWay}"/>
+                <!-- Frames -->
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
-        </StackPanel>
-        <ScrollViewer Grid.Row="1">
-            <TextBlock x:Name="StatusOutput" TextWrapping="Wrap" Text="Welcome!"/>
-        </ScrollViewer>
+        <TextBlock Grid.Row="0" x:Name="StatusOutput" TextWrapping="Wrap" Text="Welcome!"/>
+        <ListView x:Name="BeaconListView" 
+                  Grid.Row="1" 
+                  SelectionMode="None"
+                  ItemTemplate="{StaticResource BeaconInfoTemplate}" HorizontalContentAlignment="Stretch"/>
 
     </Grid>
 </Page>

@@ -19,16 +19,23 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Bluetooth.Advertisement;
+using UniversalBeaconLibrary.Annotations;
 
 namespace UniversalBeaconLibrary.Beacon
 {
-    public class Beacon
+    public class Beacon : INotifyPropertyChanged
     {
         private readonly Guid _eddystoneGuid = new Guid("0000FEAA-0000-1000-8000-00805F9B34FB");
+        private short _rssi;
+        private ulong _bluetoothAddress;
+        private DateTimeOffset _timestamp;
 
         public enum BeaconTypeEnum
         {
@@ -46,20 +53,53 @@ namespace UniversalBeaconLibrary.Beacon
             /// iBeacon is a Trademark of Apple Inc.
             /// Note: the beacon broadcast payload is not parsed by this library.
             /// </summary>
-            iBeacon 
+            iBeacon
         }
 
         public BeaconTypeEnum BeaconType { get; set; } = BeaconTypeEnum.Unknown;
 
-        public List<BeaconFrameBase> BeaconFrames { get; set; } = new List<BeaconFrameBase>();
+        public ObservableCollection<BeaconFrameBase> BeaconFrames { get; set; } = new ObservableCollection<BeaconFrameBase>();
 
-        public short Rssi { get; set; }
-        public ulong BluetoothAddress { get; set; }
-        public DateTimeOffset Timestamp { get; set; }
-
-        public Beacon()
+        public short Rssi
         {
-            
+            get { return _rssi; }
+            set
+            {
+                if (_rssi == value) return;
+                _rssi = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ulong BluetoothAddress
+        {
+            get { return _bluetoothAddress; }
+            set
+            {
+                if (_bluetoothAddress == value) return;
+                _bluetoothAddress = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(BluetoothAddressAsString));
+            }
+        }
+
+        public string BluetoothAddressAsString
+        {
+            get
+            {
+                return string.Join(":", BitConverter.GetBytes(BluetoothAddress).Reverse().Select(b => b.ToString("X2"))).Substring(6);
+            }
+        }
+
+        public DateTimeOffset Timestamp
+        {
+            get { return _timestamp; }
+            set
+            {
+                if (_timestamp == value) return;
+                _timestamp = value;
+                OnPropertyChanged();
+            }
         }
 
         public Beacon(BluetoothLEAdvertisementReceivedEventArgs btAdv)
@@ -78,7 +118,7 @@ namespace UniversalBeaconLibrary.Beacon
             Rssi = btAdv.RawSignalStrengthInDBm;
             Timestamp = btAdv.Timestamp;
 
-            //Debug.WriteLine($"Beacon detected (Strength: {Rssi}): Address: {BluetoothAddress}");
+            //Debug.WriteLine($"Beacon advertisment detected (Strength: {Rssi}): Address: {BluetoothAddress}");
 
             // Check if beacon advertisement contains any actual usable data
             if (btAdv.Advertisement == null) return;
@@ -107,6 +147,7 @@ namespace UniversalBeaconLibrary.Beacon
             {
                 if (BeaconType == BeaconTypeEnum.Eddystone)
                 {
+                    // This beacon is according to the Eddystone specification - parse data
                     ParseEddystoneData(btAdv);
                 }
                 else if (BeaconType == BeaconTypeEnum.Unknown)
@@ -159,50 +200,61 @@ namespace UniversalBeaconLibrary.Beacon
                 //Debug.WriteLine("Beacon data: " + dataSection.DataType + " = " +
                 //                BitConverter.ToString(dataSection.Data.ToArray()));
                 //+ " (" + Encoding.UTF8.GetString(dataSection.Data.ToArray()) + ")\n");
+
+                // Relvant data of Eddystone is in data section 0x16
+                // Windows receives: 0x01 = 0x06
+                //                   0x03 = 0xAA 0xFE
+                //                   0x16 = 0xAA 0xFE [type] [data]
                 if (dataSection.DataType == 0x16)
                 {
                     var beaconFrame = dataSection.Data.ToArray().CreateBeaconFrame();
-                    if (beaconFrame != null)
-                    {
-                        var found = false;
+                    if (beaconFrame == null) continue;
 
-                        for (var i = 0; i < BeaconFrames.Count; i++)
+                    var found = false;
+
+                    for (var i = 0; i < BeaconFrames.Count; i++)
+                    {
+                        if (BeaconFrames[i].GetType() == beaconFrame.GetType())
                         {
-                            if (BeaconFrames[i].GetType() == beaconFrame.GetType())
+                            var updateFrame = false;
+                            if (beaconFrame.GetType() == typeof(UnknownBeaconFrame))
                             {
-                                var replaceFrame = false;
-                                if (beaconFrame.GetType() == typeof (UnknownBeaconFrame))
+                                // Unknown frame - also compare eddystone type
+                                var existingEddystoneFrameType =
+                                    BeaconFrames[i].Payload.GetEddystoneFrameType();
+                                var newEddystoneFrameType = beaconFrame.Payload.GetEddystoneFrameType();
+                                if (existingEddystoneFrameType != null &&
+                                    existingEddystoneFrameType == newEddystoneFrameType)
                                 {
-                                    // Unknown frame - also compare eddystone type
-                                    var existingEddystoneFrameType =
-                                        BeaconFrames[i].Payload.GetEddystoneFrameType();
-                                    var newEddystoneFrameType = beaconFrame.Payload.GetEddystoneFrameType();
-                                    if (existingEddystoneFrameType != null &&
-                                        existingEddystoneFrameType == newEddystoneFrameType)
-                                    {
-                                        replaceFrame = true;
-                                    }
-                                }
-                                else
-                                {
-                                    replaceFrame = true;
-                                }
-                                if (replaceFrame)
-                                {
-                                    BeaconFrames[i] = beaconFrame;
-                                    found = true;
-                                    break;
+                                    updateFrame = true;
                                 }
                             }
+                            else
+                            {
+                                updateFrame = true;
+                            }
+                            if (updateFrame)
+                            {
+                                BeaconFrames[i].Update(beaconFrame);
+                                found = true;
+                                break;  // Don't analyze any other known frames of this beacon
+                            }
                         }
-                        if (!found)
-                        {
-                            BeaconFrames.Add(beaconFrame);
-                        }
+                    }
+                    if (!found)
+                    {
+                        BeaconFrames.Add(beaconFrame);
                     }
                 }
             }
         }
-        
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

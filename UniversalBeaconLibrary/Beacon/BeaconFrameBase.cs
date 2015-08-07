@@ -18,10 +18,14 @@
 // limitations under the License. 
 
 using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using UniversalBeaconLibrary.Annotations;
 
 namespace UniversalBeaconLibrary.Beacon
 {
-    public abstract class BeaconFrameBase
+    public abstract class BeaconFrameBase : INotifyPropertyChanged
     {
         protected byte[] _payload;
         
@@ -40,8 +44,10 @@ namespace UniversalBeaconLibrary.Beacon
                     _payload = null;
                     return;
                 }
+                if (_payload != null && _payload.SequenceEqual(value)) return;
                 _payload = new byte[value.Length];
                 Array.Copy(value, _payload, value.Length);
+                OnPropertyChanged();
             }
         }
 
@@ -60,10 +66,22 @@ namespace UniversalBeaconLibrary.Beacon
             Payload = other.Payload;
         }
 
+        public virtual void Update(BeaconFrameBase otherFrame)
+        {
+            Payload = otherFrame.Payload;
+        }
+
         public virtual bool IsValid()
         {
             return Payload != null;
         }
-        
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

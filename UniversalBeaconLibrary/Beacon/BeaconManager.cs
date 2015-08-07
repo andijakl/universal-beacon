@@ -18,6 +18,7 @@
 // limitations under the License. 
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Windows.Devices.Bluetooth.Advertisement;
 
@@ -25,7 +26,7 @@ namespace UniversalBeaconLibrary.Beacon
 {
     public class BeaconManager
     {
-        public List<Beacon> BluetoothBeacons { get; set; } = new List<Beacon>();
+        public ObservableCollection<Beacon> BluetoothBeacons { get; set; } = new ObservableCollection<Beacon>();
 
         public void ReceivedAdvertisement(BluetoothLEAdvertisementReceivedEventArgs btAdv)
         {
@@ -43,7 +44,6 @@ namespace UniversalBeaconLibrary.Beacon
 
             var newBeacon = new Beacon(btAdv);
             BluetoothBeacons.Add(newBeacon);
-            //Debug.WriteLine("Added new beacon - now at " + BluetoothBeacons.Count);
-    }
+        }
     }
 }

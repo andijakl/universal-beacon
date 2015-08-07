@@ -37,6 +37,7 @@ namespace UniversalBeaconLibrary.Beacon
                 if (_rangingData == value) return;
                 _rangingData = value;
                 UpdatePayload();
+                OnPropertyChanged();
             }
         }
 
@@ -49,6 +50,7 @@ namespace UniversalBeaconLibrary.Beacon
                 if (_completeUrl == value) return;
                 _completeUrl = value;
                 UpdatePayload();
+                OnPropertyChanged();
             }
         }
 
@@ -205,6 +207,11 @@ namespace UniversalBeaconLibrary.Beacon
         public string UrlSchemePrefixAsString(byte urlSchemePrefix)
         {
             return UrlSchemeDictionary.ContainsKey(urlSchemePrefix) ? UrlSchemeDictionary[urlSchemePrefix] : null;
+        }
+
+        public override void Update(BeaconFrameBase otherFrame)
+        {
+            ParsePayload();
         }
 
         public override bool IsValid()
