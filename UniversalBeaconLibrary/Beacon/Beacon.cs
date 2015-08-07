@@ -33,9 +33,6 @@ namespace UniversalBeaconLibrary.Beacon
     public class Beacon : INotifyPropertyChanged
     {
         private readonly Guid _eddystoneGuid = new Guid("0000FEAA-0000-1000-8000-00805F9B34FB");
-        private short _rssi;
-        private ulong _bluetoothAddress;
-        private DateTimeOffset _timestamp;
 
         public enum BeaconTypeEnum
         {
@@ -60,6 +57,7 @@ namespace UniversalBeaconLibrary.Beacon
 
         public ObservableCollection<BeaconFrameBase> BeaconFrames { get; set; } = new ObservableCollection<BeaconFrameBase>();
 
+        private short _rssi;
         public short Rssi
         {
             get { return _rssi; }
@@ -71,6 +69,7 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
+        private ulong _bluetoothAddress;
         public ulong BluetoothAddress
         {
             get { return _bluetoothAddress; }
@@ -91,6 +90,7 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
+        private DateTimeOffset _timestamp;
         public DateTimeOffset Timestamp
         {
             get { return _timestamp; }
@@ -106,6 +106,11 @@ namespace UniversalBeaconLibrary.Beacon
         {
             BluetoothAddress = btAdv.BluetoothAddress;
             UpdateBeacon(btAdv);
+        }
+
+        public Beacon(BeaconTypeEnum beaconType)
+        {
+            BeaconType = beaconType;
         }
 
         public void UpdateBeacon(BluetoothLEAdvertisementReceivedEventArgs btAdv)

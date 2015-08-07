@@ -190,9 +190,13 @@
                 <!-- Beacon type -->
                 <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
                            Fill="{StaticResource BeaconTypeBackgroundBrush}"/>
-                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-                           Text="{Binding BeaconType, Mode=OneWay, Converter={StaticResource BeaconTypeToTextConverter}}"
+                <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+                           Orientation="Horizontal">
+                    <TextBlock Text="&#xE95A;" Margin="12,12,0,0"
+                           Style="{StaticResource BeaconTypeTextBlockStyle}" FontFamily="Segoe MDL2 Assets"/>
+                    <TextBlock Text="{Binding BeaconType, Mode=OneWay, Converter={StaticResource BeaconTypeToTextConverter}}"
                            Style="{StaticResource BeaconTypeTextBlockStyle}"/>
+                </StackPanel>
                 <!-- Bluetooth MAC address -->
                 <TextBlock Grid.Row="1" Grid.Column="0"
                            Text="Address: " Style="{StaticResource BoldInfoTextBlockStyle}" />
@@ -239,12 +243,22 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Rectangle Grid.Row="0" Fill="{ThemeResource SystemControlBackgroundAccentBrush}"/>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <TextBlock Text="Status: " Style="{StaticResource InfoTextBlockStyle}" 
-                   Foreground="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
-            <TextBlock x:Name="StatusOutput" TextWrapping="Wrap" Text="" Style="{StaticResource InfoTextBlockStyle}" 
-                   Foreground="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
-        </StackPanel>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" 
+                       Text="Status: " Style="{StaticResource InfoTextBlockStyle}" 
+                       Foreground="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
+            <TextBlock Grid.Column="1"
+                       x:Name="StatusOutput" TextWrapping="Wrap" Text="" Style="{StaticResource InfoTextBlockStyle}" 
+                       Foreground="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
+            <SymbolIcon Grid.Column="2" Symbol="Help"
+                        Margin="12,5,12,5"
+                        Foreground="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
+        </Grid>
         <ListView x:Name="BeaconListView" 
                   Grid.Row="1" 
                   SelectionMode="None"
