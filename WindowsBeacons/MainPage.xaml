@@ -16,7 +16,7 @@
         <DataTemplate x:Key="UidEddystoneFrameTemplate">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="230"/>
+                    <ColumnDefinition Width="Auto" MinWidth="210"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -31,21 +31,21 @@
                            Style="{StaticResource FrameTypeTextBlockStyle}"/>
                 <!-- Ranging Data -->
                 <TextBlock Grid.Row="1" Grid.Column="0"
-                           Text="Ranging Data:"
+                           x:Uid="RangingData"
                            Style="{StaticResource BoldInfoTextBlockStyle}"/>
                 <TextBlock Grid.Row="1" Grid.Column="1"
                            Text="{Binding RangingData, Mode=OneWay}"
                            Style="{StaticResource InfoTextBlockStyle}"/>
                 <!-- Namespace ID -->
                 <TextBlock Grid.Row="2" Grid.Column="0"
-                           Text="Namespace ID:"
+                           x:Uid="NamespaceId"
                            Style="{StaticResource BoldInfoTextBlockStyle}"/>
                 <TextBlock Grid.Row="2" Grid.Column="1"
                            Text="{Binding NamespaceIdAsNumber, Mode=OneWay, Converter={StaticResource IdToHexTextConverter}}"
                            Style="{StaticResource InfoTextBlockStyle}"/>
                 <!-- Instance ID -->
                 <TextBlock Grid.Row="3" Grid.Column="0"
-                           Text="Instance ID:"
+                           x:Uid="InstanceId"
                            Style="{StaticResource BoldInfoTextBlockStyle}"/>
                 <TextBlock Grid.Row="3" Grid.Column="1"
                            Text="{Binding InstanceIdAsNumber, Mode=OneWay, Converter={StaticResource IdToHexTextConverter}}"
@@ -56,7 +56,7 @@
         <DataTemplate x:Key="UrlEddystoneFrameTemplate">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="230"/>
+                    <ColumnDefinition Width="Auto" MinWidth="210"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -70,14 +70,14 @@
                            Style="{StaticResource FrameTypeTextBlockStyle}"/>
                 <!-- URL -->
                 <TextBlock Grid.Row="1" Grid.Column="0"
-                           Text="URL:"
+                           x:Uid="Url"
                            Style="{StaticResource BoldInfoTextBlockStyle}"/>
                 <TextBlock Grid.Row="1" Grid.Column="1"
                            Text="{Binding CompleteUrl, Mode=OneWay}"
                            Style="{StaticResource InfoTextBlockStyle}"/>
                 <!-- Ranging Data -->
                 <TextBlock Grid.Row="2" Grid.Column="0"
-                           Text="Ranging Data:"
+                           x:Uid="RangingData"
                            Style="{StaticResource BoldInfoTextBlockStyle}"/>
                 <TextBlock Grid.Row="2" Grid.Column="1"
                            Text="{Binding RangingData, Mode=OneWay}"
@@ -88,7 +88,7 @@
         <DataTemplate x:Key="TlmEddystoneFrameTemplate">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="230"/>
+                    <ColumnDefinition Width="Auto" MinWidth="210"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -105,35 +105,35 @@
                            Style="{StaticResource FrameTypeTextBlockStyle}"/>
                 <!-- Version -->
                 <TextBlock Grid.Row="1" Grid.Column="0"
-                           Text="Version:"
+                           x:Uid="Version"
                            Style="{StaticResource BoldInfoTextBlockStyle}"/>
                 <TextBlock Grid.Row="1" Grid.Column="1"
                            Text="{Binding Version, Mode=OneWay}"
                            Style="{StaticResource InfoTextBlockStyle}"/>
                 <!-- Battery -->
                 <TextBlock Grid.Row="2" Grid.Column="0"
-                           Text="Battery [mV]:"
+                           x:Uid="BatteryInMilliV"
                            Style="{StaticResource BoldInfoTextBlockStyle}"/>
                 <TextBlock Grid.Row="2" Grid.Column="1"
                            Text="{Binding BatteryInMilliV, Mode=OneWay}"
                            Style="{StaticResource InfoTextBlockStyle}"/>
                 <!-- Temperature -->
                 <TextBlock Grid.Row="3" Grid.Column="0"
-                           Text="Temperature [°C]:"
+                           x:Uid="TemperatureInC"
                            Style="{StaticResource BoldInfoTextBlockStyle}"/>
                 <TextBlock Grid.Row="3" Grid.Column="1"
                            Text="{Binding TemperatureInC, Mode=OneWay}"
                            Style="{StaticResource InfoTextBlockStyle}"/>
                 <!-- AdvertisementFrameCount -->
                 <TextBlock Grid.Row="4" Grid.Column="0"
-                           Text="Advertisement frame count:"
+                           x:Uid="AdvertisementFrameCount"
                            Style="{StaticResource BoldInfoTextBlockStyle}"/>
                 <TextBlock Grid.Row="4" Grid.Column="1"
                            Text="{Binding AdvertisementFrameCount, Mode=OneWay}"
                            Style="{StaticResource InfoTextBlockStyle}"/>
                 <!-- TimeSincePowerUp -->
                 <TextBlock Grid.Row="5" Grid.Column="0"
-                           Text="Time since power up [.1 s]:"
+                           x:Uid="TimeSincePowerUp"
                            Style="{StaticResource BoldInfoTextBlockStyle}"/>
                 <TextBlock Grid.Row="5" Grid.Column="1"
                            Text="{Binding TimeSincePowerUp, Mode=OneWay}"
@@ -145,7 +145,7 @@
         <DataTemplate x:Key="UnknownBeaconFrameTemplate">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="230"/>
+                    <ColumnDefinition Width="Auto" MinWidth="210"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -159,7 +159,7 @@
                            Style="{StaticResource FrameTypeTextBlockStyle}"/>
                 <!-- Payload -->
                 <TextBlock Grid.Row="1" Grid.Column="0"
-                           Text="Payload:"
+                           x:Uid="Payload"
                            Style="{StaticResource BoldInfoTextBlockStyle}"/>
                 <TextBlock Grid.Row="1" Grid.Column="1"
                            Text="{Binding Payload, Mode=OneWay, Converter={StaticResource IdToHexTextConverter}}"
@@ -176,7 +176,7 @@
         <DataTemplate x:Name="BeaconInfoTemplate">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="230"/>
+                    <ColumnDefinition Width="Auto" MinWidth="210"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -199,19 +199,19 @@
                 </StackPanel>
                 <!-- Bluetooth MAC address -->
                 <TextBlock Grid.Row="1" Grid.Column="0"
-                           Text="Address: " Style="{StaticResource BoldInfoTextBlockStyle}" />
+                           x:Uid="BluetoothAddress" Style="{StaticResource BoldInfoTextBlockStyle}" />
                 <TextBlock Grid.Row="1" Grid.Column="1"
                            Text="{Binding BluetoothAddressAsString, Mode=OneWay}" 
                            Style="{StaticResource InfoTextBlockStyle}"/>
                 <!-- RSSI -->
                 <TextBlock Grid.Row="2" Grid.Column="0"
-                           Text="Signal strength [dBm]: " Style="{StaticResource BoldInfoTextBlockStyle}" />
+                           x:Uid="Rssi" Style="{StaticResource BoldInfoTextBlockStyle}" />
                 <TextBlock Grid.Row="2" Grid.Column="1"
                            Text="{Binding Rssi, Mode=OneWay}" 
                            Style="{StaticResource InfoTextBlockStyle}"/>
                 <!-- Timestamp of last update -->
                 <TextBlock Grid.Row="3" Grid.Column="0"
-                           Text="Updated: " 
+                           x:Uid="Updated"
                            Style="{StaticResource BoldInfoTextBlockStyle}"/>
                 <TextBlock Grid.Row="3"  Grid.Column="1"
                            Text="{Binding Timestamp, Mode=OneWay}"
@@ -237,47 +237,76 @@
         </DataTemplate>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Rectangle Grid.Row="0" Fill="{ThemeResource SystemControlBackgroundAccentBrush}"/>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" 
-                       Text="Status: " Style="{StaticResource InfoTextBlockStyle}" 
+    <SplitView x:Name="MainSplitView" PanePlacement="Right" DisplayMode="Overlay" IsPaneOpen="False">
+        <SplitView.Content>
+            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <!-- Status & Menu -->
+                <Rectangle Grid.Row="0" Fill="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" 
+                       x:Uid="Status" Style="{StaticResource InfoTextBlockStyle}" 
                        Foreground="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
-            <TextBlock Grid.Column="1"
+                    <TextBlock Grid.Column="1"
                        x:Name="StatusOutput" TextWrapping="Wrap" Text="" Style="{StaticResource InfoTextBlockStyle}" 
                        Foreground="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
-            <SymbolIcon Grid.Column="2" Symbol="Help"
+                    <SymbolIcon x:Name="AboutButton" Grid.Column="2" Symbol="Help"
                         Margin="12,5,12,5"
+                        Tapped="AboutButton_Tapped"
                         Foreground="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
-        </Grid>
-        <ListView x:Name="BeaconListView" 
+                </Grid>
+                
+                <!-- Beacon scan results -->
+                <ListView x:Name="BeaconListView" 
                   Grid.Row="1" 
                   SelectionMode="None"
                   ItemTemplate="{StaticResource BeaconInfoTemplate}" 
                   HorizontalContentAlignment="Stretch">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ListViewItem">
-                                <ListViewItemPresenter ContentMargin="0"/>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <ListViewItemPresenter ContentMargin="0"/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
 
-    </Grid>
+            </Grid>
+        </SplitView.Content>
+        <SplitView.Pane >
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Vertical">
+                    <Grid Tapped="AboutButton_Tapped">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <!--<FontIcon Grid.Column="0" Glyph="&#xE973;" FontSize="25"/>-->
+                        <TextBlock Grid.Column="1" x:Uid="Info" Style="{StaticResource BeaconTypeTextBlockStyle}"/>
+                    </Grid>
+                    <TextBlock x:Uid="Instructions"
+                        Style="{StaticResource InfoTextBlockStyle}" />
+                    <TextBlock x:Uid="About" Style="{StaticResource BeaconTypeTextBlockStyle}"/>
+                    <TextBlock x:Uid="AboutText"
+                        Style="{StaticResource InfoTextBlockStyle}" />
+                </StackPanel>
+            </ScrollViewer>
+        </SplitView.Pane>
+    </SplitView>
+
 </Page>

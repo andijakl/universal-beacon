@@ -16,6 +16,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using Windows.ApplicationModel.Resources;
 using Windows.Devices.Bluetooth.Advertisement;
 using Windows.Storage.Streams;
 using Windows.UI.Core;
@@ -56,7 +57,8 @@ namespace WindowsBeacons
             // Start watching
             _watcher.Received += WatcherOnReceived;
             _watcher.Start();
-            SetStatusOutput("Watching for Bluetooth Beacons");
+            var resourceLoader = ResourceLoader.GetForCurrentView();
+            SetStatusOutput(resourceLoader.GetString("WatchingForBeacons"));
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -90,5 +92,10 @@ namespace WindowsBeacons
 
         #endregion
 
+        private void AboutButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
+        }
+        
     }
 }
