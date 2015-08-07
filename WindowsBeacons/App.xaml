@@ -20,6 +20,10 @@
             <Setter Property="FontWeight" Value="Light"/>
             <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundAccentBrush}"/>
         </Style>
+        <Style x:Key="HyperlinkStyle" BasedOn="{StaticResource TextBlockButtonStyle}" TargetType="HyperlinkButton">
+            <Setter Property="FontWeight" Value="Thin"/>
+            <Setter Property="Margin" Value="12, 0, 12, 5"/>
+        </Style>
         <SolidColorBrush x:Key="BeaconTypeBackgroundBrush" Color="{ThemeResource SystemAccentColor}" Opacity="0.0"></SolidColorBrush>
     </Application.Resources>
 

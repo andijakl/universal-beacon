@@ -302,8 +302,10 @@
                     <TextBlock x:Uid="Instructions"
                         Style="{StaticResource InfoTextBlockStyle}" />
                     <TextBlock x:Uid="About" Style="{StaticResource BeaconTypeTextBlockStyle}"/>
-                    <TextBlock x:Uid="AboutText"
-                        Style="{StaticResource InfoTextBlockStyle}" />
+                    <TextBlock x:Uid="AboutText1" Style="{StaticResource InfoTextBlockStyle}" />
+                    <HyperlinkButton x:Uid="TwitterButton" Style="{StaticResource HyperlinkStyle}"/>
+                    <TextBlock x:Uid="AboutText2" Style="{StaticResource InfoTextBlockStyle}" />
+                    <HyperlinkButton x:Uid="LibraryUrlButton" Style="{StaticResource HyperlinkStyle}"/>
                 </StackPanel>
             </ScrollViewer>
         </SplitView.Pane>
