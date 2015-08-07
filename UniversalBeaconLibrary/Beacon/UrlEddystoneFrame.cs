@@ -96,10 +96,25 @@ namespace UniversalBeaconLibrary.Beacon
         {
             if (!IsValid()) return;
 
-            _rangingData = Payload[BeaconFrameHelper.EddystoneHeaderSize];
+            // Ranging data
+            var newRangingData = Payload[BeaconFrameHelper.EddystoneHeaderSize];
+            if (newRangingData != RangingData)
+            {
+                _rangingData = newRangingData;
+                OnPropertyChanged(nameof(RangingData));
+            }
+
+            // URL Scheme prefix (1 byte)
             var urlSchemePrefix = Payload[BeaconFrameHelper.EddystoneHeaderSize + 1];
             
-            _completeUrl = UrlSchemePrefixAsString(urlSchemePrefix) + DecodeUrl(Payload, BeaconFrameHelper.EddystoneHeaderSize + 2);
+            // Decode complete URL
+            var newCompleteUrl = UrlSchemePrefixAsString(urlSchemePrefix) + DecodeUrl(Payload, BeaconFrameHelper.EddystoneHeaderSize + 2);
+            if (newCompleteUrl != CompleteUrl)
+            {
+                _completeUrl = newCompleteUrl;
+                OnPropertyChanged(nameof(CompleteUrl));
+            }
+
             //Debug.WriteLine("Eddystone URL Frame: Url = " + CompleteUrl);
         }
 
@@ -211,6 +226,7 @@ namespace UniversalBeaconLibrary.Beacon
 
         public override void Update(BeaconFrameBase otherFrame)
         {
+            base.Update(otherFrame);
             ParsePayload();
         }
 

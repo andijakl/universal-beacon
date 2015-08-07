@@ -58,6 +58,7 @@ namespace UniversalBeaconLibrary.Beacon
                 Array.Copy(value, _namespaceId, value.Length);
                 UpdatePayload();
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(NamespaceIdAsNumber));
             }
         }
 
@@ -80,6 +81,7 @@ namespace UniversalBeaconLibrary.Beacon
                 Array.Copy(value, _instanceId, value.Length);
                 UpdatePayload();
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(InstanceIdAsNumber));
             }
         }
 
@@ -107,17 +109,33 @@ namespace UniversalBeaconLibrary.Beacon
             // Note that this is different from other beacon protocol specifications that require the Tx power 
             // to be measured at 1 m.The value is an 8-bit integer as specified by the Tx Power Level Characteristic 
             // and ranges from -100 dBm to +20 dBm to a resolution of 1 dBm.
-            RangingData = Payload[BeaconFrameHelper.EddystoneHeaderSize];
+            var newRangingData = Payload[BeaconFrameHelper.EddystoneHeaderSize];
+            if (newRangingData != RangingData)
+            {
+                _rangingData = newRangingData;
+                OnPropertyChanged(nameof(RangingData));
+            }
 
             // Namespace ID
-            var nId = new byte[10];
-            Array.Copy(Payload, BeaconFrameHelper.EddystoneHeaderSize + 1, nId, 0, 10);
-            _namespaceId = nId;
+            var newNamespaceId = new byte[10];
+            Array.Copy(Payload, BeaconFrameHelper.EddystoneHeaderSize + 1, newNamespaceId, 0, 10);
+            if (NamespaceId == null || !newNamespaceId.SequenceEqual(NamespaceId))
+            {
+                _namespaceId = newNamespaceId;
+                OnPropertyChanged(nameof(NamespaceId));
+                OnPropertyChanged(nameof(NamespaceIdAsNumber));
+            }
 
             // Instance ID
-            var iId = new byte[6];
-            Array.Copy(Payload, BeaconFrameHelper.EddystoneHeaderSize + 11, iId, 0, 6);
-            _instanceId = iId;
+            var newInstanceId = new byte[6];
+            Array.Copy(Payload, BeaconFrameHelper.EddystoneHeaderSize + 11, newInstanceId, 0, 6);
+            if (InstanceId == null || !newInstanceId.SequenceEqual(InstanceId))
+            {
+                _instanceId = newInstanceId;
+                OnPropertyChanged(nameof(InstanceId));
+                OnPropertyChanged(nameof(InstanceIdAsNumber));
+            }
+            _instanceId = newInstanceId;
 
             //Debug.WriteLine("Eddystone Uid Frame: Ranging data = "
             //    + RangingData + ", NS = " + BitConverter.ToString(NamespaceId) + ", Instance = " + BitConverter.ToString(InstanceId));
@@ -129,6 +147,7 @@ namespace UniversalBeaconLibrary.Beacon
         }
         public override void Update(BeaconFrameBase otherFrame)
         {
+            base.Update(otherFrame);
             ParsePayload();
         }
 

@@ -107,13 +107,23 @@ namespace UniversalBeaconLibrary.Beacon
                     ms.Position = BeaconFrameHelper.EddystoneHeaderSize;
 
                     // At present the value must be  0x00 
-                    _version = reader.ReadByte();
+                    var newVersion = reader.ReadByte();
+                    if (newVersion != Version)
+                    {
+                        _version = newVersion;
+                        OnPropertyChanged(nameof(Version));
+                    }
 
                     // Battery voltage is the current battery charge in millivolts, expressed as 1 mV per bit.
                     // If not supported (for example in a USB-powered beacon) the value should be zeroed.
                     var batteryBytes = reader.ReadBytes(2);
                     Array.Reverse(batteryBytes);
-                    _batteryInMilliV = BitConverter.ToUInt16(batteryBytes, 0);
+                    var newBatteryInMilliV = BitConverter.ToUInt16(batteryBytes, 0);
+                    if (BatteryInMilliV != newBatteryInMilliV)
+                    {
+                        _batteryInMilliV = newBatteryInMilliV;
+                        OnPropertyChanged(nameof(BatteryInMilliV));
+                    }
 
                     // Beacon temperature is the temperature in degrees Celsius sensed by the beacon and 
                     // expressed in a signed 8.8 fixed-point notation. 
@@ -123,7 +133,12 @@ namespace UniversalBeaconLibrary.Beacon
                     // #define fix2float(a) ((float)(a)/256.0)         //Convert fix to float. a is an int 
                     var temperatureBytes = reader.ReadBytes(2);
                     Array.Reverse(temperatureBytes);
-                    _temperatureInC = BitConverter.ToInt16(temperatureBytes, 0) / (float)256.0;
+                    var newTemperatureInC = BitConverter.ToInt16(temperatureBytes, 0) / (float)256.0;
+                    if (Math.Abs(newTemperatureInC - TemperatureInC) > 0.0001 )
+                    {
+                        _temperatureInC = newTemperatureInC;
+                        OnPropertyChanged(nameof(TemperatureInC));
+                    }
 
                     // ADV_CNT is the running count of advertisement frames of all types 
                     // emitted by the beacon since power-up or reboot, useful for monitoring 
@@ -131,13 +146,23 @@ namespace UniversalBeaconLibrary.Beacon
                     // If this value is reset (e.g.on reboot), the current time field must also be reset.
                     var advCntBytes = reader.ReadBytes(4);
                     Array.Reverse(advCntBytes);
-                    _advertisementFrameCount = BitConverter.ToUInt32(advCntBytes, 0);
+                    var newAdvertisementFrameCount = BitConverter.ToUInt32(advCntBytes, 0);
+                    if (newAdvertisementFrameCount != AdvertisementFrameCount)
+                    {
+                        _advertisementFrameCount = newAdvertisementFrameCount;
+                        OnPropertyChanged(nameof(AdvertisementFrameCount));
+                    }
 
                     // SEC_CNT is a 0.1 second resolution counter that represents time since beacon power - 
                     // up or reboot. If this value is reset (e.g.on a reboot), the ADV count field must also be reset.
                     var secCntBytes = reader.ReadBytes(4);
                     Array.Reverse(secCntBytes);
-                    _timeSincePowerUp = BitConverter.ToUInt32(secCntBytes, 0);
+                    var newTimeSincePowerUp = BitConverter.ToUInt32(secCntBytes, 0);
+                    if (newTimeSincePowerUp != TimeSincePowerUp)
+                    {
+                        _timeSincePowerUp = newTimeSincePowerUp;
+                        OnPropertyChanged(nameof(TimeSincePowerUp));
+                    }
                     
                     //Debug.WriteLine("Eddystone Tlm Frame: Version = "
                     //    + Version + ", Battery = " + (BatteryInMilliV / 1000.0) + "V, Temperature = " + TemperatureInC
@@ -154,6 +179,7 @@ namespace UniversalBeaconLibrary.Beacon
 
         public override void Update(BeaconFrameBase otherFrame)
         {
+            base.Update(otherFrame);
             ParsePayload();
         }
 
