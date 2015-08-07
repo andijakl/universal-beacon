@@ -96,7 +96,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\BeaconFrameTypeToTextConverter.cs" />
     <Compile Include="Converter\BeaconTypeToTextConverter.cs" />
+    <Compile Include="FrameTemplateSelector.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

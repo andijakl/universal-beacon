@@ -7,9 +7,79 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converter="using:WindowsBeacons.Converter"
     mc:Ignorable="d">
-    
+
     <Page.Resources>
         <converter:BeaconTypeToTextConverter x:Key="BeaconTypeToTextConverter"/>
+        <converter:BeaconFrameTypeToTextConverter x:Key="BeaconFrameTypeToTextConverter"/>
+
+        <DataTemplate x:Key="UrlEddystoneFrameTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <!-- Frame type -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                           Text="{Binding Converter={StaticResource BeaconFrameTypeToTextConverter}}"
+                           Style="{StaticResource BoldInfoTextBlockStyle}"/>
+                <!-- URL -->
+                <TextBlock Grid.Row="1" Grid.Column="0"
+                           Text="URL:"
+                           Style="{StaticResource BoldInfoTextBlockStyle}"/>
+                <TextBlock Grid.Row="1" Grid.Column="1"
+                           Text="{Binding CompleteUrl, Mode=OneWay}"
+                           Style="{StaticResource InfoTextBlockStyle}"/>
+                <!-- Ranging Data -->
+                <TextBlock Grid.Row="2" Grid.Column="0"
+                           Text="Ranging Data:"
+                           Style="{StaticResource BoldInfoTextBlockStyle}"/>
+                <TextBlock Grid.Row="2" Grid.Column="1"
+                           Text="{Binding RangingData, Mode=OneWay}"
+                           Style="{StaticResource InfoTextBlockStyle}"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TlmEddystoneFrameTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <!-- Frame type -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                           Text="{Binding Converter={StaticResource BeaconFrameTypeToTextConverter}}"
+                           Style="{StaticResource BoldInfoTextBlockStyle}"/>
+                <!-- Version -->
+                <TextBlock Grid.Row="1" Grid.Column="0"
+                           Text="Version:"
+                           Style="{StaticResource BoldInfoTextBlockStyle}"/>
+                <TextBlock Grid.Row="1" Grid.Column="1"
+                           Text="{Binding Version, Mode=OneWay}"
+                           Style="{StaticResource InfoTextBlockStyle}"/>
+                <!-- Battery -->
+                <TextBlock Grid.Row="2" Grid.Column="0"
+                           Text="Battery [mV]:"
+                           Style="{StaticResource BoldInfoTextBlockStyle}"/>
+                <TextBlock Grid.Row="2" Grid.Column="1"
+                           Text="{Binding Battery, Mode=OneWay}"
+                           Style="{StaticResource InfoTextBlockStyle}"/>
+            </Grid>
+        </DataTemplate>
+
+        <local:FrameTemplateSelector x:Key="FrameTemplateSelector"
+                                     UrlEddystoneFrameTemplate="{StaticResource UrlEddystoneFrameTemplate}"
+                                     TlmEddystoneFrameTemplate="{StaticResource TlmEddystoneFrameTemplate}"/>
+
         <DataTemplate x:Name="BeaconInfoTemplate">
             <Grid Margin="0,10,0,10">
                 <Grid.ColumnDefinitions>
@@ -24,18 +94,33 @@
                 </Grid.RowDefinitions>
                 <!-- Beacon type -->
                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-                           Text="{Binding BeaconType, Mode=OneWay, Converter={StaticResource BeaconTypeToTextConverter}}"/>
+                           Text="{Binding BeaconType, Mode=OneWay, Converter={StaticResource BeaconTypeToTextConverter}}"
+                           Style="{StaticResource FlyoutPickerTitleTextBlockStyle}"/>
                 <!-- Bluetooth MAC address -->
                 <TextBlock Grid.Row="1" Grid.Column="0"
-                           Text="Address: " />
+                           Text="Address: " Style="{StaticResource BoldInfoTextBlockStyle}" />
                 <TextBlock Grid.Row="1" Grid.Column="1"
-                           Text="{Binding BluetoothAddressAsString, Mode=OneWay}"/>
+                           Text="{Binding BluetoothAddressAsString, Mode=OneWay}" 
+                           Style="{StaticResource InfoTextBlockStyle}"/>
+                <!-- RSSI -->
+                <TextBlock Grid.Row="1" Grid.Column="0"
+                           Text="Signal strength [dBm]: " Style="{StaticResource BoldInfoTextBlockStyle}" />
+                <TextBlock Grid.Row="1" Grid.Column="1"
+                           Text="{Binding BluetoothAddressAsString, Mode=OneWay}" 
+                           Style="{StaticResource InfoTextBlockStyle}"/>
                 <!-- Timestamp of last update -->
                 <TextBlock Grid.Row="2" Grid.Column="0"
-                           Text="Updated: " />
+                           Text="Updated: " 
+                           Style="{StaticResource BoldInfoTextBlockStyle}"/>
                 <TextBlock Grid.Row="2"  Grid.Column="1"
-                           Text="{Binding Timestamp, Mode=OneWay}"/>
+                           Text="{Binding Timestamp, Mode=OneWay}"
+                           Style="{StaticResource InfoTextBlockStyle}"/>
                 <!-- Frames -->
+                <ListView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" 
+                          SelectionMode="None"
+                          ItemsSource="{Binding BeaconFrames, Mode=OneWay}"
+                          ItemTemplateSelector="{StaticResource FrameTemplateSelector}"
+                          HorizontalContentAlignment="Stretch" IsHitTestVisible="False"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -45,11 +130,12 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" x:Name="StatusOutput" TextWrapping="Wrap" Text="Welcome!"/>
+        <TextBlock Grid.Row="0" x:Name="StatusOutput" TextWrapping="Wrap" Text="Welcome!" Style="{StaticResource InfoTextBlockStyle}"/>
         <ListView x:Name="BeaconListView" 
                   Grid.Row="1" 
                   SelectionMode="None"
-                  ItemTemplate="{StaticResource BeaconInfoTemplate}" HorizontalContentAlignment="Stretch"/>
+                  ItemTemplate="{StaticResource BeaconInfoTemplate}" 
+                  HorizontalContentAlignment="Stretch"/>
 
     </Grid>
 </Page>
