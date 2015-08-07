@@ -20,6 +20,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 
 namespace UniversalBeaconLibrary.Beacon
 {
@@ -60,6 +61,8 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
+        public BigInteger NamespaceIdAsNumber => new BigInteger(NamespaceId.Reverse().ToArray());
+
         private byte[] _instanceId;
 
         public byte[] InstanceId
@@ -77,6 +80,17 @@ namespace UniversalBeaconLibrary.Beacon
                 Array.Copy(value, _instanceId, value.Length);
                 UpdatePayload();
                 OnPropertyChanged();
+            }
+        }
+
+        public ulong InstanceIdAsNumber
+        {
+            get
+            {
+                var tmpArray = (BitConverter.IsLittleEndian) ? InstanceId.Reverse().ToArray() : InstanceId;
+                var tst = new byte[8];
+                Array.Copy(tmpArray, 0, tst, 0, 6);
+                return BitConverter.ToUInt64(tst, 0);
             }
         }
 

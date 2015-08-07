@@ -12,6 +12,10 @@
         <Style x:Key="BoldInfoTextBlockStyle" BasedOn="{StaticResource InfoTextBlockStyle}" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
+        <Style x:Key="HeaderInfoTextBlockStyle" BasedOn="{StaticResource InfoTextBlockStyle}" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="30" />
+        </Style>
     </Application.Resources>
 
 </Application>
