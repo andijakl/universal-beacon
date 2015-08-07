@@ -28,7 +28,7 @@
                 <!-- Frame type -->
                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                            Text="{Binding Converter={StaticResource BeaconFrameTypeToTextConverter}}"
-                           Style="{StaticResource BoldInfoTextBlockStyle}"/>
+                           Style="{StaticResource FrameTypeTextBlockStyle}"/>
                 <!-- Ranging Data -->
                 <TextBlock Grid.Row="1" Grid.Column="0"
                            Text="Ranging Data:"
@@ -67,7 +67,7 @@
                 <!-- Frame type -->
                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                            Text="{Binding Converter={StaticResource BeaconFrameTypeToTextConverter}}"
-                           Style="{StaticResource BoldInfoTextBlockStyle}"/>
+                           Style="{StaticResource FrameTypeTextBlockStyle}"/>
                 <!-- URL -->
                 <TextBlock Grid.Row="1" Grid.Column="0"
                            Text="URL:"
@@ -102,7 +102,7 @@
                 <!-- Frame type -->
                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                            Text="{Binding Converter={StaticResource BeaconFrameTypeToTextConverter}}"
-                           Style="{StaticResource BoldInfoTextBlockStyle}"/>
+                           Style="{StaticResource FrameTypeTextBlockStyle}"/>
                 <!-- Version -->
                 <TextBlock Grid.Row="1" Grid.Column="0"
                            Text="Version:"
@@ -141,13 +141,40 @@
             </Grid>
         </DataTemplate>
 
+
+        <DataTemplate x:Key="UnknownBeaconFrameTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="230"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <!-- Frame type -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                           Text="{Binding Converter={StaticResource BeaconFrameTypeToTextConverter}}"
+                           Style="{StaticResource FrameTypeTextBlockStyle}"/>
+                <!-- Payload -->
+                <TextBlock Grid.Row="1" Grid.Column="0"
+                           Text="Payload:"
+                           Style="{StaticResource BoldInfoTextBlockStyle}"/>
+                <TextBlock Grid.Row="1" Grid.Column="1"
+                           Text="{Binding Payload, Mode=OneWay, Converter={StaticResource IdToHexTextConverter}}"
+                           Style="{StaticResource InfoTextBlockStyle}"/>
+            </Grid>
+        </DataTemplate>
+
         <local:FrameTemplateSelector x:Key="FrameTemplateSelector"
                                      UrlEddystoneFrameTemplate="{StaticResource UrlEddystoneFrameTemplate}"
                                      TlmEddystoneFrameTemplate="{StaticResource TlmEddystoneFrameTemplate}"
-                                     UidEddystoneFrameTemplate="{StaticResource UidEddystoneFrameTemplate}"/>
+                                     UidEddystoneFrameTemplate="{StaticResource UidEddystoneFrameTemplate}"
+                                     UnknownBeaconFrameTemplate="{StaticResource UnknownBeaconFrameTemplate}"/>
         
         <DataTemplate x:Name="BeaconInfoTemplate">
-            <Grid Margin="0,10,0,10">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" MinWidth="230"/>
                     <ColumnDefinition Width="*"/>
@@ -161,9 +188,11 @@
                     <RowDefinition Height="1"/>
                 </Grid.RowDefinitions>
                 <!-- Beacon type -->
+                <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+                           Fill="{StaticResource BeaconTypeBackgroundBrush}"/>
                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
                            Text="{Binding BeaconType, Mode=OneWay, Converter={StaticResource BeaconTypeToTextConverter}}"
-                           Style="{StaticResource HeaderInfoTextBlockStyle}"/>
+                           Style="{StaticResource BeaconTypeTextBlockStyle}"/>
                 <!-- Bluetooth MAC address -->
                 <TextBlock Grid.Row="1" Grid.Column="0"
                            Text="Address: " Style="{StaticResource BoldInfoTextBlockStyle}" />
@@ -174,7 +203,7 @@
                 <TextBlock Grid.Row="2" Grid.Column="0"
                            Text="Signal strength [dBm]: " Style="{StaticResource BoldInfoTextBlockStyle}" />
                 <TextBlock Grid.Row="2" Grid.Column="1"
-                           Text="{Binding BluetoothAddressAsString, Mode=OneWay}" 
+                           Text="{Binding Rssi, Mode=OneWay}" 
                            Style="{StaticResource InfoTextBlockStyle}"/>
                 <!-- Timestamp of last update -->
                 <TextBlock Grid.Row="3" Grid.Column="0"
@@ -188,7 +217,16 @@
                           SelectionMode="None"
                           ItemsSource="{Binding BeaconFrames, Mode=OneWay}"
                           ItemTemplateSelector="{StaticResource FrameTemplateSelector}"
-                          HorizontalContentAlignment="Stretch" IsHitTestVisible="False"/>
+                          HorizontalContentAlignment="Stretch" IsHitTestVisible="False">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Margin" Value="0,0,0,0"/>
+                            <Setter Property="Padding" Value="0,0,0,0"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
                 <!-- Border -->
                 <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Background="{ThemeResource SystemControlBackgroundAccentBrush}"/>
             </Grid>
@@ -200,12 +238,32 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" x:Name="StatusOutput" TextWrapping="Wrap" Text="Welcome!" Style="{StaticResource InfoTextBlockStyle}"/>
+        <Rectangle Grid.Row="0" Fill="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBlock Text="Status: " Style="{StaticResource InfoTextBlockStyle}" 
+                   Foreground="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
+            <TextBlock x:Name="StatusOutput" TextWrapping="Wrap" Text="" Style="{StaticResource InfoTextBlockStyle}" 
+                   Foreground="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
+        </StackPanel>
         <ListView x:Name="BeaconListView" 
                   Grid.Row="1" 
                   SelectionMode="None"
                   ItemTemplate="{StaticResource BeaconInfoTemplate}" 
-                  HorizontalContentAlignment="Stretch"/>
+                  HorizontalContentAlignment="Stretch">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <ListViewItemPresenter ContentMargin="0"/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
 
     </Grid>
 </Page>

@@ -6,16 +6,21 @@
     RequestedTheme="Light">
     <Application.Resources>
         <Style x:Key="InfoTextBlockStyle" BasedOn="{StaticResource BaseTextBlockStyle}" TargetType="TextBlock">
-            <Setter Property="FontWeight" Value="Normal"/>
-            <Setter Property="Margin" Value="15, 5, 15, 5"/>
+            <Setter Property="FontWeight" Value="Thin"/>
+            <Setter Property="Margin" Value="12, 5, 12, 5"/>
         </Style>
         <Style x:Key="BoldInfoTextBlockStyle" BasedOn="{StaticResource InfoTextBlockStyle}" TargetType="TextBlock">
-            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontWeight" Value="Light"/>
         </Style>
-        <Style x:Key="HeaderInfoTextBlockStyle" BasedOn="{StaticResource InfoTextBlockStyle}" TargetType="TextBlock">
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="30" />
+        <Style x:Key="BeaconTypeTextBlockStyle" BasedOn="{StaticResource InfoTextBlockStyle}" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="FontSize" Value="25" />
         </Style>
+        <Style x:Key="FrameTypeTextBlockStyle" BasedOn="{StaticResource InfoTextBlockStyle}" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundAccentBrush}"/>
+        </Style>
+        <SolidColorBrush x:Key="BeaconTypeBackgroundBrush" Color="{ThemeResource SystemAccentColor}" Opacity="0.0"></SolidColorBrush>
     </Application.Resources>
 
 </Application>

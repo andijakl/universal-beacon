@@ -80,7 +80,7 @@ namespace WindowsBeacons
             // to modify the UI thread)
             await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                if (StatusOutput != null) StatusOutput.Text += "\n" + newStatus; 
+                if (StatusOutput != null) StatusOutput.Text = newStatus; 
             });
         }
 
