@@ -24,6 +24,7 @@ using Windows.Storage.Streams;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using UniversalBeaconLibrary.Annotations;
 using UniversalBeaconLibrary.Beacon;
@@ -44,23 +45,37 @@ namespace WindowsBeacons
         public static readonly DependencyProperty LeftColumnWidthProperty = DependencyProperty.Register(
             "LeftColumnWidth", typeof(int), typeof(MainPage), new PropertyMetadata(default(int)));
 
+        private ResourceLoader _resourceLoader;
+
         public int LeftColumnWidth
         {
             get { return (int)GetValue(LeftColumnWidthProperty); }
             set { SetValue(LeftColumnWidthProperty, value); }
         }
-        
+
+        private string _statusText;
+        public string StatusText
+        {
+            get { return _statusText; }
+            set
+            {
+                if (_statusText == value) return;
+                _statusText = value;
+                OnPropertyChanged();
+            }
+        }
 
 
         public MainPage()
         {
             this.InitializeComponent();
             DataContext = this;
-            MainSplitView.DataContext = this;
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
-            _watcher = new BluetoothLEAdvertisementWatcher();
+            _watcher = new BluetoothLEAdvertisementWatcher { ScanningMode = BluetoothLEScanningMode.Active };
             _beaconManager = new BeaconManager();
             BeaconListView.ItemsSource = _beaconManager.BluetoothBeacons;
+
+            var x = _watcher.Status;
 
             // Simulate beacon info
             var eddystoneBeacon = new Beacon(Beacon.BeaconTypeEnum.Eddystone);
@@ -74,20 +89,30 @@ namespace WindowsBeacons
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
             // Start watching
             _watcher.Received += WatcherOnReceived;
+            _watcher.Stopped += WatcherOnStopped;
             _watcher.Start();
-            var resourceLoader = ResourceLoader.GetForCurrentView();
-            SetStatusOutput(resourceLoader.GetString("WatchingForBeacons"));
+            _resourceLoader = ResourceLoader.GetForCurrentView();
+            if (_watcher.Status == BluetoothLEAdvertisementWatcherStatus.Started)
+            {
+                SetStatusOutput(_resourceLoader.GetString("WatchingForBeacons"));
+            }
+        }
+
+        private void WatcherOnStopped(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementWatcherStoppedEventArgs args)
+        {
+            SetStatusOutput(_resourceLoader.GetString("AbortedWatchingBeacons"));
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
+            SetStatusOutput(_resourceLoader.GetString("StoppedWatchingBeacons"));
             _watcher.Stop();
             _watcher.Received -= WatcherOnReceived;
         }
 
         #region Bluetooth Beacons
-        
+
         private async void WatcherOnReceived(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs eventArgs)
         {
             await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => _beaconManager.ReceivedAdvertisement(eventArgs));
@@ -104,7 +129,7 @@ namespace WindowsBeacons
             // to modify the UI thread)
             await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                if (StatusOutput != null) StatusOutput.Text = newStatus; 
+                StatusText = newStatus;
             });
         }
 
@@ -121,6 +146,16 @@ namespace WindowsBeacons
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void StatusMsgArea_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (_watcher.Status == BluetoothLEAdvertisementWatcherStatus.Started) return;
+            _watcher.Start();
+            if (_watcher.Status == BluetoothLEAdvertisementWatcherStatus.Started)
+            {
+                SetStatusOutput(_resourceLoader.GetString("WatchingForBeacons"));
+            }
         }
     }
 }

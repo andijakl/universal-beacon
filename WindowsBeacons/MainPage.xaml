@@ -309,18 +309,18 @@
 
                 <!-- Status & Menu -->
                 <Rectangle Grid.Row="0" Fill="{ThemeResource SystemControlBackgroundAccentBrush}"/>
-                <Grid Grid.Row="0">
+                <Grid Grid.Row="0" x:Name="StatusMsgArea" Tapped="StatusMsgArea_Tapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <!-- Status -->
-                    <TextBlock Grid.Column="0" x:Name="StatusText" TextWrapping="Wrap" 
+                    <TextBlock Grid.Column="0" TextWrapping="Wrap" 
                                x:Uid="Status" Style="{StaticResource InfoTextBlockStyle}" 
                                Foreground="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
                     <TextBlock Grid.Column="1"
-                       x:Name="StatusOutput" TextWrapping="Wrap" Text="" Style="{StaticResource InfoTextBlockStyle}" 
+                       x:Name="StatusOutput" TextWrapping="Wrap" Text="{Binding StatusText}" Style="{StaticResource InfoTextBlockStyle}" 
                        Foreground="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
                     <!-- Toggle about view -->
                     <!--<SymbolIcon x:Name="AboutButton" Grid.Column="2" Symbol="Help"

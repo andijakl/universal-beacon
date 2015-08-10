@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AbortedWatchingBeacons" xml:space="preserve">
+    <value>Watching for beacons has been aborted, e.g., because Bluetooth was deactivated. Tap to try restarting.</value>
+  </data>
   <data name="About.Text" xml:space="preserve">
     <value>About</value>
   </data>
@@ -173,11 +176,17 @@ Make sure your device supports Bluetooth Smart (LE) and that Bluetooth is activa
   <data name="RangingData.Text" xml:space="preserve">
     <value>Ranging Data: </value>
   </data>
+  <data name="RestartWatchingBeacons" xml:space="preserve">
+    <value>Attempting to restart watching for beacons ...</value>
+  </data>
   <data name="Rssi.Text" xml:space="preserve">
     <value>Signal strength [dBm]: </value>
   </data>
   <data name="Status.Text" xml:space="preserve">
     <value>Status: </value>
+  </data>
+  <data name="StoppedWatchingBeacons" xml:space="preserve">
+    <value>Stopped watching for beacons. Tap to restart.</value>
   </data>
   <data name="TemperatureInC.Text" xml:space="preserve">
     <value>Temperature [°C]: </value>
