@@ -135,6 +135,12 @@
   <data name="BluetoothAddress.Text" xml:space="preserve">
     <value>Address: </value>
   </data>
+  <data name="ContactEmailButton.Content" xml:space="preserve">
+    <value>Contact per email</value>
+  </data>
+  <data name="ContactEmailButton.NavigateUri" xml:space="preserve">
+    <value>mailto:andreas.jakl@tieto.com</value>
+  </data>
   <data name="Info.Text" xml:space="preserve">
     <value>&lt; Info</value>
   </data>
@@ -158,6 +164,12 @@ Make sure your device supports Bluetooth Smart (LE) and that Bluetooth is activa
   <data name="Payload.Text" xml:space="preserve">
     <value>Payload: </value>
   </data>
+  <data name="Privacy.Text" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="PrivacyText.Text" xml:space="preserve">
+    <value>The app does not store, collect or transmit any personally identifiable data.</value>
+  </data>
   <data name="RangingData.Text" xml:space="preserve">
     <value>Ranging Data: </value>
   </data>
@@ -169,6 +181,12 @@ Make sure your device supports Bluetooth Smart (LE) and that Bluetooth is activa
   </data>
   <data name="TemperatureInC.Text" xml:space="preserve">
     <value>Temperature [°C]: </value>
+  </data>
+  <data name="Terms.Text" xml:space="preserve">
+    <value>Terms &amp; Conditions</value>
+  </data>
+  <data name="TermsText.Text" xml:space="preserve">
+    <value>This application is an open source sample for the universal beacon library. Eddystone is an open source specification by Google, released under Apache License. iBeacon is a Trademark by Apple Inc.</value>
   </data>
   <data name="TimeSincePowerUp.Text" xml:space="preserve">
     <value>Time since power up [.1 s]: </value>

@@ -355,19 +355,21 @@
                 <StackPanel Orientation="Vertical">
                     <Grid Tapped="AboutButton_Tapped">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <!--<FontIcon Grid.Column="0" Glyph="&#xE973;" FontSize="25"/>-->
-                        <TextBlock Grid.Column="1" x:Uid="Info" Style="{StaticResource BeaconTypeTextBlockStyle}"/>
+                        <TextBlock Grid.Column="0" x:Uid="Info" Style="{StaticResource BeaconTypeTextBlockStyle}"/>
                     </Grid>
-                    <TextBlock x:Uid="Instructions"
-                        Style="{StaticResource InfoTextBlockStyle}" />
+                    <TextBlock x:Uid="Instructions" Style="{StaticResource InfoTextBlockStyle}" />
                     <TextBlock x:Uid="About" Style="{StaticResource BeaconTypeTextBlockStyle}"/>
                     <TextBlock x:Uid="AboutText1" Style="{StaticResource InfoTextBlockStyle}" />
                     <HyperlinkButton x:Uid="TwitterButton" Style="{StaticResource HyperlinkStyle}"/>
+                    <HyperlinkButton x:Uid="ContactEmailButton" Style="{StaticResource HyperlinkStyle}"/>
                     <TextBlock x:Uid="AboutText2" Style="{StaticResource InfoTextBlockStyle}" />
                     <HyperlinkButton x:Uid="LibraryUrlButton" Style="{StaticResource HyperlinkStyle}"/>
+                    <TextBlock x:Uid="Privacy" Style="{StaticResource BeaconTypeTextBlockStyle}"/>
+                    <TextBlock x:Uid="PrivacyText" Style="{StaticResource InfoTextBlockStyle}" />
+                    <TextBlock x:Uid="Terms" Style="{StaticResource BeaconTypeTextBlockStyle}"/>
+                    <TextBlock x:Uid="TermsText" Style="{StaticResource InfoTextBlockStyle}" />
                 </StackPanel>
             </ScrollViewer>
         </SplitView.Pane>
