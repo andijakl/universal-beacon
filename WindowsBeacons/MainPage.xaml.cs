@@ -52,6 +52,8 @@ namespace WindowsBeacons
         }
 
         private string _statusText;
+        private bool _restartingBeaconWatch;
+
         public string StatusText
         {
             get { return _statusText; }
@@ -98,7 +100,9 @@ namespace WindowsBeacons
 
         private void WatcherOnStopped(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementWatcherStoppedEventArgs args)
         {
-            SetStatusOutput(_resourceLoader.GetString("AbortedWatchingBeacons"));
+            SetStatusOutput(_restartingBeaconWatch
+                ? _resourceLoader.GetString("FailedRestartingBluetoothWatch")
+                : _resourceLoader.GetString("AbortedWatchingBeacons"));
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -107,6 +111,7 @@ namespace WindowsBeacons
             SetStatusOutput(_resourceLoader.GetString("StoppedWatchingBeacons"));
             _watcher.Stop();
             _watcher.Received -= WatcherOnReceived;
+            _restartingBeaconWatch = false;
         }
 
         #region Bluetooth Beacons
@@ -149,6 +154,7 @@ namespace WindowsBeacons
         private void StatusMsgArea_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (_watcher.Status == BluetoothLEAdvertisementWatcherStatus.Started) return;
+            _restartingBeaconWatch = true;
             _watcher.Start();
             if (_watcher.Status == BluetoothLEAdvertisementWatcherStatus.Started)
             {

@@ -3,7 +3,7 @@
   <Identity Name="27f10f31-b0a2-48e3-96e6-5d89c3d36518" Publisher="CN=andre" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="27f10f31-b0a2-48e3-96e6-5d89c3d36518" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>WindowsBeacons</DisplayName>
+    <DisplayName>BluetoothBeaconInteractor</DisplayName>
     <PublisherDisplayName>Andreas Jakl</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -23,7 +23,6 @@
     </Application>
   </Applications>
   <Capabilities>
-    <Capability Name="internetClient" />
     <DeviceCapability Name="proximity" />
     <DeviceCapability Name="bluetooth" />
   </Capabilities>
