@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AbortedWatchingBeacons" xml:space="preserve">
-    <value>Watching for beacons has been aborted, e.g., because Bluetooth was deactivated. Tap to try restarting.</value>
+    <value>Watching for beacons has been aborted, e.g., because Bluetooth is / was deactivated. Tap to try restarting.</value>
   </data>
   <data name="About.Text" xml:space="preserve">
     <value>About</value>
