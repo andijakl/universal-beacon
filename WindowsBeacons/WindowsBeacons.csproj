@@ -99,6 +99,7 @@
     <Compile Include="Converter\BeaconFrameTypeToTextConverter.cs" />
     <Compile Include="Converter\BeaconTypeToTextConverter.cs" />
     <Compile Include="Converter\IdToHexTextConverter.cs" />
+    <Compile Include="Converter\IntToGridLengthConverter.cs" />
     <Compile Include="FrameTemplateSelector.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

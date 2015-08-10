@@ -15,18 +15,22 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using Windows.ApplicationModel.Resources;
 using Windows.Devices.Bluetooth.Advertisement;
 using Windows.Storage.Streams;
 using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using UniversalBeaconLibrary.Annotations;
 using UniversalBeaconLibrary.Beacon;
 
 namespace WindowsBeacons
 {
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
         // Bluetooth Beacons
         private readonly BluetoothLEAdvertisementWatcher _watcher;
@@ -37,17 +41,31 @@ namespace WindowsBeacons
         // UI
         private CoreDispatcher _dispatcher;
 
+        public static readonly DependencyProperty LeftColumnWidthProperty = DependencyProperty.Register(
+            "LeftColumnWidth", typeof(int), typeof(MainPage), new PropertyMetadata(default(int)));
+
+        public int LeftColumnWidth
+        {
+            get { return (int)GetValue(LeftColumnWidthProperty); }
+            set { SetValue(LeftColumnWidthProperty, value); }
+        }
+        
+
+
         public MainPage()
         {
             this.InitializeComponent();
+            DataContext = this;
+            MainSplitView.DataContext = this;
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
             _watcher = new BluetoothLEAdvertisementWatcher();
             _beaconManager = new BeaconManager();
             BeaconListView.ItemsSource = _beaconManager.BluetoothBeacons;
 
-            //var eddystoneBeacon = new Beacon(Beacon.BeaconTypeEnum.Eddystone);
-            //eddystoneBeacon.BeaconFrames.Add(new UrlEddystoneFrame(0, "http://www.tieto.at"));
-            //_beaconManager.BluetoothBeacons.Add(eddystoneBeacon);
+            // Simulate beacon info
+            var eddystoneBeacon = new Beacon(Beacon.BeaconTypeEnum.Eddystone);
+            eddystoneBeacon.BeaconFrames.Add(new UrlEddystoneFrame(0, "http://www.tieto.at"));
+            _beaconManager.BluetoothBeacons.Add(eddystoneBeacon);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -96,6 +114,13 @@ namespace WindowsBeacons
         {
             MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
         }
-        
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
