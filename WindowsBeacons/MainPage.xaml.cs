@@ -74,13 +74,11 @@ namespace WindowsBeacons
             _watcher = new BluetoothLEAdvertisementWatcher { ScanningMode = BluetoothLEScanningMode.Active };
             _beaconManager = new BeaconManager();
             BeaconListView.ItemsSource = _beaconManager.BluetoothBeacons;
-
-            var x = _watcher.Status;
-
+            
             // Simulate beacon info
-            var eddystoneBeacon = new Beacon(Beacon.BeaconTypeEnum.Eddystone);
-            eddystoneBeacon.BeaconFrames.Add(new UrlEddystoneFrame(0, "http://www.tieto.at"));
-            _beaconManager.BluetoothBeacons.Add(eddystoneBeacon);
+            //var eddystoneBeacon = new Beacon(Beacon.BeaconTypeEnum.Eddystone);
+            //eddystoneBeacon.BeaconFrames.Add(new UrlEddystoneFrame(0, "http://www.tieto.at"));
+            //_beaconManager.BluetoothBeacons.Add(eddystoneBeacon);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
