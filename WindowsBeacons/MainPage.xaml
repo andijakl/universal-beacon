@@ -315,16 +315,24 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
+                    <!-- Status -->
                     <TextBlock Grid.Column="0" x:Name="StatusText" TextWrapping="Wrap" 
                                x:Uid="Status" Style="{StaticResource InfoTextBlockStyle}" 
                                Foreground="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
                     <TextBlock Grid.Column="1"
                        x:Name="StatusOutput" TextWrapping="Wrap" Text="" Style="{StaticResource InfoTextBlockStyle}" 
                        Foreground="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
-                    <SymbolIcon x:Name="AboutButton" Grid.Column="2" Symbol="Help"
+                    <!-- Toggle about view -->
+                    <!--<SymbolIcon x:Name="AboutButton" Grid.Column="2" Symbol="Help"
                         Margin="12,5,12,5"
                         Tapped="AboutButton_Tapped"
-                        Foreground="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
+                        Foreground="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>-->
+                    <ToggleButton x:Name="TogglePaneButton" Grid.Column="2" 
+                      TabIndex="1"
+                      Style="{StaticResource SplitViewTogglePaneButtonStyle}"
+                      IsChecked="{Binding IsPaneOpen, ElementName=MainSplitView, Mode=TwoWay}"
+                      AutomationProperties.Name="About"
+                      ToolTipService.ToolTip="About" />
                 </Grid>
                 
                 <!-- Beacon scan results -->
