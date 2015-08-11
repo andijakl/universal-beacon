@@ -70,11 +70,10 @@ The app has been tested on Windows 10 tablets and phones and requires Bluetooth 
 ### Registering for beacons and handling the data
 
 ```csharp
-public sealed partial class MainPage : Page, INotifyPropertyChanged
+public sealed partial class MainPage : Page
 {
 	// Bluetooth Beacons
 	private readonly BluetoothLEAdvertisementWatcher _watcher;
-	//private BluetoothLEAdvertisementPublisher _publisher;
 
 	private readonly BeaconManager _beaconManager;
 	
