@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Windows.ApplicationModel.Resources;
+using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.Advertisement;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -83,7 +84,10 @@ namespace WindowsBeacons
             // Simulate beacon info
 //#if DEBUG
 //            var eddystoneBeacon = new Beacon(Beacon.BeaconTypeEnum.Eddystone);
-//            eddystoneBeacon.BeaconFrames.Add(new UrlEddystoneFrame(0, "http://www.tieto.at"));
+//            eddystoneBeacon.BeaconFrames.Add(new UrlEddystoneFrame(220, "http://www.tieto.at"));
+//            eddystoneBeacon.Rssi = -49;
+//            eddystoneBeacon.BluetoothAddress = 0x0000e27ef189f6c3;
+//            eddystoneBeacon.Timestamp = DateTimeOffset.Now;
 //            _beaconManager.BluetoothBeacons.Add(eddystoneBeacon);
 //#endif
         }
@@ -91,12 +95,12 @@ namespace WindowsBeacons
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            _resourceLoader = ResourceLoader.GetForCurrentView();
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
             // Start watching
             _watcher.Received += WatcherOnReceived;
             _watcher.Stopped += WatcherOnStopped;
             _watcher.Start();
-            _resourceLoader = ResourceLoader.GetForCurrentView();
             if (_watcher.Status == BluetoothLEAdvertisementWatcherStatus.Started)
             {
                 SetStatusOutput(_resourceLoader.GetString("WatchingForBeacons"));
@@ -122,11 +126,39 @@ namespace WindowsBeacons
 
         private void WatcherOnStopped(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementWatcherStoppedEventArgs args)
         {
-            SetStatusOutput(_restartingBeaconWatch
-                ? _resourceLoader.GetString("FailedRestartingBluetoothWatch")
-                : _resourceLoader.GetString("AbortedWatchingBeacons"));
+            string errorMsg = null;
+            switch (args.Error)
+            {
+                case BluetoothError.Success:
+                    errorMsg = "WatchingSuccessfullyStopped";
+                    break;
+                case BluetoothError.RadioNotAvailable:
+                    errorMsg = "ErrorNoRadioAvailable";
+                    break;
+                case BluetoothError.ResourceInUse:
+                    errorMsg = "ErrorResourceInUse";
+                    break;
+                case BluetoothError.DeviceNotConnected:
+                    errorMsg = "ErrorDeviceNotConnected";
+                    break;
+                case BluetoothError.DisabledByPolicy:
+                    errorMsg = "ErrorDisabledByPolicy";
+                    break;
+                case BluetoothError.NotSupported:
+                    errorMsg = "ErrorNotSupported";
+                    break;
+            }
+            if (errorMsg == null)
+            {
+                // All other errors - generic error message
+                errorMsg = _restartingBeaconWatch
+                    ? "FailedRestartingBluetoothWatch"
+                    : "AbortedWatchingBeacons";
+            }
+            SetStatusOutput(_resourceLoader.GetString(errorMsg));
         }
 
+#if DEBUG
         private void PrintBeaconInfoExample()
         {
             Debug.WriteLine("Beacons discovered so far\n-------------------------");
@@ -164,10 +196,11 @@ namespace WindowsBeacons
                 }
             }
         }
+#endif
 
 #endregion
 
-#region UI
+        #region UI
 
         private async void SetStatusOutput(string newStatus)
         {

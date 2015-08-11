@@ -144,6 +144,21 @@
   <data name="ContactEmailButton.NavigateUri" xml:space="preserve">
     <value>mailto:andreas.jakl@tieto.com</value>
   </data>
+  <data name="ErrorDeviceNotConnected" xml:space="preserve">
+    <value>Could not connect to the Bluetooth Low Energy compatible radio module in your device. Please ensure it is available and activated (e.g., no active airplane mode) and try again later.</value>
+  </data>
+  <data name="ErrorDisabledByPolicy" xml:space="preserve">
+    <value>A policy restricts this app to access your Bluetooth radio module. Please make sure you allow the app to access Bluetooth / proximity.</value>
+  </data>
+  <data name="ErrorNoRadioAvailable" xml:space="preserve">
+    <value>No Bluetooth Low Energy compatible radio module is available, or it has been deactivated in your system (e.g., due to active airplane mode)</value>
+  </data>
+  <data name="ErrorNotSupported" xml:space="preserve">
+    <value>Accessing the Bluetooth Low Energy Radio is not supported on your device. Please ensure your device has the hardware needed to scan for Bluetooth Beacons and that it is activated.</value>
+  </data>
+  <data name="ErrorResourceInUse" xml:space="preserve">
+    <value>The Bluetooth radio is already in use and we could not get access. Please try again later.</value>
+  </data>
   <data name="FailedRestartingBluetoothWatch" xml:space="preserve">
     <value>Failed to restart Bluetooth scanning. Please make sure Bluetooth is activated on your device and airplane mode is deactivated. Tap here to try again.</value>
   </data>
@@ -226,5 +241,8 @@ Make sure your device supports Bluetooth Smart (LE) and that Bluetooth is activa
   </data>
   <data name="WatchingForBeacons" xml:space="preserve">
     <value>Watching for Bluetooth Beacons</value>
+  </data>
+  <data name="WatchingSuccessfullyStopped" xml:space="preserve">
+    <value>Successfully stopped watching for Bluetooth Beacons.</value>
   </data>
 </root>
