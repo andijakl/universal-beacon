@@ -15,10 +15,10 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="WindowsBeacons.App">
-      <uap:VisualElements DisplayName="Bluetooth Beacon Interactor" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="View information from nearby Bluetooth Beacons - currently supporting the Google Eddystone Specification." BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
+      <uap:VisualElements DisplayName="Bluetooth Beacon Interactor" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="View information from nearby Bluetooth Beacons - currently supporting the Google Eddystone Specification." BackgroundColor="#0089ff">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Bluetooth Beacon Interactor">
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#0089ff" />
       </uap:VisualElements>
     </Application>
   </Applications>

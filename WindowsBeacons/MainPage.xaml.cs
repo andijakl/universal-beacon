@@ -16,6 +16,8 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Windows.ApplicationModel.Resources;
 using Windows.Devices.Bluetooth.Advertisement;
@@ -33,7 +35,6 @@ namespace WindowsBeacons
     {
         // Bluetooth Beacons
         private readonly BluetoothLEAdvertisementWatcher _watcher;
-        //private BluetoothLEAdvertisementPublisher _publisher;
 
         private readonly BeaconManager _beaconManager;
 
@@ -71,7 +72,11 @@ namespace WindowsBeacons
             this.InitializeComponent();
             DataContext = this;
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
+
+            // Create the Bluetooth LE watcher from the Windows 10 UWP
             _watcher = new BluetoothLEAdvertisementWatcher { ScanningMode = BluetoothLEScanningMode.Active };
+
+            // Construct the Universal Bluetooth Beacon manager
             _beaconManager = new BeaconManager();
             BeaconListView.ItemsSource = _beaconManager.BluetoothBeacons;
             
@@ -96,12 +101,6 @@ namespace WindowsBeacons
             }
         }
 
-        private void WatcherOnStopped(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementWatcherStoppedEventArgs args)
-        {
-            SetStatusOutput(_restartingBeaconWatch
-                ? _resourceLoader.GetString("FailedRestartingBluetoothWatch")
-                : _resourceLoader.GetString("AbortedWatchingBeacons"));
-        }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
@@ -119,6 +118,51 @@ namespace WindowsBeacons
             await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => _beaconManager.ReceivedAdvertisement(eventArgs));
         }
 
+        private void WatcherOnStopped(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementWatcherStoppedEventArgs args)
+        {
+            SetStatusOutput(_restartingBeaconWatch
+                ? _resourceLoader.GetString("FailedRestartingBluetoothWatch")
+                : _resourceLoader.GetString("AbortedWatchingBeacons"));
+        }
+
+        private void PrintBeaconInfoExample()
+        {
+            Debug.WriteLine("Beacons discovered so far\n-------------------------");
+            foreach (var bluetoothBeacon in _beaconManager.BluetoothBeacons.ToList())
+            {
+                Debug.WriteLine("\nBeacon: " + bluetoothBeacon.BluetoothAddressAsString);
+                Debug.WriteLine("Type: " + bluetoothBeacon.BeaconType);
+                Debug.WriteLine("Last Update: " + bluetoothBeacon.Timestamp);
+                Debug.WriteLine("RSSI: " + bluetoothBeacon.Rssi);
+                foreach (var beaconFrame in bluetoothBeacon.BeaconFrames.ToList())
+                {
+                    // Print a small sample of the available data parsed by the library
+                    if (beaconFrame is UidEddystoneFrame)
+                    {
+                        Debug.WriteLine("Eddystone UID Frame");
+                        Debug.WriteLine("ID: " + ((UidEddystoneFrame) beaconFrame).NamespaceIdAsNumber.ToString("X") + " / " +
+                                        ((UidEddystoneFrame) beaconFrame).InstanceIdAsNumber.ToString("X"));
+                    }
+                    else if (beaconFrame is UrlEddystoneFrame)
+                    {
+                        Debug.WriteLine("Eddystone URL Frame");
+                        Debug.WriteLine("URL: " + ((UrlEddystoneFrame) beaconFrame).CompleteUrl);
+                    }
+                    else if (beaconFrame is TlmEddystoneFrame)
+                    {
+                        Debug.WriteLine("Eddystone Telemetry Frame");
+                        Debug.WriteLine("Temperature [°C]: " + ((TlmEddystoneFrame) beaconFrame).TemperatureInC);
+                        Debug.WriteLine("Battery [mV]: " + ((TlmEddystoneFrame) beaconFrame).BatteryInMilliV);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Unknown frame - not parsed by the library, write your own derived beacon frame type!");
+                        Debug.WriteLine("Payload: " + BitConverter.ToString(((UnknownBeaconFrame) beaconFrame).Payload));
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region UI
@@ -134,7 +178,6 @@ namespace WindowsBeacons
             });
         }
 
-        #endregion
 
         private void AboutButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -159,5 +202,6 @@ namespace WindowsBeacons
                 SetStatusOutput(_resourceLoader.GetString("WatchingForBeacons"));
             }
         }
+        #endregion
     }
 }

@@ -200,6 +200,12 @@ Make sure your device supports Bluetooth Smart (LE) and that Bluetooth is activa
   <data name="TermsText.Text" xml:space="preserve">
     <value>This application is an open source sample for the universal beacon library. Eddystone is an open source specification by Google, released under Apache License. iBeacon is a Trademark by Apple Inc.</value>
   </data>
+  <data name="TietoComButton.Content" xml:space="preserve">
+    <value>Tieto.com</value>
+  </data>
+  <data name="TietoComButton.NavigateUri" xml:space="preserve">
+    <value>http://www.tieto.com/</value>
+  </data>
   <data name="TimeSincePowerUp.Text" xml:space="preserve">
     <value>Time since power up [.1 s]: </value>
   </data>

@@ -217,8 +217,7 @@
                     <RowDefinition Height="1"/>
                 </Grid.RowDefinitions>
                 <!-- Beacon type -->
-                <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-                           Fill="{StaticResource BeaconTypeBackgroundBrush}"/>
+                <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
                 <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
                            Orientation="Horizontal">
                     <TextBlock Text="&#xE95A;" Margin="12,12,0,0"
@@ -270,7 +269,7 @@
                     </ListView.ItemContainerStyle>
                 </ListView>
                 <!-- Border -->
-                <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Background="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource CustomAccentBrush}"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -308,7 +307,7 @@
 
 
                 <!-- Status & Menu -->
-                <Rectangle Grid.Row="0" Fill="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                <Rectangle Grid.Row="0" Fill="{StaticResource CustomAccentBrush}"/>
                 <Grid Grid.Row="0" x:Name="StatusMsgArea" Tapped="StatusMsgArea_Tapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -372,6 +371,7 @@
                     <TextBlock x:Uid="AboutText1" Style="{StaticResource InfoTextBlockStyle}" />
                     <HyperlinkButton x:Uid="TwitterButton" Style="{StaticResource HyperlinkStyle}"/>
                     <HyperlinkButton x:Uid="ContactEmailButton" Style="{StaticResource HyperlinkStyle}"/>
+                    <HyperlinkButton x:Uid="TietoComButton" Style="{StaticResource HyperlinkStyle}"/>
                     <TextBlock x:Uid="AboutText2" Style="{StaticResource InfoTextBlockStyle}" />
                     <HyperlinkButton x:Uid="LibraryUrlButton" Style="{StaticResource HyperlinkStyle}"/>
                     <TextBlock x:Uid="Privacy" Style="{StaticResource BeaconTypeTextBlockStyle}"/>
