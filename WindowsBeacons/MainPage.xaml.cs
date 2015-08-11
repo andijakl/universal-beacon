@@ -127,26 +127,29 @@ namespace WindowsBeacons
         private void WatcherOnStopped(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementWatcherStoppedEventArgs args)
         {
             string errorMsg = null;
-            switch (args.Error)
+            if (args != null)
             {
-                case BluetoothError.Success:
-                    errorMsg = "WatchingSuccessfullyStopped";
-                    break;
-                case BluetoothError.RadioNotAvailable:
-                    errorMsg = "ErrorNoRadioAvailable";
-                    break;
-                case BluetoothError.ResourceInUse:
-                    errorMsg = "ErrorResourceInUse";
-                    break;
-                case BluetoothError.DeviceNotConnected:
-                    errorMsg = "ErrorDeviceNotConnected";
-                    break;
-                case BluetoothError.DisabledByPolicy:
-                    errorMsg = "ErrorDisabledByPolicy";
-                    break;
-                case BluetoothError.NotSupported:
-                    errorMsg = "ErrorNotSupported";
-                    break;
+                switch (args.Error)
+                {
+                    case BluetoothError.Success:
+                        errorMsg = "WatchingSuccessfullyStopped";
+                        break;
+                    case BluetoothError.RadioNotAvailable:
+                        errorMsg = "ErrorNoRadioAvailable";
+                        break;
+                    case BluetoothError.ResourceInUse:
+                        errorMsg = "ErrorResourceInUse";
+                        break;
+                    case BluetoothError.DeviceNotConnected:
+                        errorMsg = "ErrorDeviceNotConnected";
+                        break;
+                    case BluetoothError.DisabledByPolicy:
+                        errorMsg = "ErrorDisabledByPolicy";
+                        break;
+                    case BluetoothError.NotSupported:
+                        errorMsg = "ErrorNotSupported";
+                        break;
+                }
             }
             if (errorMsg == null)
             {
