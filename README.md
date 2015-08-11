@@ -1,5 +1,4 @@
 # Universal Beacon Library for Windows 10
-========
 
 Support for Bluetooth Beacons for the Universal Windows Platform (Windows 10), including the Eddystone specification.
 
@@ -9,27 +8,52 @@ Directly use the received Bluetooth LE Advertisement notifications from the Wind
 
 ## Background - Bluetooth Beacons
 
-Bluetooth Low Energy / LE / Smart allows objects to be discovered - for example, it enables your phone to connect to a heart rate belt or a headset. A Bluetooth Beacon does not connect to your phone; instead, it continuously transmits small amounts of data. 
+Bluetooth Low Energy / LE / Smart allows objects to be discovered - for example, it enables your phone to connect to a heart rate belt or a headset. A Bluetooth Beacon does not connect to your phone; instead, it continuously transmits small amounts of data - no matter if someone is listening or not. The efficient nature of Bluetooth Smart ensures that the battery of a beacon nevertheless lasts several months.
+
+Phones and apps can react to Bluetooth Beacons - e.g., to trigger specific actions when the user is close to a physical location. In contrast to GPS, this works even indoors and has a much better accuracy.
+
+To differentiate between different beacons and to give each one a unique meaning in your virtual world, beacons send out information packages. These are formatted according to a certain specification. While the general way of broadcasting these information packages is standardized by the Bluetooth Core specification, the beacon package contents are not. Windows 10 comes with APIs to receive Bluetooth LE advertisements, but does not contain an SDK to work with common beacon protocols.
 
 
 
 ## The Universal Beacon Library
 
-... coming soon!
+Provides an easy way for Universal Windows Apps (for Windows 10) to manage beacons and to parse their information packages.
 
+As a developer, you only have to feed the received Bluetooth advertisements into the library - it will analyze, cluster and parse the contents, so that you can easily access the latest data from each individual beacon.
 
+Clustering is achieved through the Bluetooth address (MAC): the constant and regular advertisements of multiple beacons are matched to unique beacons.
 
-## Availability
+The next step is analyzing the conents of the advertisement payloads. The library recognizes Apple iBeacons and fully parses the open [Google Eddystone specification](https://github.com/google/eddystone), including all three frame types that have been defined:
 
-The Universal Beacon Library is available in C# and includes a dependency to .NETCore the Universal Windows Platform (UWP / UAP) for Windows 10, and can therefore be used in applications targeting Windows 10 with support for Bluetooth Smart / LE.
+* UID frames
+* URL frames
+* Telemetry frames
 
-To keep up to date, either watch this project or [follow me on Twitter](https://twitter.com/andijakl).
+Instead of having to implement the Eddystone specification yourself and worry about encodings and byte orderings, you can directly access the latest available information through convenient classes and properties. For unknown frames of other beacon types, it's easy to extend the library to parse the payload in a derived beacon frame class and make use of the beacon management and information update features of the library.
 
 
 
 ## Feature Overview
 
-... coming soon!
+- Directly analyzes received Bluetooth LE advertisements (`BluetoothLEAdvertisementReceivedEventArgs`)
+- Clusters based on Bluetooth MAC address and keeps frame types up to date with the latest information
+- Retrieve Bluetooth address (MAC), signal strength (RSSI) and latest update timestamp for each beacon
+- Parses individual advertisement frame contents
+- Eddystone UID frame:
+  - Ranging data
+  - Namespace ID
+  - Instance ID
+- Eddystone Telemetry (TLM) frame:
+  - Version
+  - Battery [V]
+  - Beacon temperature [°C]
+  - Count of advertisement frames sent since power up
+  - Time since power up
+- Eddystone URL frame:
+  - Ranging data
+  - Complete URL
+- Raw payload for all other beacons, including Apple iBeacon
 
 
 
@@ -45,7 +69,7 @@ The app has been tested on Windows 10 tablets and phones and requires Bluetooth 
 
 ### Registering for beacons and handling the data
 
-``` 
+```csharp
 public sealed partial class MainPage : Page, INotifyPropertyChanged
 {
 	// Bluetooth Beacons
@@ -111,9 +135,16 @@ public sealed partial class MainPage : Page, INotifyPropertyChanged
 		}
 	}
 }
-		
-			
 ``` 
+
+
+
+## Availability
+
+The Universal Beacon Library is available in C# and includes a dependency to .NETCore the Universal Windows Platform (UWP / UAP) for Windows 10 to directly work with received advertisement packets from the Windows Bluetooth API. The library can therefore be used in applications targeting Windows 10 with support for Bluetooth Smart / LE.
+
+To keep up to date, either watch this project or [follow me on Twitter](https://twitter.com/andijakl).
+
 
 
 
@@ -150,9 +181,11 @@ https://github.com/andijakl/universal-beacon/issues
 
 ## License & Related Information
 
-The library is released under the Apache license and is partly based on the Google Eddystone specification, which is also released under Apache license https://github.com/google/eddystone - see the LICENSE file for details.
+The library is released under the Apache license and is partly based on the [Google Eddystone](https://github.com/google/eddystone) specification, which is also released under Apache license - see the LICENSE file for details.
 
-Developed by Andreas Jakl, Tieto Corporation
+The example application is licensed under the GPL v3 license - see LICENSE.GPL for details.
+
+Developed by Andreas Jakl, Tieto Austria GmbH
 https://twitter.com/andijakl
 http://www.tieto.com/
 
