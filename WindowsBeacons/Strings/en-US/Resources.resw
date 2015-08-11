@@ -127,7 +127,7 @@
     <value>Developed by Andreas Jakl, Tieto Corporation.</value>
   </data>
   <data name="AboutText2.Text" xml:space="preserve">
-    <value>Download the universal beacon library for Windows 10 from:</value>
+    <value>Download the open source universal beacon library for Windows 10 from:</value>
   </data>
   <data name="AdvertisementFrameCount.Text" xml:space="preserve">
     <value>Advertisement frame count: </value>
