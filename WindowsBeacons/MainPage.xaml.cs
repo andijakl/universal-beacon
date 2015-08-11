@@ -79,11 +79,13 @@ namespace WindowsBeacons
             // Construct the Universal Bluetooth Beacon manager
             _beaconManager = new BeaconManager();
             BeaconListView.ItemsSource = _beaconManager.BluetoothBeacons;
-            
+
             // Simulate beacon info
-            //var eddystoneBeacon = new Beacon(Beacon.BeaconTypeEnum.Eddystone);
-            //eddystoneBeacon.BeaconFrames.Add(new UrlEddystoneFrame(0, "http://www.tieto.at"));
-            //_beaconManager.BluetoothBeacons.Add(eddystoneBeacon);
+//#if DEBUG
+//            var eddystoneBeacon = new Beacon(Beacon.BeaconTypeEnum.Eddystone);
+//            eddystoneBeacon.BeaconFrames.Add(new UrlEddystoneFrame(0, "http://www.tieto.at"));
+//            _beaconManager.BluetoothBeacons.Add(eddystoneBeacon);
+//#endif
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -111,7 +113,7 @@ namespace WindowsBeacons
             _restartingBeaconWatch = false;
         }
 
-        #region Bluetooth Beacons
+#region Bluetooth Beacons
 
         private async void WatcherOnReceived(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs eventArgs)
         {
@@ -163,9 +165,9 @@ namespace WindowsBeacons
             }
         }
 
-        #endregion
+#endregion
 
-        #region UI
+#region UI
 
         private async void SetStatusOutput(string newStatus)
         {
@@ -202,6 +204,6 @@ namespace WindowsBeacons
                 SetStatusOutput(_resourceLoader.GetString("WatchingForBeacons"));
             }
         }
-        #endregion
+#endregion
     }
 }
