@@ -19,6 +19,7 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 
@@ -124,6 +125,22 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
+        public UidEddystoneFrame(byte rangingData, byte[] namespaceId, byte[] instanceId)
+        {
+            _rangingData = rangingData;
+            if (namespaceId != null && namespaceId.Length == 10)
+            {
+                _namespaceId = new byte[10];
+                Array.Copy(namespaceId, _namespaceId, namespaceId.Length);
+            }
+            if (instanceId != null && instanceId.Length == 6)
+            {
+                _instanceId = new byte[6];
+                Array.Copy(instanceId, _instanceId, instanceId.Length);
+            }
+            UpdatePayload();
+        }
+
         public UidEddystoneFrame(byte[] payload) : base(payload)
         {
             ParsePayload();
@@ -178,7 +195,27 @@ namespace UniversalBeaconLibrary.Beacon
         /// </summary>
         private void UpdatePayload()
         {
-            // TODO 
+            if (NamespaceId == null || NamespaceId.Length != 10 ||
+                InstanceId == null || InstanceId.Length != 6)
+            {
+                _payload = null;
+                return;
+            }
+
+            var header = BeaconFrameHelper.CreateEddystoneHeader(BeaconFrameHelper.EddystoneFrameType.UidFrameType);
+            using (var ms = new MemoryStream())
+            {
+                // Frame header
+                ms.Write(header, 0, header.Length);
+                // Ranging data
+                ms.WriteByte(RangingData);
+                // Namespace ID
+                ms.Write(NamespaceId, 0, NamespaceId.Length);
+                // Instance ID
+                ms.Write(InstanceId, 0, InstanceId.Length);
+                // Save to payload (to direct array to prevent re-parsing and a potential endless loop of updating and parsing)
+                _payload = ms.ToArray();
+            }
         }
         
         /// <summary>
