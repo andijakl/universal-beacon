@@ -20,7 +20,7 @@
     <PackageCertificateKeyFile>WindowsBeacons_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>4FFCF1D6E95643297B0B4E4E099276652876CBB6</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>FA80FC263A9F7FAF213C29C056675C1B1EC2BF1F</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>

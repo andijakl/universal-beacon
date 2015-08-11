@@ -23,6 +23,10 @@ using System.IO;
 
 namespace UniversalBeaconLibrary.Beacon
 {
+    /// <summary>
+    /// An Eddystone Telemetry frame, according to the Google Specification from
+    /// https://github.com/google/eddystone/tree/master/eddystone-tlm
+    /// </summary>
     public class TlmEddystoneFrame : BeaconFrameBase
     {
         private byte _version;
@@ -31,6 +35,10 @@ namespace UniversalBeaconLibrary.Beacon
         private uint _advertisementFrameCount;
         private uint _timeSincePowerUp;
 
+        /// <summary>
+        /// Version of the Eddystone Telemetry (TLM) frame.
+        /// Current and supported value is 0.
+        /// </summary>
         public byte Version
         {
             get { return _version; }
@@ -43,6 +51,10 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
+        /// <summary>
+        /// The current battery voltage in millivolts [mV].
+        /// If not supported (e.g., USB powerd beacon) = 0.
+        /// </summary>
         public ushort BatteryInMilliV
         {
             get { return _batteryInMilliV; }
@@ -55,6 +67,10 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
+        /// <summary>
+        /// Beacon temperature in degrees Celsius.
+        /// If not supported, -128 °C.
+        /// </summary>
         public float TemperatureInC
         {
             get { return _temperatureInC; }
@@ -67,6 +83,10 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
+        /// <summary>
+        /// Running count of advertisement frames of all types emitted
+        /// by the beacon since the last power up / reboot.
+        /// </summary>
         public uint AdvertisementFrameCount
         {
             get { return _advertisementFrameCount; }
@@ -79,6 +99,9 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
+        /// <summary>
+        /// Time in 0.1 second resolution since the last beacon power up / reboot.
+        /// </summary>
         public uint TimeSincePowerUp
         {
             get { return _timeSincePowerUp; }
@@ -97,6 +120,10 @@ namespace UniversalBeaconLibrary.Beacon
             ParsePayload();
         }
 
+        /// <summary>
+        /// Parse the current payload into the properties exposed by this class.
+        /// Has to be called if manually modifying the raw payload.
+        /// </summary>
         public void ParsePayload()
         {
             using (var ms = new MemoryStream(Payload, false))
@@ -171,18 +198,34 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
-
+        /// <summary>
+        /// Update the raw payload when properties have changed.
+        /// </summary>
         private void UpdatePayload()
         {
             // TODO
         }
 
+        /// <summary>
+        /// Update the information stored in this frame with the information from the other frame.
+        /// Useful for example when binding the UI to beacon information, as this will emit
+        /// property changed notifications whenever a value changes - which would not be possible if
+        /// you would overwrite the whole frame.
+        /// </summary>
+        /// <param name="otherFrame">Frame to use as source for updating the information in this beacon
+        /// frame.</param>
         public override void Update(BeaconFrameBase otherFrame)
         {
             base.Update(otherFrame);
             ParsePayload();
         }
 
+        /// <summary>
+        /// Check if the contents of this frame are generally valid.
+        /// Does not currently perform a deep analysis, but checks the header as well
+        /// as the frame length.
+        /// </summary>
+        /// <returns>True if the frame is a valid Eddystone TLM frame.</returns>
         public override bool IsValid()
         {
             if (!base.IsValid()) return false;

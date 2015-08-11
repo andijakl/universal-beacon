@@ -25,10 +25,20 @@ using System.Text;
 
 namespace UniversalBeaconLibrary.Beacon
 {
+    /// <summary>
+    /// An Eddystone URL frame, according to the Google Specification from
+    /// https://github.com/google/eddystone/tree/master/eddystone-url
+    /// </summary>
     public class UrlEddystoneFrame : BeaconFrameBase
     {
         private byte _rangingData;
 
+        /// <summary>
+        /// Tx power level - the received power level at 0 m, in dBm.
+        /// Values range from -100 to +20 dBM, with a resolution of 1 dBm.
+        /// Signed 8 bit integer according to:
+        /// https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.tx_power_level.xml
+        /// </summary>
         public byte RangingData
         {
             get { return _rangingData; }
@@ -42,6 +52,9 @@ namespace UniversalBeaconLibrary.Beacon
         }
 
         private string _completeUrl;
+        /// <summary>
+        /// The decoded complete URL contained in this advertisement frame.
+        /// </summary>
         public string CompleteUrl
         {
             get { return _completeUrl; }
@@ -54,6 +67,11 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
+        /// <summary>
+        /// The encoded URL may only contain graphic printable characters of the US-ASCII coded character set.
+        /// Other byte values contained in the URL that are found in this dictionary are expanded to the
+        /// complete URL, to save bytes in the overall encoded URL.
+        /// </summary>
         private static readonly Dictionary<byte, string> UrlCodeDictionary = new Dictionary<byte, string>
         {
             {0, ".com/"},
@@ -72,6 +90,11 @@ namespace UniversalBeaconLibrary.Beacon
             {13, ".gov"},
         };
 
+        /// <summary>
+        /// The first byte of the URL data contains the URL scheme.
+        /// This byte is mandatory and only the four values contained in this dictionary
+        /// are currently allowed in the specification.
+        /// </summary>
         private static readonly Dictionary<byte, string> UrlSchemeDictionary = new Dictionary<byte, string>
         {
             {0, "http://www."},
@@ -92,6 +115,10 @@ namespace UniversalBeaconLibrary.Beacon
             ParsePayload();
         }
 
+        /// <summary>
+        /// Parse the current payload into the properties exposed by this class.
+        /// Has to be called if manually modifying the raw payload.
+        /// </summary>
         public void ParsePayload()
         {
             if (!IsValid()) return;
@@ -118,6 +145,9 @@ namespace UniversalBeaconLibrary.Beacon
             //Debug.WriteLine("Eddystone URL Frame: Url = " + CompleteUrl);
         }
 
+        /// <summary>
+        /// Update the raw payload when properties have changed.
+        /// </summary>
         private void UpdatePayload()
         {
             if (string.IsNullOrEmpty(CompleteUrl))
@@ -149,6 +179,13 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
+        /// <summary>
+        /// Return the URL scheme (starting characters of the URL) as encoded byte.
+        /// Returns null if the scheme is not found in the definition, which is not
+        /// valid for the Eddystone URL format.
+        /// </summary>
+        /// <param name="url">URL to analyze.</param>
+        /// <returns>Byte to use for the encoded URL.</returns>
         private static byte? EncodeUrlScheme(string url)
         {
             foreach (var curScheme in UrlSchemeDictionary)
@@ -161,6 +198,13 @@ namespace UniversalBeaconLibrary.Beacon
             return null;
         }
 
+        /// <summary>
+        /// Parse the provided URL starting at the provided position 
+        /// (after the URL scheme) and write the encoded data into the provided stream.
+        /// </summary>
+        /// <param name="url">URL to encode.</param>
+        /// <param name="pos">Start position in the URL string, after the URL scheme.</param>
+        /// <param name="ms">Memory stream to encode the data to.</param>
         private void EncodeUrlToStream(string url, int pos, Stream ms)
         {
             // Encode the rest of the URL string
@@ -183,6 +227,13 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
+        /// <summary>
+        /// Check the if the provided URL string starts with one of the
+        /// URL codes from the dictionary. 
+        /// </summary>
+        /// <param name="url">URL where the beginning should be analyzed.</param>
+        /// <returns>Returns the encoded byte value if the beginning of the URL
+        /// string is present in the dictionary, or null if not.</returns>
         private byte? FindUrlCode(string url)
         {
             var dictPos = -1;
@@ -205,7 +256,14 @@ namespace UniversalBeaconLibrary.Beacon
             return null;
         }
 
-
+        /// <summary>
+        /// Decode the provided URL into a normal string.
+        /// Does not decode the URL scheme, use the extra method for that.
+        /// </summary>
+        /// <param name="rawUrl">Raw encoded URL to expand into a standard string.</param>
+        /// <param name="startAtArrayPos">Start analyzing the byte array at this position
+        /// (after the scheme)</param>
+        /// <returns>Decoded URL.</returns>
         private static string DecodeUrl(byte[] rawUrl, int startAtArrayPos)
         {
             if (rawUrl.Length < startAtArrayPos) return null;
@@ -219,17 +277,36 @@ namespace UniversalBeaconLibrary.Beacon
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Get the URL scheme as string for the specified scheme prefix byte.
+        /// </summary>
+        /// <param name="urlSchemePrefix">URL prefix byte to analyze.</param>
+        /// <returns>Decoded URL scheme as string.</returns>
         public string UrlSchemePrefixAsString(byte urlSchemePrefix)
         {
             return UrlSchemeDictionary.ContainsKey(urlSchemePrefix) ? UrlSchemeDictionary[urlSchemePrefix] : null;
         }
 
+        /// <summary>
+        /// Update the information stored in this frame with the information from the other frame.
+        /// Useful for example when binding the UI to beacon information, as this will emit
+        /// property changed notifications whenever a value changes - which would not be possible if
+        /// you would overwrite the whole frame.
+        /// </summary>
+        /// <param name="otherFrame">Frame to use as source for updating the information in this beacon
+        /// frame.</param>
         public override void Update(BeaconFrameBase otherFrame)
         {
             base.Update(otherFrame);
             ParsePayload();
         }
 
+        /// <summary>
+        /// Check if the contents of this frame are generally valid.
+        /// Does not currently perform a deep analysis, but checks the header as well
+        /// as the frame length.
+        /// </summary>
+        /// <returns>True if the frame is a valid Eddystone URL frame.</returns>
         public override bool IsValid()
         {
             if (!base.IsValid()) return false;

@@ -25,11 +25,20 @@ using UniversalBeaconLibrary.Annotations;
 
 namespace UniversalBeaconLibrary.Beacon
 {
+    /// <summary>
+    /// Abstract class for every Bluetooth Beacon frame.
+    /// Common is that every frame has a payload / data, which derived classes can
+    /// further parse and make it more accessible through custom properties depending
+    /// on the beacon specification.
+    /// </summary>
     public abstract class BeaconFrameBase : INotifyPropertyChanged
     {
         protected byte[] _payload;
         
         /// <summary>
+        /// The raw byte payload of this beacon frame.
+        /// Derived classes can add additional functionality to parse or update the payload.
+        /// 
         /// Note: directly setting the payload does not lead to the class re-parsing the payload
         /// into its instance variables (if applicable in the derived class).
         /// Call ParsePayload() manually from the derived class if you wish to enable this behavior.

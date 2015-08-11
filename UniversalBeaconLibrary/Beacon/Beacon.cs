@@ -18,10 +18,8 @@
 // limitations under the License. 
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -30,6 +28,14 @@ using UniversalBeaconLibrary.Annotations;
 
 namespace UniversalBeaconLibrary.Beacon
 {
+    /// <summary>
+    /// Represents a single unique beacon that has a specified Bluetooth MAC address.
+    /// Construction and updates are usually handled by the BeaconManager.
+    /// 
+    /// Construct this class based on a Bluetooth advertisement received from the
+    /// Windows Bluetooth API. When further advertisements are received for this beacon,
+    /// call its UpdateBeacon() method to update the frames.
+    /// </summary>
     public class Beacon : INotifyPropertyChanged
     {
         private readonly Guid _eddystoneGuid = new Guid("0000FEAA-0000-1000-8000-00805F9B34FB");
@@ -53,11 +59,25 @@ namespace UniversalBeaconLibrary.Beacon
             iBeacon
         }
 
+        /// <summary>
+        /// Type of this beacon.
+        /// Defines how the beacon will parse the individual frames to extract information from the
+        /// advertisements.
+        /// </summary>
         public BeaconTypeEnum BeaconType { get; set; } = BeaconTypeEnum.Unknown;
 
+        /// <summary>
+        /// List of all the different frames that have been observed for this beacon so far.
+        /// If a new frame with the same type is collected, it replaces the previous frame.
+        /// </summary>
         public ObservableCollection<BeaconFrameBase> BeaconFrames { get; set; } = new ObservableCollection<BeaconFrameBase>();
 
         private short _rssi;
+        /// <summary>
+        /// Raw signal strength in dBM.
+        /// If a new advertisement is received for the same beacon (with the same
+        /// Bluetooth MAC address), always the latest signal strength is recorded.
+        /// </summary>
         public short Rssi
         {
             get { return _rssi; }
@@ -70,6 +90,11 @@ namespace UniversalBeaconLibrary.Beacon
         }
 
         private ulong _bluetoothAddress;
+        /// <summary>
+        /// The Bluetooth MAC address.
+        /// Used to cluster the different received Bluetooth advertisements and to
+        /// collect multiple advertisements for unique beacons.
+        /// </summary>
         public ulong BluetoothAddress
         {
             get { return _bluetoothAddress; }
@@ -82,6 +107,9 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
+        /// <summary>
+        /// Retrieves the Bluetooth MAC address formatted as a hex string.
+        /// </summary>
         public string BluetoothAddressAsString
         {
             get
@@ -91,6 +119,9 @@ namespace UniversalBeaconLibrary.Beacon
         }
 
         private DateTimeOffset _timestamp;
+        /// <summary>
+        /// Timestamp when the last advertisement was received for this beacon.
+        /// </summary>
         public DateTimeOffset Timestamp
         {
             get { return _timestamp; }
@@ -102,17 +133,34 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
+        /// <summary>
+        /// Construct a new Bluetooth beacon based on the received advertisement.
+        /// Tries to find out if it's a known type, and then parses the contents accordingly.
+        /// </summary>
+        /// <param name="btAdv">Bluetooth advertisement to parse, as received from
+        /// the Windows Bluetooth LE API.</param>
         public Beacon(BluetoothLEAdvertisementReceivedEventArgs btAdv)
         {
             BluetoothAddress = btAdv.BluetoothAddress;
             UpdateBeacon(btAdv);
         }
 
+        /// <summary>
+        /// Manually create a new Beacon instance.
+        /// </summary>
+        /// <param name="beaconType">Beacon type to use for this manually constructed beacon.</param>
         public Beacon(BeaconTypeEnum beaconType)
         {
             BeaconType = beaconType;
         }
 
+        /// <summary>
+        /// Received a new advertisement for this beacon.
+        /// If the Bluetooth address of the new advertisement matches this beacon,
+        /// it will parse the contents of the advertisement and extract known frames.
+        /// </summary>
+        /// <param name="btAdv">Bluetooth advertisement to parse, as received from
+        /// the Windows Bluetooth LE API.</param>
         public void UpdateBeacon(BluetoothLEAdvertisementReceivedEventArgs btAdv)
         {
             if (btAdv.BluetoothAddress != BluetoothAddress)
@@ -193,8 +241,6 @@ namespace UniversalBeaconLibrary.Beacon
                     }
                 }
             }
-
-
         }
 
         private void ParseEddystoneData(BluetoothLEAdvertisementReceivedEventArgs btAdv)
@@ -212,7 +258,7 @@ namespace UniversalBeaconLibrary.Beacon
                 //                   0x16 = 0xAA 0xFE [type] [data]
                 if (dataSection.DataType == 0x16)
                 {
-                    var beaconFrame = dataSection.Data.ToArray().CreateBeaconFrame();
+                    var beaconFrame = dataSection.Data.ToArray().CreateEddystoneBeaconFrame();
                     if (beaconFrame == null) continue;
 
                     var found = false;

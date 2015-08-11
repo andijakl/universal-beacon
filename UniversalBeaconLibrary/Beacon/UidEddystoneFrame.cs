@@ -24,10 +24,20 @@ using System.Numerics;
 
 namespace UniversalBeaconLibrary.Beacon
 {
+    /// <summary>
+    /// An Eddystone UID frame, according to the Google Specification from
+    /// https://github.com/google/eddystone/tree/master/eddystone-uid
+    /// </summary>
     public class UidEddystoneFrame : BeaconFrameBase
     {
         private byte _rangingData;
 
+        /// <summary>
+        /// Tx power level - the received power level at 0 m, in dBm.
+        /// Values range from -100 to +20 dBM, with a resolution of 1 dBm.
+        /// Signed 8 bit integer according to:
+        /// https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.tx_power_level.xml
+        /// </summary>
         public byte RangingData
         {
             get { return _rangingData; }
@@ -42,6 +52,12 @@ namespace UniversalBeaconLibrary.Beacon
 
         private byte[] _namespaceId;
 
+        /// <summary>
+        /// 10-byte namespace, intended to ensure ID uniqueness accross multiple
+        /// Eddystone implementers.
+        /// For hints how to construct the namespace ID, see:
+        /// https://github.com/google/eddystone/tree/master/eddystone-uid
+        /// </summary>
         public byte[] NamespaceId
         {
             get { return _namespaceId; }
@@ -62,10 +78,19 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
+        /// <summary>
+        /// Interprets the namespace ID as number.
+        /// As it is 10 bytes, returned as BigInteger.
+        /// </summary>
         public BigInteger NamespaceIdAsNumber => new BigInteger(NamespaceId.Reverse().ToArray());
 
         private byte[] _instanceId;
 
+        /// <summary>
+        /// 6-byte instance ID of the specific beacon belonging to a certain
+        /// namespace.
+        /// The ID can be assigned by your app in any custom way.
+        /// </summary>
         public byte[] InstanceId
         {
             get { return _instanceId; }
@@ -85,6 +110,9 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
+        /// <summary>
+        /// Return the instance ID as number.
+        /// </summary>
         public ulong InstanceIdAsNumber
         {
             get
@@ -101,6 +129,10 @@ namespace UniversalBeaconLibrary.Beacon
             ParsePayload();
         }
 
+        /// <summary>
+        /// Parse the current payload into the properties exposed by this class.
+        /// Has to be called if manually modifying the raw payload.
+        /// </summary>
         public void ParsePayload()
         {
             if (!IsValid()) return;
@@ -141,16 +173,34 @@ namespace UniversalBeaconLibrary.Beacon
             //    + RangingData + ", NS = " + BitConverter.ToString(NamespaceId) + ", Instance = " + BitConverter.ToString(InstanceId));
         }
 
+        /// <summary>
+        /// Update the raw payload when properties have changed.
+        /// </summary>
         private void UpdatePayload()
         {
             // TODO 
         }
+        
+        /// <summary>
+        /// Update the information stored in this frame with the information from the other frame.
+        /// Useful for example when binding the UI to beacon information, as this will emit
+        /// property changed notifications whenever a value changes - which would not be possible if
+        /// you would overwrite the whole frame.
+        /// </summary>
+        /// <param name="otherFrame">Frame to use as source for updating the information in this beacon
+        /// frame.</param>
         public override void Update(BeaconFrameBase otherFrame)
         {
             base.Update(otherFrame);
             ParsePayload();
         }
 
+        /// <summary>
+        /// Check if the contents of this frame are generally valid.
+        /// Does not currently perform a deep analysis, but checks the header as well
+        /// as the frame length.
+        /// </summary>
+        /// <returns>True if the frame is a valid Eddystone UID frame.</returns>
         public override bool IsValid()
         {
             if (!base.IsValid()) return false;
