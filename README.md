@@ -161,7 +161,10 @@ To try the Windows 10 example app, download the complete library package from th
 
 ## Version History
 
-### 1.0.0.0 - August 2015
+### 1.1.0 - August 2015
+* Manually construct Eddystone TLM & UID frames
+
+### 1.0.0 - August 2015
 * Initial release
 * Works with received Bluetooth advertisements from the Windows 10 Bluetooth LE API
 * Combines individual received frames based on the Bluetooth MAC address to associate them with unique beacons
