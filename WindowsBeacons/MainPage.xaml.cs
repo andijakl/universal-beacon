@@ -84,9 +84,10 @@ namespace WindowsBeacons
             // Simulate beacon info
 //#if DEBUG
 //            var eddystoneBeacon = new Beacon(Beacon.BeaconTypeEnum.Eddystone);
-//            eddystoneBeacon.BeaconFrames.Add(new UidEddystoneFrame(220, 
-//                new byte[] {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A},
-//                new byte[] {0x01, 0x02, 0x03, 0x04, 0x05, 0x06}));
+//            eddystoneBeacon.BeaconFrames.Add(new TlmEddystoneFrame(0, 3100, (float)25.5, 2000, 1000));
+//            eddystoneBeacon.BeaconFrames.Add(new UidEddystoneFrame(220,
+//                new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A },
+//                new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 }));
 //            eddystoneBeacon.BeaconFrames.Add(new UrlEddystoneFrame(220, "http://www.tieto.at"));
 //            eddystoneBeacon.Rssi = -49;
 //            eddystoneBeacon.BluetoothAddress = 0x0000e27ef189f6c4; // 3

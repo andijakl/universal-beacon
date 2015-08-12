@@ -20,6 +20,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace UniversalBeaconLibrary.Beacon
 {
@@ -69,6 +70,7 @@ namespace UniversalBeaconLibrary.Beacon
 
         /// <summary>
         /// Beacon temperature in degrees Celsius.
+        /// Note: does not have full float precision, not more than 2 decimal places.
         /// If not supported, -128 °C.
         /// </summary>
         public float TemperatureInC
@@ -114,6 +116,17 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
+        public TlmEddystoneFrame(byte version, ushort batteryInMv, float temperatureInC,
+            uint advertisementFrameCount, uint timeSincePowerUp)
+        {
+            _version = version;
+            _batteryInMilliV = batteryInMv;
+            _temperatureInC = temperatureInC;
+            _advertisementFrameCount = advertisementFrameCount;
+            _timeSincePowerUp = timeSincePowerUp;
+            UpdatePayload();
+        }
+
 
         public TlmEddystoneFrame(byte[] payload) : base(payload)
         {
@@ -133,7 +146,7 @@ namespace UniversalBeaconLibrary.Beacon
                     // Skip frame header
                     ms.Position = BeaconFrameHelper.EddystoneHeaderSize;
 
-                    // At present the value must be  0x00 
+                    // At present the value must be 0x00 
                     var newVersion = reader.ReadByte();
                     if (newVersion != Version)
                     {
@@ -144,7 +157,8 @@ namespace UniversalBeaconLibrary.Beacon
                     // Battery voltage is the current battery charge in millivolts, expressed as 1 mV per bit.
                     // If not supported (for example in a USB-powered beacon) the value should be zeroed.
                     var batteryBytes = reader.ReadBytes(2);
-                    Array.Reverse(batteryBytes);
+                    if (BitConverter.IsLittleEndian)
+                        Array.Reverse(batteryBytes);
                     var newBatteryInMilliV = BitConverter.ToUInt16(batteryBytes, 0);
                     if (BatteryInMilliV != newBatteryInMilliV)
                     {
@@ -159,7 +173,8 @@ namespace UniversalBeaconLibrary.Beacon
                     // #define float2fix(a) ((int)((a)*256.0))         //Convert float to fix. a is a float
                     // #define fix2float(a) ((float)(a)/256.0)         //Convert fix to float. a is an int 
                     var temperatureBytes = reader.ReadBytes(2);
-                    Array.Reverse(temperatureBytes);
+                    if (BitConverter.IsLittleEndian)
+                        Array.Reverse(temperatureBytes);
                     var newTemperatureInC = BitConverter.ToInt16(temperatureBytes, 0) / (float)256.0;
                     if (Math.Abs(newTemperatureInC - TemperatureInC) > 0.0001 )
                     {
@@ -172,7 +187,8 @@ namespace UniversalBeaconLibrary.Beacon
                     // performance metrics that scale per broadcast frame.
                     // If this value is reset (e.g.on reboot), the current time field must also be reset.
                     var advCntBytes = reader.ReadBytes(4);
-                    Array.Reverse(advCntBytes);
+                    if (BitConverter.IsLittleEndian)
+                        Array.Reverse(advCntBytes);
                     var newAdvertisementFrameCount = BitConverter.ToUInt32(advCntBytes, 0);
                     if (newAdvertisementFrameCount != AdvertisementFrameCount)
                     {
@@ -183,7 +199,8 @@ namespace UniversalBeaconLibrary.Beacon
                     // SEC_CNT is a 0.1 second resolution counter that represents time since beacon power - 
                     // up or reboot. If this value is reset (e.g.on a reboot), the ADV count field must also be reset.
                     var secCntBytes = reader.ReadBytes(4);
-                    Array.Reverse(secCntBytes);
+                    if (BitConverter.IsLittleEndian)
+                        Array.Reverse(secCntBytes);
                     var newTimeSincePowerUp = BitConverter.ToUInt32(secCntBytes, 0);
                     if (newTimeSincePowerUp != TimeSincePowerUp)
                     {
@@ -203,7 +220,38 @@ namespace UniversalBeaconLibrary.Beacon
         /// </summary>
         private void UpdatePayload()
         {
-            // TODO
+            var header = BeaconFrameHelper.CreateEddystoneHeader(BeaconFrameHelper.EddystoneFrameType.TelemetryFrameType);
+            using (var ms = new MemoryStream())
+            {
+                // Frame header
+                ms.Write(header, 0, header.Length);
+                // Version
+                ms.WriteByte(Version);
+                // Battery
+                var batBytes = BitConverter.GetBytes(BatteryInMilliV);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(batBytes);
+                ms.Write(batBytes, 0, batBytes.Length);
+                // Temperature
+                // #define float2fix(a) ((int)((a)*256.0))         //Convert float to fix. a is a float
+                var temp = ((int)((TemperatureInC) * 256.0));
+                var tempBytes = BitConverter.GetBytes(temp);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(tempBytes);
+                ms.Write(tempBytes, 2, 2); 
+                // ADV_CNT
+                var advCntBytes = BitConverter.GetBytes(AdvertisementFrameCount);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(advCntBytes);
+                ms.Write(advCntBytes, 0, 4);
+                // SEC_CNT
+                var secCntBytes = BitConverter.GetBytes(TimeSincePowerUp);
+                if (BitConverter.IsLittleEndian)
+                    Array.Reverse(secCntBytes);
+                ms.Write(secCntBytes, 0, 4);
+                // Save to payload (to direct array to prevent re-parsing and a potential endless loop of updating and parsing)
+                _payload = ms.ToArray();
+            }
         }
 
         /// <summary>
