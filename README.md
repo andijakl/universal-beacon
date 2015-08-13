@@ -155,6 +155,8 @@ If you want to use the Universal Beacon Library from your own app, the easiest o
 2. Search "Online" for "Universal Bluetooth Beacon Library"
 3. Install the library.
 
+Alternatively, use the NuGet Package Manager console as described here: https://www.nuget.org/packages/UniversalBeaconLibrary
+
 To try the Windows 10 example app, download the complete library package from this site.
 
 
@@ -193,6 +195,9 @@ http://www.tieto.com/
 
 Library homepage on GitHub:
 https://github.com/andijakl/universal-beacon
+
+Library package on NuGet:
+https://www.nuget.org/packages/UniversalBeaconLibrary
 
 You might also be interested in the NFC / NDEF library:
 https://github.com/andijakl/ndef-nfc
