@@ -1,6 +1,6 @@
 # Universal Beacon Library for Windows 10
 
-Support for Bluetooth Beacons for the Universal Windows Platform (Windows 10), including the Eddystone specification.
+Support for Bluetooth Beacons for the Universal Windows Platform (Windows 10), including the Eddystone™ Smart beacon format.
 
 Directly use the received Bluetooth LE Advertisement notifications from the Windows 10 base system and let the library take care of the rest for you. It extracts, combines and updates unique beacons, associated individual frames to the beacons and parses their contents - e.g., the beacon IDs, URLs or telemetry information like temperature or battery voltage.
 
@@ -24,7 +24,7 @@ As a developer, you only have to feed the received Bluetooth advertisements into
 
 Clustering is achieved through the Bluetooth address (MAC): the constant and regular advertisements of multiple beacons are matched to unique beacons.
 
-The next step is analyzing the conents of the advertisement payloads. The library recognizes Apple iBeacons and fully parses the open [Google Eddystone specification](https://github.com/google/eddystone), including all three frame types that have been defined:
+The next step is analyzing the conents of the advertisement payloads. The library recognizes Apple iBeacons and fully parses the open [Eddystone specification](https://github.com/google/eddystone), including all three frame types that have been defined:
 
 * UID frames
 * URL frames
@@ -185,7 +185,7 @@ https://github.com/andijakl/universal-beacon/issues
 
 ## License & Related Information
 
-The library is released under the Apache license and is partly based on the [Google Eddystone](https://github.com/google/eddystone) specification, which is also released under Apache license - see the LICENSE file for details.
+The library is released under the Apache license and is partly based on the [Eddystone™](https://github.com/google/eddystone) specification, which is also released under Apache license - see the LICENSE file for details.
 
 The example application is licensed under the GPL v3 license - see LICENSE.GPL for details.
 

@@ -169,7 +169,7 @@
     <value>Instance ID: </value>
   </data>
   <data name="Instructions.Text" xml:space="preserve">
-    <value>Continuously scans for Bluetooth Beacons close to your device. If a beacon is found, its message is parsed - currently for the Google Eddystone format.
+    <value>Continuously scans for Bluetooth Beacons close to your device. If a beacon is found, its message is parsed - currently for Eddystone™, an open Bluetooth® Smart beacon format from Google.
 
 Make sure your device supports Bluetooth Smart (LE) and that Bluetooth is activated in your device settings!</value>
   </data>
@@ -213,7 +213,7 @@ Make sure your device supports Bluetooth Smart (LE) and that Bluetooth is activa
     <value>Terms &amp; Conditions</value>
   </data>
   <data name="TermsText.Text" xml:space="preserve">
-    <value>This application is an open source sample for the universal beacon library. Eddystone is an open source specification by Google, released under Apache License. iBeacon is a Trademark by Apple Inc.</value>
+    <value>This application is an open source sample for the universal beacon library. Eddystone is an open Bluetooth® Smart beacon format from Google, released under Apache License. iBeacon is a Trademark by Apple Inc.</value>
   </data>
   <data name="TietoComButton.Content" xml:space="preserve">
     <value>Tieto.com</value>
