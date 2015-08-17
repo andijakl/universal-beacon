@@ -28,7 +28,6 @@
     </Application>
   </Applications>
   <Capabilities>
-    <DeviceCapability Name="proximity" />
     <DeviceCapability Name="bluetooth" />
   </Capabilities>
 </Package>
