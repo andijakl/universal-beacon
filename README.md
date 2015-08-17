@@ -4,6 +4,8 @@ Support for Bluetooth® Beacons for the Universal Windows Platform (Windows 10),
 
 Directly use the received Bluetooth Smart Advertisement notifications from the Windows 10 base system and let the library take care of the rest for you. It extracts, combines and updates unique beacons, associated individual frames to the beacons and parses their contents - e.g., the beacon IDs, URLs or telemetry information like temperature or battery voltage.
 
+[NuGet Library Download](https://www.nuget.org/packages/UniversalBeaconLibrary) | [Windows 10 Example App Download](https://www.microsoft.com/store/apps/9NBLGGH1Z24K)
+
 
 
 ## Background - Bluetooth Beacons
