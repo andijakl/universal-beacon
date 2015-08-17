@@ -63,6 +63,8 @@ The included Windows 10 example app continuously scans for Bluetooth LE advertis
 
 The app has been tested on Windows 10 tablets and phones and requires Bluetooth LE / Smart capable hardware. Make sure your device has Bluetooth activated (in Windows settings and also in hardware in case your device allows turning off bluetooth using a key combination) and is not in airplane mode.
 
+Download and test the example app from the Windows 10 store: https://www.microsoft.com/store/apps/9NBLGGH1Z24K
+
 
 
 ## Usage example (C#)
@@ -176,7 +178,7 @@ To try the Windows 10 example app, download the complete library package from th
 
 ## Status & Roadmap
 
-The Universal Bluetooth Beacon library is classified as stable release and is in use in several projects, most importantly Bluetooth Beacon Interactor for Windows 10.
+The Universal Bluetooth Beacon library is classified as stable release and is in use in several projects, most importantly [Bluetooth Beacon Interactor](https://www.microsoft.com/store/apps/9NBLGGH1Z24K) for Windows 10.
 
 Any open issues as well as planned features are tracked online:
 https://github.com/andijakl/universal-beacon/issues
