@@ -47,7 +47,6 @@
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
-            <Setter Property="Content" Value="&#xE11B;" />
             <Setter Property="AutomationProperties.Name" Value="Menu" />
             <Setter Property="UseSystemFocusVisuals" Value="True"/>
             <Setter Property="Template">
