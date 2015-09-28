@@ -226,12 +226,10 @@ namespace WindowsBeacons
             MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void ClearButton_Tapped(object sender, RoutedEventArgs e)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            ClearButton.IsChecked = false;
+            _beaconManager?.BluetoothBeacons.Clear();
         }
 
         private void StatusMsgArea_Tapped(object sender, TappedRoutedEventArgs e)
@@ -244,6 +242,15 @@ namespace WindowsBeacons
                 SetStatusOutput(_resourceLoader.GetString("WatchingForBeacons"));
             }
         }
-#endregion
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
     }
 }
