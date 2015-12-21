@@ -4,6 +4,8 @@ Support for Bluetooth® Beacons for the Universal Windows Platform (Windows 10),
 
 Directly use the received Bluetooth Smart Advertisement notifications from the Windows 10 base system and let the library take care of the rest for you. It extracts, combines and updates unique beacons, associated individual frames to the beacons and parses their contents - e.g., the beacon IDs, URLs or telemetry information like temperature or battery voltage.
 
+[NuGet Library Download](https://www.nuget.org/packages/UniversalBeaconLibrary) | [Windows 10 Example App Download](https://www.microsoft.com/store/apps/9NBLGGH1Z24K)
+
 
 
 ## Background - Bluetooth Beacons
@@ -62,6 +64,8 @@ Instead of having to implement the Eddystone specification yourself and worry ab
 The included Windows 10 example app continuously scans for Bluetooth LE advertisements. It associates these with known or new Bluetooth MAC addresses to identify beacons. The individual advertisement frames are then parsed for known frame types - which are currently the three frame types defined by the Google Eddystone specification.
 
 The app has been tested on Windows 10 tablets and phones and requires Bluetooth LE / Smart capable hardware. Make sure your device has Bluetooth activated (in Windows settings and also in hardware in case your device allows turning off bluetooth using a key combination) and is not in airplane mode.
+
+Download and test the example app from the Windows 10 store: https://www.microsoft.com/store/apps/9NBLGGH1Z24K
 
 
 
@@ -176,7 +180,7 @@ To try the Windows 10 example app, download the complete library package from th
 
 ## Status & Roadmap
 
-The Universal Bluetooth Beacon library is classified as stable release and is in use in several projects, most importantly Bluetooth Beacon Interactor for Windows 10.
+The Universal Bluetooth Beacon library is classified as stable release and is in use in several projects, most importantly [Bluetooth Beacon Interactor](https://www.microsoft.com/store/apps/9NBLGGH1Z24K) for Windows 10.
 
 Any open issues as well as planned features are tracked online:
 https://github.com/andijakl/universal-beacon/issues
