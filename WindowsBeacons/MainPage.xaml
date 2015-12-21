@@ -7,7 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converter="using:WindowsBeacons.Converter"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    RequestedTheme="Light">
 
 
     <Page.Resources>
@@ -298,7 +299,7 @@
         </VisualStateManager.VisualStateGroups>
 
         <SplitView.Content>
-            <Grid x:Name="ContentGrid" >
+            <Grid x:Name="ContentGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                 <!--Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"-->
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
