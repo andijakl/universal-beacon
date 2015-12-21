@@ -21,6 +21,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.ApplicationInsights;
 
 namespace WindowsBeacons
 {
@@ -35,6 +36,7 @@ namespace WindowsBeacons
         /// </summary>
         public App()
         {
+            WindowsAppInitializer.InitializeAsync(); // Application Insights
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
