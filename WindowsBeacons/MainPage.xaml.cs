@@ -17,6 +17,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Windows.ApplicationModel.Resources;
@@ -70,7 +71,7 @@ namespace WindowsBeacons
 
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             DataContext = this;
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
 
@@ -207,7 +208,7 @@ namespace WindowsBeacons
 
 #endregion
 
-        #region UI
+#region UI
 
         private async void SetStatusOutput(string newStatus)
         {
@@ -250,6 +251,43 @@ namespace WindowsBeacons
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
+        #region Tools
+        /// <summary>
+        /// Convert minus-separated hex string to a byte array. Format example: "4E-66-63"
+        /// </summary>
+        /// <param name="hex"></param>
+        /// <returns></returns>
+        public static byte[] HexStringToByteArray(string hex)
+        {
+            // Remove all space characters
+            var hexPure = hex.Replace("-", "");
+            if (hexPure.Length % 2 != 0)
+            {
+                // No even length of the string
+                throw new Exception("No valid hex string");
+            }
+            var numberChars = hexPure.Length / 2;
+            var bytes = new byte[numberChars];
+            var sr = new StringReader(hexPure);
+            try
+            {
+                for (var i = 0; i < numberChars; i++)
+                {
+                    bytes[i] = Convert.ToByte(new string(new[] { (char)sr.Read(), (char)sr.Read() }), 16);
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("No valid hex string");
+            }
+            finally
+            {
+                sr.Dispose();
+            }
+            return bytes;
         }
         #endregion
     }

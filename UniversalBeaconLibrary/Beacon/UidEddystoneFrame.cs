@@ -213,6 +213,9 @@ namespace UniversalBeaconLibrary.Beacon
                 ms.Write(NamespaceId, 0, NamespaceId.Length);
                 // Instance ID
                 ms.Write(InstanceId, 0, InstanceId.Length);
+                // RFU (2 bytes, must be 0x00)
+                ms.WriteByte(0x00);
+                ms.WriteByte(0x00);
                 // Save to payload (to direct array to prevent re-parsing and a potential endless loop of updating and parsing)
                 _payload = ms.ToArray();
             }
@@ -249,7 +252,10 @@ namespace UniversalBeaconLibrary.Beacon
             // 1 byte ranging data
             // 10 bytes namespace id
             // 6 bytes instance id
-            return Payload.Length == BeaconFrameHelper.EddystoneHeaderSize + 17;
+            // 2 bytes RFU - have to be present according to specfication, but are
+            //               sometimes omitted in practice
+            return Payload.Length == BeaconFrameHelper.EddystoneHeaderSize + 17 ||
+                Payload.Length == BeaconFrameHelper.EddystoneHeaderSize + 17 + 2;
 
         }
     }

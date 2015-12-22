@@ -204,7 +204,7 @@ Make sure your device supports Bluetooth Smart (LE) and that Bluetooth is activa
     <value>Status: </value>
   </data>
   <data name="StoppedWatchingBeacons" xml:space="preserve">
-    <value>Stopped watching for beacons. Tap to restart.</value>
+    <value>Stopped watching for beacons. Tap here to restart.</value>
   </data>
   <data name="TemperatureInC.Text" xml:space="preserve">
     <value>Temperature [°C]: </value>
@@ -243,6 +243,6 @@ Make sure your device supports Bluetooth Smart (LE) and that Bluetooth is activa
     <value>Watching for Bluetooth Beacons</value>
   </data>
   <data name="WatchingSuccessfullyStopped" xml:space="preserve">
-    <value>Successfully stopped watching for Bluetooth Beacons.</value>
+    <value>Successfully stopped watching for Bluetooth Beacons. Tap here to restart.</value>
   </data>
 </root>
