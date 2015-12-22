@@ -167,6 +167,15 @@ To try the Windows 10 example app, download the complete library package from th
 
 ## Version History
 
+### 1.4.0 - December 2015
+* Fix black window background color in example app on latest Windows 10 Mobile version
+
+### 1.3.0 - September 2015
+* Example app allows clearing visible information
+
+### 1.2.0 - August 2015
+* Improvements in naming and Eddystone references
+
 ### 1.1.0 - August 2015
 * Manually construct Eddystone TLM & UID frames
 
