@@ -163,6 +163,8 @@ namespace UniversalBeaconLibrary.Beacon
         /// the Windows Bluetooth LE API.</param>
         public void UpdateBeacon(BluetoothLEAdvertisementReceivedEventArgs btAdv)
         {
+            if (btAdv == null) return;
+
             if (btAdv.BluetoothAddress != BluetoothAddress)
             {
                 throw new BeaconException("Bluetooth address of beacon does not match - not updating beacon information");
