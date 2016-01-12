@@ -24,6 +24,7 @@ namespace WindowsBeacons.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
+            // TODO Translate and get from resource file
             if (value is UnknownBeaconFrame)
                 return "Unknown Frame";
             if (value is TlmEddystoneFrame)

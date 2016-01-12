@@ -101,6 +101,9 @@
     </Content>
     <None Include="project.json" />
     <None Include="Service References\Application Insights\ConnectedService.json" />
+    <PRIResource Include="Strings\de-DE\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
     <None Include="WindowsBeacons_StoreKey.pfx" />
     <None Include="WindowsBeacons_TemporaryKey.pfx" />
   </ItemGroup>

@@ -167,11 +167,14 @@ To try the Windows 10 example app, download the complete library package from th
 
 ## Version History
 
+### 1.6.0 - January 2016
+* Added translation to German
+* Fix crash when a Bluetooth Beacon with no further data is found.
+
 ### 1.5.0 - December 2015
 * Allow last two bytes of the Eddystone UID frame to be 0x00 0x00 for RFU, according to the specification.
 Some beacons do not send these bytes; the library now allows both variants. When creating a UID record,
 the library will now add the two additional bytes to conform to the spec.
-
 
 ### 1.4.0 - December 2015
 * Fix black window background color in example app on latest Windows 10 Mobile version

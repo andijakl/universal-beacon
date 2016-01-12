@@ -118,60 +118,60 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AbortedWatchingBeacons" xml:space="preserve">
-    <value>Watching for beacons has been aborted, e.g., because Bluetooth is / was deactivated. Tap to try restarting.</value>
+    <value>Die Suche nach Bluetooth Beacons wurde abgebrochen, z.B. weil Bluetooth deaktiviert war oder wurde. Tippe auf diese Nachricht um einen neuen Versuch zu starten.</value>
   </data>
   <data name="About.Text" xml:space="preserve">
-    <value>About</value>
+    <value>Über</value>
   </data>
   <data name="AboutText1.Text" xml:space="preserve">
-    <value>Developed by Andreas Jakl, Tieto Corporation.</value>
+    <value>Entwickelt von Andreas Jakl, Tieto Corporation.</value>
   </data>
   <data name="AboutText2.Text" xml:space="preserve">
-    <value>Download the open source universal beacon library for Windows 10 from:</value>
+    <value>Lade das Open Source Universal Beacon Library für Windows 10 herunter:</value>
   </data>
   <data name="AdvertisementFrameCount.Text" xml:space="preserve">
-    <value>Advertisement frame count: </value>
+    <value>Anzahl der Advertisement frames: </value>
   </data>
   <data name="BatteryInMilliV.Text" xml:space="preserve">
-    <value>Battery [mV]: </value>
+    <value>Batterie [mV]: </value>
   </data>
   <data name="BluetoothAddress.Text" xml:space="preserve">
-    <value>Address: </value>
+    <value>Adresse: </value>
   </data>
   <data name="ContactEmailButton.Content" xml:space="preserve">
-    <value>Contact per email</value>
+    <value>Kontakt (email)</value>
   </data>
   <data name="ContactEmailButton.NavigateUri" xml:space="preserve">
     <value>mailto:andreas.jakl@tieto.com</value>
   </data>
   <data name="ErrorDeviceNotConnected" xml:space="preserve">
-    <value>Could not connect to the Bluetooth Low Energy compatible radio module in your device. Please ensure it is available and activated (e.g., no active airplane mode) and try again later.</value>
+    <value>Konnte keine Verbindung zu einem Bluetooth Low Energy kompatiblen Modul herstellen. Bitte stelle sicher, dass es verfügbar und aktiviert ist (z.B. kein aktivierter Flugzeug-Modus) und versuche es später noch einmal.</value>
   </data>
   <data name="ErrorDisabledByPolicy" xml:space="preserve">
-    <value>A policy restricts this app to access your Bluetooth radio module. Please make sure you allow the app to access Bluetooth / proximity.</value>
+    <value>Eine Policy deines Geräts schränkt den Zugriff dieser App auf das Bluetooth Modul ein. Bitte stelle sicher, dass du der App Zugriff auf Bluetooth bzw. Proximity erlaubst.</value>
   </data>
   <data name="ErrorNoRadioAvailable" xml:space="preserve">
-    <value>No Bluetooth Low Energy compatible radio module is available, or it has been deactivated in your system (e.g., due to active airplane mode)</value>
+    <value>Kein Bluetooth Low Energy-kompatibles Modul ist verfügbar, oder es wurde in deinem System deaktiviert (z.B. durch einen aktivierten Flugzeug-Modus).</value>
   </data>
   <data name="ErrorNotSupported" xml:space="preserve">
-    <value>Accessing the Bluetooth Low Energy Radio is not supported on your device. Please ensure your device has the hardware needed to scan for Bluetooth Beacons and that it is activated.</value>
+    <value>Zugriff auf das Bluetooth Low Energy Modul ist in deinem Gerät nicht unterstützt. Bitte stelle sicher, dass das Gerät die erforderliche Hardware enthält und dass diese aktiviert ist.</value>
   </data>
   <data name="ErrorResourceInUse" xml:space="preserve">
-    <value>The Bluetooth radio is already in use and we could not get access. Please try again later.</value>
+    <value>Das Bluetooth-Modul wird bereits verwendet und wir konnten keinen Zugriff erhalten. Bitte versuche es später noch einmal!</value>
   </data>
   <data name="FailedRestartingBluetoothWatch" xml:space="preserve">
-    <value>Failed to restart Bluetooth scanning. Please make sure Bluetooth is activated on your device and airplane mode is deactivated. Tap here to try again.</value>
+    <value>Konnte die Bluetooth Suche nicht neu starten. Bitte stelle sicher, dass Bluetooth aktiviert ist und der Flugzeug-Modus deaktiviert ist. Tippe auf diese Nachricht, um es noch einmal zu versuchen.</value>
   </data>
   <data name="Info.Text" xml:space="preserve">
     <value>&lt; Info</value>
   </data>
   <data name="InstanceId.Text" xml:space="preserve">
-    <value>Instance ID: </value>
+    <value>Instanz ID: </value>
   </data>
   <data name="Instructions.Text" xml:space="preserve">
-    <value>Continuously scans for Bluetooth Beacons close to your device. If a beacon is found, its message is parsed - currently for Eddystone™, an open Bluetooth® Smart beacon format from Google.
+    <value>Sucht kontinuierlich nach Bluetooth Beacons in der Nähe deines Geräts. Wenn ein Beacon gefunden wird, wird dessen Nachricht automatisch analysiert - derzeit für Eddystone™, ein offenes Bluetooth® Smart Beacon Format von Google.
 
-Make sure your device supports Bluetooth Smart (LE) and that Bluetooth is activated in your device settings!</value>
+Stelle sicher, dass dein Gerät Bluetooth Smart (LE) unterstützt und dass Bluetooth in deinem Gerät aktiviert ist!</value>
   </data>
   <data name="LibraryUrlButton.Content" xml:space="preserve">
     <value>github.com/andijakl/universal-beacon</value>
@@ -186,34 +186,34 @@ Make sure your device supports Bluetooth Smart (LE) and that Bluetooth is activa
     <value>Payload: </value>
   </data>
   <data name="Privacy.Text" xml:space="preserve">
-    <value>Privacy</value>
+    <value>Datenschutz</value>
   </data>
   <data name="PrivacyText.Text" xml:space="preserve">
-    <value>The app does not store, collect or transmit any personally identifiable data.</value>
+    <value>Die App sammelt, speichert und versendet keine Daten, die eine persönliche Identifikation zulassen.</value>
   </data>
   <data name="RangingData.Text" xml:space="preserve">
     <value>Ranging Data: </value>
   </data>
   <data name="RestartWatchingBeacons" xml:space="preserve">
-    <value>Attempting to restart watching for beacons ...</value>
+    <value>Versuche gerade, die Suche nach Beacons neu zu starten ...</value>
   </data>
   <data name="Rssi.Text" xml:space="preserve">
-    <value>Signal strength [dBm]: </value>
+    <value>Signalstärke [dBm]: </value>
   </data>
   <data name="Status.Text" xml:space="preserve">
     <value>Status: </value>
   </data>
   <data name="StoppedWatchingBeacons" xml:space="preserve">
-    <value>Stopped watching for beacons. Tap here to restart.</value>
+    <value>Die Suche nach Beacons wurde gestoppt. Tippe auf diese Nachricht, um die Suche neu zu starten.</value>
   </data>
   <data name="TemperatureInC.Text" xml:space="preserve">
-    <value>Temperature [°C]: </value>
+    <value>Temperatur [°C]: </value>
   </data>
   <data name="Terms.Text" xml:space="preserve">
     <value>Terms &amp; Conditions</value>
   </data>
   <data name="TermsText.Text" xml:space="preserve">
-    <value>This application is an open source sample for the universal beacon library. Eddystone is an open Bluetooth® Smart beacon format from Google, released under Apache License. iBeacon™ is a Trademark by Apple Inc.</value>
+    <value>Diese App ist ein Open Source Beispiel für das Universal Beacon Library. Eddystone™ ist ein offenes Bluetooth® Smart Beacon Format von Google, veröffentlicht unter der Apache License. iBeacon™ ist ein Trademark von Apple Inc.</value>
   </data>
   <data name="TietoComButton.Content" xml:space="preserve">
     <value>Tieto.com</value>
@@ -222,16 +222,16 @@ Make sure your device supports Bluetooth Smart (LE) and that Bluetooth is activa
     <value>http://www.tieto.com/</value>
   </data>
   <data name="TimeSincePowerUp.Text" xml:space="preserve">
-    <value>Time since power up [.1 s]: </value>
+    <value>Zeit seit Neustart [.1 s]: </value>
   </data>
   <data name="TwitterButton.Content" xml:space="preserve">
-    <value>Follow on Twitter</value>
+    <value>Auf Twitter folgen</value>
   </data>
   <data name="TwitterButton.NavigateUri" xml:space="preserve">
     <value>https://twitter.com/andijakl</value>
   </data>
   <data name="Updated.Text" xml:space="preserve">
-    <value>Updated: </value>
+    <value>Letztes Update: </value>
   </data>
   <data name="Url.Text" xml:space="preserve">
     <value>URL: </value>
@@ -240,9 +240,9 @@ Make sure your device supports Bluetooth Smart (LE) and that Bluetooth is activa
     <value>Version: </value>
   </data>
   <data name="WatchingForBeacons" xml:space="preserve">
-    <value>Watching for Bluetooth Beacons</value>
+    <value>Suche nach Bluetooth Beacons</value>
   </data>
   <data name="WatchingSuccessfullyStopped" xml:space="preserve">
-    <value>Successfully stopped watching for Bluetooth Beacons. Tap here to restart.</value>
+    <value>Die Suche nach Beacons wurde erfolgreich gestoppt. Tippe auf diese Nachricht, um die Suche neu zu starten.</value>
   </data>
 </root>
