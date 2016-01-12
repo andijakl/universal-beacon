@@ -20,9 +20,9 @@
     <PackageCertificateKeyFile>WindowsBeacons_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>502DB054115A5AD87D12EF8CC5061FF8EBF95A27</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>584E5CCA7F7231AE69C99ECC9AA6F1394DE531FE</PackageCertificateThumbprint>
     <ApplicationInsightsResourceId />
-    <AppxBundle>Auto</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -101,11 +101,11 @@
     </Content>
     <None Include="project.json" />
     <None Include="Service References\Application Insights\ConnectedService.json" />
+    <None Include="WindowsBeacons_StoreKey.pfx" />
+    <None Include="WindowsBeacons_TemporaryKey.pfx" />
     <PRIResource Include="Strings\de-DE\Resources.resw">
       <SubType>Designer</SubType>
     </PRIResource>
-    <None Include="WindowsBeacons_StoreKey.pfx" />
-    <None Include="WindowsBeacons_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
