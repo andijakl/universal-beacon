@@ -49,6 +49,8 @@ namespace UniversalBeaconLibrary.Beacon
         /// the Windows Bluetooth LE API.</param>
         public void ReceivedAdvertisement(BluetoothLEAdvertisementReceivedEventArgs btAdv)
         {
+            if (btAdv == null) return;
+
             // Check if we already know this bluetooth address
             foreach (var bluetoothBeacon in BluetoothBeacons)
             {

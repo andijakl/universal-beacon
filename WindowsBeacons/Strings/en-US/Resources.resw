@@ -179,6 +179,12 @@ Make sure your device supports Bluetooth Smart (LE) and that Bluetooth is activa
   <data name="LibraryUrlButton.NavigateUri" xml:space="preserve">
     <value>https://github.com/andijakl/universal-beacon</value>
   </data>
+  <data name="MajorId.Text" xml:space="preserve">
+    <value>Major ID</value>
+  </data>
+  <data name="MinorId.Text" xml:space="preserve">
+    <value>Minor ID</value>
+  </data>
   <data name="NamespaceId.Text" xml:space="preserve">
     <value>Namespace ID: </value>
   </data>
@@ -235,6 +241,9 @@ Make sure your device supports Bluetooth Smart (LE) and that Bluetooth is activa
   </data>
   <data name="Url.Text" xml:space="preserve">
     <value>URL: </value>
+  </data>
+  <data name="Uuid.Text" xml:space="preserve">
+    <value>UUID</value>
   </data>
   <data name="Version.Text" xml:space="preserve">
     <value>Version: </value>
