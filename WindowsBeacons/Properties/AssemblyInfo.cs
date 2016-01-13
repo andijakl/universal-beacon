@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Tieto Austria GmbH")]
 [assembly: AssemblyProduct("WindowsBeacons")]
-[assembly: AssemblyCopyright("Copyright © Andreas Jakl, Tieto 2015")]
+[assembly: AssemblyCopyright("Copyright © Andreas Jakl, Tieto 2015 - 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
