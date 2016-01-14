@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AbortedWatchingBeacons" xml:space="preserve">
+    <value>Отслеживание маяков остановлено (возможно, отключен Bluetooth). Коснитесь, чтобы перезапустить.</value>
+  </data>
+  <data name="About.Text" xml:space="preserve">
+    <value>О программе</value>
+  </data>
+  <data name="AboutText1.Text" xml:space="preserve">
+    <value>Разработчик: Андреас Якл (Andreas Jakl), корпорация Tieto.</value>
+  </data>
+  <data name="AboutText2.Text" xml:space="preserve">
+    <value>Загрузите универсальную библиотеку маяков для Windows 10 с открытым исходным кодом по адресу:</value>
+  </data>
+  <data name="AdvertisementFrameCount.Text" xml:space="preserve">
+    <value>Количество рекламных кадров: </value>
+  </data>
+  <data name="BatteryInMilliV.Text" xml:space="preserve">
+    <value>Батарея [мВ]: </value>
+  </data>
+  <data name="BluetoothAddress.Text" xml:space="preserve">
+    <value>Адрес: </value>
+  </data>
+  <data name="ContactEmailButton.Content" xml:space="preserve">
+    <value>Связь по электронной почте</value>
+  </data>
+  <data name="ErrorDeviceNotConnected" xml:space="preserve">
+    <value>Не удалось подключиться к радиомодулю устройства, совместимому с Bluetooth с низким энергопотреблением. Убедитесь, что этот модуль доступен и активирован (в частности, не включен режим «в самолете»), и повторите попытку.</value>
+  </data>
+  <data name="ErrorDisabledByPolicy" xml:space="preserve">
+    <value>Системная политика запрещает этому приложению доступ к радиомодулю Bluetooth. Разрешите этому приложению доступ к Bluetooth и функциям близкого взаимодействия.</value>
+  </data>
+  <data name="ErrorNoRadioAvailable" xml:space="preserve">
+    <value>Радиомодуль, совместимый с Bluetooth с низким энергопотреблением, недоступен или отключен в системе (например, активен режим «в самолете»)</value>
+  </data>
+  <data name="ErrorNotSupported" xml:space="preserve">
+    <value>На этом устройстве не поддерживается доступ к радиомодулю Bluetooth с низким энергопотреблением. Убедитесь, что устройство оснащено оборудованием, необходимым для сканирования маяков Bluetooth, и это оборудование активно.</value>
+  </data>
+  <data name="ErrorResourceInUse" xml:space="preserve">
+    <value>Не удалось получить доступ к радиомодулю Bluetooth, так как он уже используется. Попробуйте еще раз позже.</value>
+  </data>
+  <data name="FailedRestartingBluetoothWatch" xml:space="preserve">
+    <value>Не удалось перезапустить сканирование Bluetooth. Убедитесь, что на устройстве активен Bluetooth и не включен режим «в самолете». Коснитесь здесь, чтобы повторить попытку.</value>
+  </data>
+  <data name="Info.Text" xml:space="preserve">
+    <value>&lt; Информация</value>
+  </data>
+  <data name="InstanceId.Text" xml:space="preserve">
+    <value>Идентификатор экземпляра: </value>
+  </data>
+  <data name="Instructions.Text" xml:space="preserve">
+    <value>Непрерывно сканирует маяки Bluetooth вблизи устройства. Если обнаруживается маяк, анализируется его сообщение. В данной версии поддерживается Eddystone™ — открытый формат маяков Bluetooth® Smart, разработанный Google. Убедитесь, что устройство поддерживает стандарт Bluetooth Smart (с низким энергопотреблением), а в настройках устройства включена связь Bluetooth.</value>
+  </data>
+  <data name="MajorId.Text" xml:space="preserve">
+    <value>Основной идентификатор</value>
+  </data>
+  <data name="MinorId.Text" xml:space="preserve">
+    <value>Дополнительный идентификатор</value>
+  </data>
+  <data name="NamespaceId.Text" xml:space="preserve">
+    <value>Идентификатор пространства имен: </value>
+  </data>
+  <data name="Payload.Text" xml:space="preserve">
+    <value>Полезные данные: </value>
+  </data>
+  <data name="Privacy.Text" xml:space="preserve">
+    <value>Конфиденциальность</value>
+  </data>
+  <data name="PrivacyText.Text" xml:space="preserve">
+    <value>Это приложение не собирает, не хранит и не передает никаких личных сведений.</value>
+  </data>
+  <data name="RangingData.Text" xml:space="preserve">
+    <value>Сортировка данных: </value>
+  </data>
+  <data name="RestartWatchingBeacons" xml:space="preserve">
+    <value>Перезапускается отслеживание маяков...</value>
+  </data>
+  <data name="Rssi.Text" xml:space="preserve">
+    <value>Уровень сигнала [дБм]: </value>
+  </data>
+  <data name="Status.Text" xml:space="preserve">
+    <value>Состояние: </value>
+  </data>
+  <data name="StoppedWatchingBeacons" xml:space="preserve">
+    <value>Отслеживание маяков остановлено. Коснитесь здесь, чтобы перезапустить.</value>
+  </data>
+  <data name="TemperatureInC.Text" xml:space="preserve">
+    <value>Температура [°C]: </value>
+  </data>
+  <data name="Terms.Text" xml:space="preserve">
+    <value>Условия</value>
+  </data>
+  <data name="TermsText.Text" xml:space="preserve">
+    <value>Это приложение представляет собой образец с открытым исходным кодом для универсальной библиотеки маяков. Eddystone — это открытый формат маяков Bluetooth® Smart, разработанный Google и предоставляемый по лицензии Apache. iBeacon является товарным знаком Apple Inc.</value>
+  </data>
+  <data name="TimeSincePowerUp.Text" xml:space="preserve">
+    <value>Время с момента включения [в десятых долях секунды]: </value>
+  </data>
+  <data name="TwitterButton.Content" xml:space="preserve">
+    <value>Следите за нами в Твиттере</value>
+  </data>
+  <data name="Updated.Text" xml:space="preserve">
+    <value>Обновлено: </value>
+  </data>
+  <data name="Url.Text" xml:space="preserve">
+    <value>URL-адрес: </value>
+  </data>
+  <data name="Uuid.Text" xml:space="preserve">
+    <value>UUID</value>
+  </data>
+  <data name="Version.Text" xml:space="preserve">
+    <value>Версия: </value>
+  </data>
+  <data name="WatchingForBeacons" xml:space="preserve">
+    <value>Идет отслеживание маяков Bluetooth</value>
+  </data>
+  <data name="WatchingSuccessfullyStopped" xml:space="preserve">
+    <value>Отслеживание маяков Bluetooth успешно остановлено. Коснитесь здесь, чтобы перезапустить.</value>
+  </data>
+  <data name="TwitterButton.NavigateUri" xml:space="preserve">
+    <value>https://twitter.com/andijakl</value>
+  </data>
+  <data name="TietoComButton.NavigateUri" xml:space="preserve">
+    <value>http://www.tieto.com/</value>
+  </data>
+  <data name="LibraryUrlButton.Content" xml:space="preserve">
+    <value>github.com/andijakl/universal-beacon</value>
+  </data>
+  <data name="LibraryUrlButton.NavigateUri" xml:space="preserve">
+    <value>https://github.com/andijakl/universal-beacon</value>
+  </data>
+  <data name="ContactEmailButton.NavigateUri" xml:space="preserve">
+    <value>mailto:andreas.jakl@tieto.com</value>
+  </data>
+</root>

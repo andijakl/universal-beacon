@@ -101,6 +101,10 @@
     </Content>
     <None Include="project.json" />
     <None Include="Service References\Application Insights\ConnectedService.json" />
+    <PRIResource Include="Strings\fr-FR\Resources.resw" />
+    <PRIResource Include="Strings\pt-BR\Resources.resw" />
+    <PRIResource Include="Strings\ru-RU\Resources.resw" />
+    <PRIResource Include="Strings\zh-CN\Resources.resw" />
     <None Include="WindowsBeacons_StoreKey.pfx" />
     <None Include="WindowsBeacons_TemporaryKey.pfx" />
     <PRIResource Include="Strings\de-DE\Resources.resw">

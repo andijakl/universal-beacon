@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AbortedWatchingBeacons" xml:space="preserve">
+    <value>A procura por beacons foi anulada, por exemplo, devido à desativação do recurso Bluetooth. Toque para tentar reiniciar.</value>
+  </data>
+  <data name="About.Text" xml:space="preserve">
+    <value>Sobre</value>
+  </data>
+  <data name="AboutText1.Text" xml:space="preserve">
+    <value>Desenvolvido por Andreas Jakl, Tieto Corporation.</value>
+  </data>
+  <data name="AboutText2.Text" xml:space="preserve">
+    <value>Baixe a biblioteca universal de beacons de software livre para o Windows 10 de:</value>
+  </data>
+  <data name="AdvertisementFrameCount.Text" xml:space="preserve">
+    <value>Contagem de quadros de anúncio: </value>
+  </data>
+  <data name="BatteryInMilliV.Text" xml:space="preserve">
+    <value>Bateria [mV]: </value>
+  </data>
+  <data name="BluetoothAddress.Text" xml:space="preserve">
+    <value>Endereço: </value>
+  </data>
+  <data name="ContactEmailButton.Content" xml:space="preserve">
+    <value>Contato por email</value>
+  </data>
+  <data name="ErrorDeviceNotConnected" xml:space="preserve">
+    <value>Não foi possível conectar com o módulo de rádio compatível Bluetooth de Baixa Energia em seu dispositivo. Confira se ele está disponível e ativado (por exemplo, se o modo avião não está ativo) e tente novamente.</value>
+  </data>
+  <data name="ErrorDisabledByPolicy" xml:space="preserve">
+    <value>Uma política está restringindo este aplicativo de acessar seu módulo de rádio Bluetooth. Permita que o aplicativo acesse o recurso de proximidade ou Bluetooth.</value>
+  </data>
+  <data name="ErrorNoRadioAvailable" xml:space="preserve">
+    <value>Não há módulo de rádio compatível Bluetooth de Baixa Energia disponível ou ele foi desativado no sistema (por exemplo, devido à ativação do modo avião)</value>
+  </data>
+  <data name="ErrorNotSupported" xml:space="preserve">
+    <value>Não há suporte para acessar o Rádio Bluetooth de Baixa Energia no dispositivo. Verifique se o dispositivo apresenta o hardware necessário para procurar Beacons Bluetooth e se está ativado.</value>
+  </data>
+  <data name="ErrorResourceInUse" xml:space="preserve">
+    <value>O rádio Bluetooth já está em uso. Não foi possível acessá-lo. Tente mais tarde.</value>
+  </data>
+  <data name="FailedRestartingBluetoothWatch" xml:space="preserve">
+    <value>Ocorreu uma falha no reinício da procura pelo recurso Bluetooth. Confira se o recurso Bluetooth está ativado no dispositivo e se o modo avião está desativado. Toque aqui para tentar novamente.</value>
+  </data>
+  <data name="Info.Text" xml:space="preserve">
+    <value>&lt; Informações</value>
+  </data>
+  <data name="InstanceId.Text" xml:space="preserve">
+    <value>ID de Instância: </value>
+  </data>
+  <data name="Instructions.Text" xml:space="preserve">
+    <value>Faça varreduras contínuas por Beacons Bluetooth próximo do dispositivo. Se um beacon for encontrado, a mensagem será analisada, atualmente para procurar Eddystone™, um formato de beacon Bluetooth® Smart de software livre da empresa Google. Assegure-se de que o dispositivo seja compatível com Bluetooth Smart (LE) e que o recurso Bluetooth esteja ativado nas configurações do dispositivo!</value>
+  </data>
+  <data name="MajorId.Text" xml:space="preserve">
+    <value>ID principal</value>
+  </data>
+  <data name="MinorId.Text" xml:space="preserve">
+    <value>ID secundária</value>
+  </data>
+  <data name="NamespaceId.Text" xml:space="preserve">
+    <value>ID de namespace: </value>
+  </data>
+  <data name="Payload.Text" xml:space="preserve">
+    <value>Carga: </value>
+  </data>
+  <data name="Privacy.Text" xml:space="preserve">
+    <value>Privacidade</value>
+  </data>
+  <data name="PrivacyText.Text" xml:space="preserve">
+    <value>O aplicativo não armazena, coleta nem transmite nenhum dado que possa identificá-lo pessoalmente.</value>
+  </data>
+  <data name="RangingData.Text" xml:space="preserve">
+    <value>Dados de intervalo: </value>
+  </data>
+  <data name="RestartWatchingBeacons" xml:space="preserve">
+    <value>Tentando reiniciar procura por beacons...</value>
+  </data>
+  <data name="Rssi.Text" xml:space="preserve">
+    <value>Intensidade do sinal [dBm]: </value>
+  </data>
+  <data name="Status.Text" xml:space="preserve">
+    <value>Status: </value>
+  </data>
+  <data name="StoppedWatchingBeacons" xml:space="preserve">
+    <value>Parando procura por beacons. Toque aqui para reiniciar.</value>
+  </data>
+  <data name="TemperatureInC.Text" xml:space="preserve">
+    <value>Temperatura [°C]: </value>
+  </data>
+  <data name="Terms.Text" xml:space="preserve">
+    <value>Termos e Condições</value>
+  </data>
+  <data name="TermsText.Text" xml:space="preserve">
+    <value>Este aplicativo é um exemplo de software livre da biblioteca universal de beacons. Eddystone é um formato de beacon Bluetooth® Smart de software livre da empresa Google, fornecido sob Licença da Apache. iBeacon é uma marca comercial da Apple Inc.</value>
+  </data>
+  <data name="TimeSincePowerUp.Text" xml:space="preserve">
+    <value>Tempo desde acionamento [.1 s]: </value>
+  </data>
+  <data name="TwitterButton.Content" xml:space="preserve">
+    <value>Siga no Twitter</value>
+  </data>
+  <data name="Updated.Text" xml:space="preserve">
+    <value>Atualização: </value>
+  </data>
+  <data name="Url.Text" xml:space="preserve">
+    <value>URL: </value>
+  </data>
+  <data name="Uuid.Text" xml:space="preserve">
+    <value>UUID</value>
+  </data>
+  <data name="Version.Text" xml:space="preserve">
+    <value>Versão: </value>
+  </data>
+  <data name="WatchingForBeacons" xml:space="preserve">
+    <value>Procurando por Beacons Bluetooth</value>
+  </data>
+  <data name="WatchingSuccessfullyStopped" xml:space="preserve">
+    <value>Interrupção de procura por Beacons Bluetooth bem-sucedida. Toque aqui para reiniciar.</value>
+  </data>
+  <data name="TwitterButton.NavigateUri" xml:space="preserve">
+    <value>https://twitter.com/andijakl</value>
+  </data>
+  <data name="TietoComButton.NavigateUri" xml:space="preserve">
+    <value>http://www.tieto.com/</value>
+  </data>
+  <data name="LibraryUrlButton.Content" xml:space="preserve">
+    <value>github.com/andijakl/universal-beacon</value>
+  </data>
+  <data name="LibraryUrlButton.NavigateUri" xml:space="preserve">
+    <value>https://github.com/andijakl/universal-beacon</value>
+  </data>
+  <data name="ContactEmailButton.NavigateUri" xml:space="preserve">
+    <value>mailto:andreas.jakl@tieto.com</value>
+  </data>
+</root>
