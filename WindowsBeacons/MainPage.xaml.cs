@@ -126,7 +126,22 @@ namespace WindowsBeacons
 
         private async void WatcherOnReceived(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs eventArgs)
         {
-            await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => _beaconManager.ReceivedAdvertisement(eventArgs));
+            await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                try
+                {
+                    _beaconManager.ReceivedAdvertisement(eventArgs);
+                }
+                catch (ArgumentException e)
+                {
+                    // Ignore for real-life scenarios.
+                    // In some very rare cases, analyzing the data can result in an
+                    // Argument_BufferIndexExceedsCapacity. Ignore the error here,
+                    // assuming that the next received frame advertisement will be
+                    // correct.
+                    Debug.WriteLine(e);
+                }
+            });
         }
 
         private void WatcherOnStopped(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementWatcherStoppedEventArgs args)
