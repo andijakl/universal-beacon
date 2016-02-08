@@ -31,15 +31,20 @@ namespace UniversalBeaconLibrary.Beacon
     /// </summary>
     public class UidEddystoneFrame : BeaconFrameBase
     {
-        private byte _rangingData;
+        private sbyte _rangingData;
 
         /// <summary>
         /// Tx power level - the received power level at 0 m, in dBm.
         /// Values range from -100 to +20 dBM, with a resolution of 1 dBm.
         /// Signed 8 bit integer according to:
         /// https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.tx_power_level.xml
+        /// Conversion between sbyte and byte works at runtime with simple casting for variables.
+        /// In order to convert constants at compile time, you might need to run the conversion in
+        /// an unchecked() context. For example:
+        /// sbyte rangingData = unchecked((sbyte)0xEE);
+        /// According to the documentation, this corresponds to the dBm value of -18.
         /// </summary>
-        public byte RangingData
+        public sbyte RangingData
         {
             get { return _rangingData; }
             set
@@ -125,7 +130,7 @@ namespace UniversalBeaconLibrary.Beacon
             }
         }
 
-        public UidEddystoneFrame(byte rangingData, byte[] namespaceId, byte[] instanceId)
+        public UidEddystoneFrame(sbyte rangingData, byte[] namespaceId, byte[] instanceId)
         {
             _rangingData = rangingData;
             if (namespaceId != null && namespaceId.Length == 10)
@@ -158,7 +163,7 @@ namespace UniversalBeaconLibrary.Beacon
             // Note that this is different from other beacon protocol specifications that require the Tx power 
             // to be measured at 1 m.The value is an 8-bit integer as specified by the Tx Power Level Characteristic 
             // and ranges from -100 dBm to +20 dBm to a resolution of 1 dBm.
-            var newRangingData = Payload[BeaconFrameHelper.EddystoneHeaderSize];
+            var newRangingData = (sbyte)Payload[BeaconFrameHelper.EddystoneHeaderSize];
             if (newRangingData != RangingData)
             {
                 _rangingData = newRangingData;
@@ -208,7 +213,7 @@ namespace UniversalBeaconLibrary.Beacon
                 // Frame header
                 ms.Write(header, 0, header.Length);
                 // Ranging data
-                ms.WriteByte(RangingData);
+                ms.WriteByte((byte)RangingData);
                 // Namespace ID
                 ms.Write(NamespaceId, 0, NamespaceId.Length);
                 // Instance ID
