@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
   <metadata minClientVersion="3.0">
     <id>UniversalBeaconLibrary</id>
-    <version>1.8.0</version>
-	<releaseNotes>Fix for correctly handling beacon advertisements that are null</releaseNotes>
+    <version>1.8.1</version>
+	<releaseNotes>Use sbyte instead of byte for accessing ranging data in Eddystone UID and URL frames to ease development and remove the need for manual casting.</releaseNotes>
     <title>Universal Beacon Library for the Universal Windows Platform (Windows 10 UWP)</title>
     <authors>Andreas Jakl</authors>
     <owners>Andreas Jakl</owners>

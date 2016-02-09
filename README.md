@@ -167,8 +167,8 @@ To try the Windows 10 example app, download the complete library package from th
 
 ## Version History
 
-### 1.8.0 - February 2016
-* Use sbyte instead of byte for accessing ranging data in Eddystone UID frames to ease development and remove the need for manual casting.
+### 1.8.1 - February 2016
+* Use sbyte instead of byte for accessing ranging data in Eddystone UID and URL frames to ease development and remove the need for manual casting.
 
 ### 1.7.0 - January 2016
 * Added translations to Chinese, French, Russian and Portuguese

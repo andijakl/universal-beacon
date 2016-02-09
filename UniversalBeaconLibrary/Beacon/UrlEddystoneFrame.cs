@@ -31,7 +31,7 @@ namespace UniversalBeaconLibrary.Beacon
     /// </summary>
     public class UrlEddystoneFrame : BeaconFrameBase
     {
-        private byte _rangingData;
+        private sbyte _rangingData;
 
         /// <summary>
         /// Tx power level - the received power level at 0 m, in dBm.
@@ -39,7 +39,7 @@ namespace UniversalBeaconLibrary.Beacon
         /// Signed 8 bit integer according to:
         /// https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.tx_power_level.xml
         /// </summary>
-        public byte RangingData
+        public sbyte RangingData
         {
             get { return _rangingData; }
             set
@@ -103,7 +103,7 @@ namespace UniversalBeaconLibrary.Beacon
             {3, "https://"}
         };
 
-        public UrlEddystoneFrame(byte rangingData, string completeUrl)
+        public UrlEddystoneFrame(sbyte rangingData, string completeUrl)
         {
             _rangingData = rangingData;
             _completeUrl = completeUrl;
@@ -124,7 +124,7 @@ namespace UniversalBeaconLibrary.Beacon
             if (!IsValid()) return;
 
             // Ranging data
-            var newRangingData = Payload[BeaconFrameHelper.EddystoneHeaderSize];
+            var newRangingData = (sbyte)Payload[BeaconFrameHelper.EddystoneHeaderSize];
             if (newRangingData != RangingData)
             {
                 _rangingData = newRangingData;
@@ -169,7 +169,7 @@ namespace UniversalBeaconLibrary.Beacon
                 // Frame header
                 ms.Write(header, 0, header.Length);
                 // Ranging data
-                ms.WriteByte(RangingData);
+                ms.WriteByte((byte)RangingData);
                 // URL scheme byte
                 ms.WriteByte((byte)urlSchemeByte);
                 // Encoded URL
