@@ -68,6 +68,15 @@ The app has been tested on Windows 10 tablets and phones and requires Bluetooth 
 Download and test the example app from the Windows 10 store: https://www.microsoft.com/store/apps/9NBLGGH1Z24K
 
 
+### Permissions and Privacy Settings in Windows 10
+
+To allow apps to receive data from Bluetooth Beacons, you have to ensure Windows 10 is configured correctly.
+
+1. Turn off flight mode: Settings -> Network & Internet -> Flight mode
+2. Turn on Bluetooth: Settings -> Devices -> Bluetooth
+3. Turn on Device Sync: Settings -> Privacy -> Other devices -> Sync with devices (Example: beacons).
+
+
 
 ## Usage example (C#)
 
