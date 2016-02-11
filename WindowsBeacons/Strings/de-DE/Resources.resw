@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AbortedWatchingBeacons" xml:space="preserve">
-    <value>Die Suche nach Bluetooth Beacons wurde abgebrochen, z.B. weil Bluetooth deaktiviert war oder wurde. Tippe auf diese Nachricht um einen neuen Versuch zu starten.</value>
+    <value>Die Suche nach Bluetooth Beacons wurde abgebrochen, z.B. weil Bluetooth deaktiviert war oder wurde. Tippe auf diese Nachricht um einen neuen Versuch zu starten. In Windows 10, aktiviere: Einstellungen -&gt; Datenschutz -&gt; Weitere Geräte -&gt; Mit Geräten synchronisieren (Beispiel: Beacons)</value>
   </data>
   <data name="About.Text" xml:space="preserve">
     <value>Über</value>
@@ -148,7 +148,7 @@
     <value>Konnte keine Verbindung zu einem Bluetooth Low Energy kompatiblen Modul herstellen. Bitte stelle sicher, dass es verfügbar und aktiviert ist (z.B. kein aktivierter Flugzeug-Modus) und versuche es später noch einmal.</value>
   </data>
   <data name="ErrorDisabledByPolicy" xml:space="preserve">
-    <value>Eine Policy deines Geräts schränkt den Zugriff dieser App auf das Bluetooth Modul ein. Bitte stelle sicher, dass du der App Zugriff auf Bluetooth bzw. Proximity erlaubst.</value>
+    <value>Eine Policy deines Geräts schränkt den Zugriff dieser App auf das Bluetooth Modul ein. Bitte stelle sicher, dass du der App Zugriff auf Bluetooth bzw. Proximity erlaubst. In Windows 10, aktiviere: Einstellungen -&gt; Datenschutz -&gt; Weitere Geräte -&gt; Mit Geräten synchronisieren (Beispiel: Beacons)</value>
   </data>
   <data name="ErrorNoRadioAvailable" xml:space="preserve">
     <value>Kein Bluetooth Low Energy-kompatibles Modul ist verfügbar, oder es wurde in deinem System deaktiviert (z.B. durch einen aktivierten Flugzeug-Modus).</value>
@@ -160,7 +160,7 @@
     <value>Das Bluetooth-Modul wird bereits verwendet und wir konnten keinen Zugriff erhalten. Bitte versuche es später noch einmal!</value>
   </data>
   <data name="FailedRestartingBluetoothWatch" xml:space="preserve">
-    <value>Konnte die Bluetooth Suche nicht neu starten. Bitte stelle sicher, dass Bluetooth aktiviert ist und der Flugzeug-Modus deaktiviert ist. Tippe auf diese Nachricht, um es noch einmal zu versuchen.</value>
+    <value>Konnte die Bluetooth Suche nicht neu starten. Bitte stelle sicher, dass Bluetooth aktiviert ist und der Flugzeug-Modus deaktiviert ist. Tippe auf diese Nachricht, um es noch einmal zu versuchen.In Windows 10, aktiviere: Einstellungen -&gt; Datenschutz -&gt; Weitere Geräte -&gt; Mit Geräten synchronisieren (Beispiel: Beacons)</value>
   </data>
   <data name="Info.Text" xml:space="preserve">
     <value>&lt; Info</value>

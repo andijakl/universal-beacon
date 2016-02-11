@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AbortedWatchingBeacons" xml:space="preserve">
-    <value>Watching for beacons has been aborted, e.g., because Bluetooth is / was deactivated. Tap to try restarting.</value>
+    <value>Watching for beacons has been aborted, e.g., because Bluetooth is / was deactivated. Tap to try restarting. In Windows 10, turn on Settings -&gt; Privacy -&gt;Other devices -&gt; Sync with devices.</value>
   </data>
   <data name="About.Text" xml:space="preserve">
     <value>About</value>
@@ -145,22 +145,22 @@
     <value>mailto:andreas.jakl@tieto.com</value>
   </data>
   <data name="ErrorDeviceNotConnected" xml:space="preserve">
-    <value>Could not connect to the Bluetooth Low Energy compatible radio module in your device. Please ensure it is available and activated (e.g., no active airplane mode) and try again later.</value>
+    <value>Could not connect to the Bluetooth Low Energy compatible radio module in your device. Please ensure it is available and activated (e.g., no active flight mode) and try again later.</value>
   </data>
   <data name="ErrorDisabledByPolicy" xml:space="preserve">
     <value>A policy restricts this app to access your Bluetooth radio module. Please make sure you allow the app to access Bluetooth / proximity. In Windows 10, turn on Settings -&gt; Privacy -&gt;Other devices -&gt; Sync with devices.</value>
   </data>
   <data name="ErrorNoRadioAvailable" xml:space="preserve">
-    <value>No Bluetooth Low Energy compatible radio module is available, or it has been deactivated in your system (e.g., due to active airplane mode)</value>
+    <value>No Bluetooth Low Energy compatible radio module is available, or it has been deactivated in your system (e.g., due to active flight mode)</value>
   </data>
   <data name="ErrorNotSupported" xml:space="preserve">
     <value>Accessing the Bluetooth Low Energy Radio is not supported on your device. Please ensure your device has the hardware needed to scan for Bluetooth Beacons and that it is activated.</value>
   </data>
   <data name="ErrorResourceInUse" xml:space="preserve">
-    <value>The Bluetooth radio is already in use and we could not get access. Please try again later. In Windows 10, turn on Settings -&gt; Privacy -&gt;Other devices -&gt; Sync with devices.</value>
+    <value>The Bluetooth radio is already in use and we could not get access. Please try again later.</value>
   </data>
   <data name="FailedRestartingBluetoothWatch" xml:space="preserve">
-    <value>Failed to restart Bluetooth scanning. Please make sure Bluetooth is activated on your device and airplane mode is deactivated. Tap here to try again.</value>
+    <value>Failed to restart Bluetooth scanning. Please make sure Bluetooth is activated on your device and flight mode is deactivated. Tap here to try again. In Windows 10, turn on Settings -&gt; Privacy -&gt;Other devices -&gt; Sync with devices.</value>
   </data>
   <data name="Info.Text" xml:space="preserve">
     <value>&lt; Info</value>
