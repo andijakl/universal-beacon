@@ -1,4 +1,4 @@
-﻿// Copyright 2015 Andreas Jakl, Tieto Corporation. All rights reserved.
+﻿// Copyright 2015 - 2017 Andreas Jakl. All rights reserved.
 // https://github.com/andijakl/universal-beacon 
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -92,7 +92,7 @@ namespace WindowsBeacons
 //            eddystoneBeacon.BeaconFrames.Add(new UidEddystoneFrame(unchecked((sbyte)0xEE),         
 //                new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A },
 //                new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 }));
-//            eddystoneBeacon.BeaconFrames.Add(new UrlEddystoneFrame(220, "http://www.tieto.at"));
+//            eddystoneBeacon.BeaconFrames.Add(new UrlEddystoneFrame(220, "http://www.nfcinteractor.com"));
 //            eddystoneBeacon.Rssi = -49;
 //            eddystoneBeacon.BluetoothAddress = 0x0000e27ef189f6c4; // 3
 //            eddystoneBeacon.Timestamp = DateTimeOffset.Now;

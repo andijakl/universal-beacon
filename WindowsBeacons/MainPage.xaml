@@ -380,7 +380,6 @@
                     <TextBlock x:Uid="AboutText1" Style="{StaticResource InfoTextBlockStyle}" />
                     <HyperlinkButton x:Uid="TwitterButton" Style="{StaticResource HyperlinkStyle}"/>
                     <HyperlinkButton x:Uid="ContactEmailButton" Style="{StaticResource HyperlinkStyle}"/>
-                    <HyperlinkButton x:Uid="TietoComButton" Style="{StaticResource HyperlinkStyle}"/>
                     <TextBlock x:Uid="AboutText2" Style="{StaticResource InfoTextBlockStyle}" />
                     <HyperlinkButton x:Uid="LibraryUrlButton" Style="{StaticResource HyperlinkStyle}"/>
                     <TextBlock x:Uid="Privacy" Style="{StaticResource BeaconTypeTextBlockStyle}"/>

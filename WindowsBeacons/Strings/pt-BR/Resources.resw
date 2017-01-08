@@ -124,7 +124,7 @@
     <value>Sobre</value>
   </data>
   <data name="AboutText1.Text" xml:space="preserve">
-    <value>Desenvolvido por Andreas Jakl, Tieto Corporation.</value>
+    <value>Desenvolvido por Andreas Jakl.</value>
   </data>
   <data name="AboutText2.Text" xml:space="preserve">
     <value>Baixe a biblioteca universal de beacons de software livre para o Windows 10 de:</value>
@@ -237,9 +237,6 @@
   <data name="TwitterButton.NavigateUri" xml:space="preserve">
     <value>https://twitter.com/andijakl</value>
   </data>
-  <data name="TietoComButton.NavigateUri" xml:space="preserve">
-    <value>http://www.tieto.com/</value>
-  </data>
   <data name="LibraryUrlButton.Content" xml:space="preserve">
     <value>github.com/andijakl/universal-beacon</value>
   </data>
@@ -247,6 +244,6 @@
     <value>https://github.com/andijakl/universal-beacon</value>
   </data>
   <data name="ContactEmailButton.NavigateUri" xml:space="preserve">
-    <value>mailto:andreas.jakl@tieto.com</value>
+    <value>mailto:andreas.jakl@live.com</value>
   </data>
 </root>

@@ -227,9 +227,8 @@ iBeacon™ is a Trademark by Apple Inc. Bluetooth® and Bluetooth Smart are regi
 
 The example application is licensed under the GPL v3 license - see LICENSE.GPL for details.
 
-Developed by Andreas Jakl, Tieto Austria GmbH
+Developed by Andreas Jakl
 https://twitter.com/andijakl
-http://www.tieto.com/
 
 Library homepage on GitHub:
 https://github.com/andijakl/universal-beacon

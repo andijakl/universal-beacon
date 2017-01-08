@@ -1,0 +1,1 @@
+nuget push ./nupkg/UniversalBeaconLibrary.1.8.1.nupkg

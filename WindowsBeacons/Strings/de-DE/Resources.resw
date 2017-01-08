@@ -124,7 +124,7 @@
     <value>Über</value>
   </data>
   <data name="AboutText1.Text" xml:space="preserve">
-    <value>Entwickelt von Andreas Jakl, Tieto Corporation.</value>
+    <value>Entwickelt von Andreas Jakl.</value>
   </data>
   <data name="AboutText2.Text" xml:space="preserve">
     <value>Lade das Open Source Universal Beacon Library für Windows 10 herunter:</value>
@@ -142,7 +142,7 @@
     <value>Kontakt (email)</value>
   </data>
   <data name="ContactEmailButton.NavigateUri" xml:space="preserve">
-    <value>mailto:andreas.jakl@tieto.com</value>
+    <value>mailto:andreas.jakl@live.com</value>
   </data>
   <data name="ErrorDeviceNotConnected" xml:space="preserve">
     <value>Konnte keine Verbindung zu einem Bluetooth Low Energy kompatiblen Modul herstellen. Bitte stelle sicher, dass es verfügbar und aktiviert ist (z.B. kein aktivierter Flugzeug-Modus) und versuche es später noch einmal.</value>
@@ -214,12 +214,6 @@ Stelle sicher, dass dein Gerät Bluetooth Smart (LE) unterstützt und dass Bluet
   </data>
   <data name="TermsText.Text" xml:space="preserve">
     <value>Diese App ist ein Open Source Beispiel für das Universal Beacon Library. Eddystone™ ist ein offenes Bluetooth® Smart Beacon Format von Google, veröffentlicht unter der Apache License. iBeacon™ ist ein Trademark von Apple Inc.</value>
-  </data>
-  <data name="TietoComButton.Content" xml:space="preserve">
-    <value>Tieto.com</value>
-  </data>
-  <data name="TietoComButton.NavigateUri" xml:space="preserve">
-    <value>http://www.tieto.com/</value>
   </data>
   <data name="TimeSincePowerUp.Text" xml:space="preserve">
     <value>Zeit seit Neustart [.1 s]: </value>

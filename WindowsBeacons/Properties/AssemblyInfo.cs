@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("WindowsBeacons")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Tieto Austria GmbH")]
+[assembly: AssemblyCompany("Andreas Jakl")]
 [assembly: AssemblyProduct("WindowsBeacons")]
-[assembly: AssemblyCopyright("Copyright © Andreas Jakl, Tieto 2015 - 2016")]
+[assembly: AssemblyCopyright("Copyright © Andreas Jakl 2015 - 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
