@@ -179,6 +179,12 @@ Stelle sicher, dass dein Gerät Bluetooth Smart (LE) unterstützt und dass Bluet
   <data name="LibraryUrlButton.NavigateUri" xml:space="preserve">
     <value>https://github.com/andijakl/universal-beacon</value>
   </data>
+  <data name="Major.Text" xml:space="preserve">
+    <value>Major:</value>
+  </data>
+  <data name="Minor.Text" xml:space="preserve">
+    <value>Minor:</value>
+  </data>
   <data name="NamespaceId.Text" xml:space="preserve">
     <value>Namespace ID: </value>
   </data>
@@ -224,11 +230,17 @@ Stelle sicher, dass dein Gerät Bluetooth Smart (LE) unterstützt und dass Bluet
   <data name="TwitterButton.NavigateUri" xml:space="preserve">
     <value>https://twitter.com/andijakl</value>
   </data>
+  <data name="TxPower.Text" xml:space="preserve">
+    <value>TX Power:</value>
+  </data>
   <data name="Updated.Text" xml:space="preserve">
     <value>Letztes Update: </value>
   </data>
   <data name="Url.Text" xml:space="preserve">
     <value>URL: </value>
+  </data>
+  <data name="Uuid.Text" xml:space="preserve">
+    <value>UUID:</value>
   </data>
   <data name="Version.Text" xml:space="preserve">
     <value>Version: </value>

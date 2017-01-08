@@ -225,20 +225,23 @@ namespace UniversalBeaconLibrary.Beacon
                     // Print the company ID + the raw data in hex format
                     //var manufacturerDataString = $"0x{manufacturerData.CompanyId.ToString("X")}: {BitConverter.ToString(manufacturerData.Data.ToArray())}";
                     //Debug.WriteLine("Manufacturer data: " + manufacturerDataString);
+
                     var manufacturerDataArry = manufacturerData.Data.ToArray();
-                    if (manufacturerData.CompanyId == 0x4C && manufacturerData.Data.Length >= 23 &&
-                        manufacturerDataArry[0] == 0x02)
+                    if (BeaconFrameHelper.IsProximityBeaconPayload(manufacturerData.CompanyId, manufacturerDataArry))
                     {
                         BeaconType = BeaconTypeEnum.iBeacon;
                         //Debug.WriteLine("iBeacon Frame: " + BitConverter.ToString(manufacturerDataArry));
+
+                        var beaconFrame = new ProximityBeaconFrame(manufacturerDataArry);
+
                         // Only one relevant data frame for iBeacons
                         if (BeaconFrames.Any())
                         {
-                            BeaconFrames[0].Payload = manufacturerDataArry;
+                            BeaconFrames[0].Update(beaconFrame);
                         }
                         else
                         {
-                            BeaconFrames.Add(new UnknownBeaconFrame(manufacturerDataArry));
+                            BeaconFrames.Add(beaconFrame);
                         }
                     }
                 }

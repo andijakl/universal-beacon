@@ -107,5 +107,13 @@ namespace UniversalBeaconLibrary.Beacon
         {
             return new byte[] {0xAA, 0xFE, (byte)eddystoneType};
         }
+
+        public static bool IsProximityBeaconPayload(ushort companyId, byte[] manufacturerData)
+        {
+            return companyId == ProximityBeaconFrame.CompanyId &&
+                   manufacturerData.Length >= 23 &&
+                   manufacturerData[0] == ProximityBeaconFrame.DataType && 
+                   manufacturerData[1] == ProximityBeaconFrame.DataLength;
+        }
     }
 }

@@ -118,6 +118,7 @@
     <Compile Include="Beacon\BeaconFrameBase.cs" />
     <Compile Include="Beacon\BeaconFrameHelper.cs" />
     <Compile Include="Beacon\BeaconManager.cs" />
+    <Compile Include="Beacon\ProximityBeaconFrame.cs" />
     <Compile Include="Beacon\TlmEddystoneFrame.cs" />
     <Compile Include="Beacon\UidEddystoneFrame.cs" />
     <Compile Include="Beacon\UnknownBeaconFrame.cs" />

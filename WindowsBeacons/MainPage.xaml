@@ -10,7 +10,6 @@
     mc:Ignorable="d"
     RequestedTheme="Light">
 
-
     <Page.Resources>
         <converter:BeaconTypeToTextConverter x:Key="BeaconTypeToTextConverter"/>
         <converter:BeaconFrameTypeToTextConverter x:Key="BeaconFrameTypeToTextConverter"/>
@@ -169,6 +168,63 @@
         </DataTemplate>
 
 
+        <DataTemplate x:Key="ProximityBeaconFrameTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding ElementName=MainPageItem, Path=LeftColumnWidth, Converter={StaticResource IntToGridLengthConverter}}"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <!-- Frame type -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                           Text="{Binding Converter={StaticResource BeaconFrameTypeToTextConverter}}"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource FrameTypeTextBlockStyle}"/>
+                <!-- Uuid -->
+                <TextBlock Grid.Row="1" Grid.Column="0"
+                           x:Uid="Uuid"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource BoldInfoTextBlockStyle}"/>
+                <TextBlock Grid.Row="1" Grid.Column="1"
+                           Text="{Binding UuidAsString, Mode=OneWay}"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource InfoTextBlockStyle}"/>
+                <!-- Major -->
+                <TextBlock Grid.Row="2" Grid.Column="0"
+                           x:Uid="Major"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource BoldInfoTextBlockStyle}"/>
+                <TextBlock Grid.Row="2" Grid.Column="1"
+                           Text="{Binding MajorAsString, Mode=OneWay}"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource InfoTextBlockStyle}"/>
+                <!-- Minor -->
+                <TextBlock Grid.Row="3" Grid.Column="0"
+                           x:Uid="Minor"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource BoldInfoTextBlockStyle}"/>
+                <TextBlock Grid.Row="3" Grid.Column="1"
+                           Text="{Binding MinorAsString, Mode=OneWay}"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource InfoTextBlockStyle}"/>
+                <!-- TX Power -->
+                <TextBlock Grid.Row="4" Grid.Column="0"
+                           x:Uid="TxPower"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource BoldInfoTextBlockStyle}"/>
+                <TextBlock Grid.Row="4" Grid.Column="1"
+                           Text="{Binding TxPower, Mode=OneWay}"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource InfoTextBlockStyle}"/>
+            </Grid>
+        </DataTemplate>  
+        
         <DataTemplate x:Key="UnknownBeaconFrameTemplate">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -201,7 +257,8 @@
                                      UrlEddystoneFrameTemplate="{StaticResource UrlEddystoneFrameTemplate}"
                                      TlmEddystoneFrameTemplate="{StaticResource TlmEddystoneFrameTemplate}"
                                      UidEddystoneFrameTemplate="{StaticResource UidEddystoneFrameTemplate}"
-                                     UnknownBeaconFrameTemplate="{StaticResource UnknownBeaconFrameTemplate}"/>
+                                     ProximityBeaconFrameTemplate="{StaticResource ProximityBeaconFrameTemplate}"
+                                     UnknownBeaconFrameTemplate="{StaticResource UnknownBeaconFrameTemplate}" />
 
         <DataTemplate x:Name="BeaconInfoTemplate">
             <Grid>

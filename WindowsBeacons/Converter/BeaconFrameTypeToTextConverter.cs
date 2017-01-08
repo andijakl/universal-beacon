@@ -33,6 +33,8 @@ namespace WindowsBeacons.Converter
                 return "UID Frame";
             if (value is UrlEddystoneFrame)
                 return "URL Frame";
+            if (value is ProximityBeaconFrame)
+                return "Proximity Frame";
 
             return null;
         }
