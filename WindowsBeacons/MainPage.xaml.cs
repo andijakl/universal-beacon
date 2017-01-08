@@ -89,10 +89,10 @@ namespace WindowsBeacons
 //            // Ranging Data 0xEE = -18dbM: needs unchecked syntax to cast constants, works without unchecked for runtime variables
 //            // (sbyte)0x12 = +18dbM
 //            // Sample values from: https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.tx_power_level.xml
-//            eddystoneBeacon.BeaconFrames.Add(new UidEddystoneFrame(unchecked((sbyte)0xEE),         
+//            eddystoneBeacon.BeaconFrames.Add(new UidEddystoneFrame(unchecked((sbyte)0xEE),
 //                new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A },
 //                new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 }));
-//            eddystoneBeacon.BeaconFrames.Add(new UrlEddystoneFrame(220, "http://www.nfcinteractor.com"));
+//            eddystoneBeacon.BeaconFrames.Add(new UrlEddystoneFrame(unchecked((sbyte) 220), "http://www.nfcinteractor.com"));
 //            eddystoneBeacon.Rssi = -49;
 //            eddystoneBeacon.BluetoothAddress = 0x0000e27ef189f6c4; // 3
 //            eddystoneBeacon.Timestamp = DateTimeOffset.Now;

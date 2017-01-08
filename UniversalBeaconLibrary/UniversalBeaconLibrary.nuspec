@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
   <metadata minClientVersion="3.0">
     <id>UniversalBeaconLibrary</id>
-    <version>1.8.1</version>
+    <version>1.9.0</version>
 	<releaseNotes>Use sbyte instead of byte for accessing ranging data in Eddystone UID and URL frames to ease development and remove the need for manual casting.</releaseNotes>
     <title>Universal Beacon Library for the Universal Windows Platform (Windows 10 UWP)</title>
     <authors>Andreas Jakl</authors>
@@ -13,7 +13,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 	<summary>Support Bluetooth Beacons in UWP / Windows 10 apps. Manages beacon instances, advertisements, frames and protocols. Includes Eddystone parsing.</summary>
     <description>Adds support for Bluetooth Beacons to the Universal Windows Platform (Windows 10). Manages received Bluetooth advertisements, clusters them into individual beacons and parses the advertisement payloads according to specifications including the Eddystone open Bluetooth Smart beacon format from Google.</description>
-    <copyright>Copyright 2015 - 2016 Andreas Jakl, Tieto Corporation. All rights reserved.</copyright>
+    <copyright>Copyright 2015 - 2017 Andreas Jakl. All rights reserved.</copyright>
     <tags>bluetooth beacon beacons ibeacon eddystone altbeacon bluetoothle bluetoothsmart bluetooth le bluetooth smart ble proximity universal</tags>
     <dependencies>
       <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.0.0" />

@@ -83,10 +83,15 @@
                            x:Uid="Url"
                            TextWrapping="Wrap"
                            Style="{StaticResource BoldInfoTextBlockStyle}"/>
-                <TextBlock Grid.Row="1" Grid.Column="1"
+                <HyperlinkButton Grid.Row="1" Grid.Column="1"
+                                 Content="{Binding CompleteUrl, Mode=OneWay}"
+                                 NavigateUri="{Binding CompleteUrl, Mode=OneWay}"
+                                 Style="{StaticResource HyperlinkStyle}"
+                                 Margin="12, 0, 12, 0"/>
+                <!--<TextBlock Grid.Row="1" Grid.Column="1"
                            Text="{Binding CompleteUrl, Mode=OneWay}"
                            TextWrapping="Wrap"
-                           Style="{StaticResource InfoTextBlockStyle}"/>
+                           Style="{StaticResource InfoTextBlockStyle}"/>-->
                 <!-- Ranging Data -->
                 <TextBlock Grid.Row="2" Grid.Column="0"
                            x:Uid="RangingData"
@@ -313,10 +318,10 @@
                            Style="{StaticResource InfoTextBlockStyle}"/>
                 <!-- Frames -->
                 <ListView Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" 
-                          SelectionMode="None"
                           ItemsSource="{Binding BeaconFrames, Mode=OneWay}"
                           ItemTemplateSelector="{StaticResource FrameTemplateSelector}"
-                          HorizontalContentAlignment="Stretch" IsHitTestVisible="False">
+                          SelectionMode="None"
+                          HorizontalContentAlignment="Stretch">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -357,7 +362,6 @@
 
         <SplitView.Content>
             <Grid x:Name="ContentGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                <!--Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"-->
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -403,8 +407,8 @@
                 <!-- Beacon scan results -->
                 <ListView x:Name="BeaconListView" 
                   Grid.Row="1" 
-                  SelectionMode="None"
                   ItemTemplate="{StaticResource BeaconInfoTemplate}" 
+                  SelectionMode="None"
                   HorizontalContentAlignment="Stretch">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
