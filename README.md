@@ -1,8 +1,8 @@
 # Universal Beacon Library for Windows 10
 
-Support for Bluetooth® Beacons for the Universal Windows Platform (Windows 10), including the Eddystone™ Smart beacon format.
+Support for Bluetooth® Beacons for the Universal Windows Platform (Windows 10), including the open Eddystone™ Bluetooth beacon format from Google.
 
-Directly use the received Bluetooth Smart Advertisement notifications from the Windows 10 base system and let the library take care of the rest for you. It extracts, combines and updates unique beacons, associated individual frames to the beacons and parses their contents - e.g., the beacon IDs, URLs or telemetry information like temperature or battery voltage.
+Directly use the received Bluetooth Low Energy Advertisement notifications from the Windows 10 base system and let the library take care of the rest for you. It extracts, combines and updates unique beacons, associated individual frames to the beacons and parses their contents - e.g., the beacon IDs, URLs or telemetry information like temperature or battery voltage.
 
 [NuGet Library Download](https://www.nuget.org/packages/UniversalBeaconLibrary) | [Windows 10 Example App Download](https://www.microsoft.com/store/apps/9NBLGGH1Z24K)
 
@@ -10,7 +10,7 @@ Directly use the received Bluetooth Smart Advertisement notifications from the W
 
 ## Background - Bluetooth Beacons
 
-Bluetooth Low Energy / LE / Smart allows objects to be discovered - for example, it enables your phone to connect to a heart rate belt or a headset. A Bluetooth Beacon does not connect to your phone; instead, it continuously transmits small amounts of data - no matter if someone is listening or not. The efficient nature of Bluetooth Smart ensures that the battery of a beacon nevertheless lasts several months.
+Bluetooth Low Energy / LE (BLE) allows objects to be discovered - for example, it enables your phone to connect to a heart rate belt or a headset. A Bluetooth Beacon does not connect to your phone; instead, it continuously transmits small amounts of data - no matter if someone is listening or not. The efficient nature of Bluetooth Smart ensures that the battery of a beacon nevertheless lasts several months.
 
 Phones and apps can react to Bluetooth Beacons - e.g., to trigger specific actions when the user is close to a physical location. In contrast to GPS, this works even indoors and has a much better accuracy.
 
@@ -26,7 +26,7 @@ As a developer, you only have to feed the received Bluetooth advertisements into
 
 Clustering is achieved through the Bluetooth address (MAC): the constant and regular advertisements of multiple beacons are matched to unique beacons.
 
-The next step is analyzing the conents of the advertisement payloads. The library recognizes Apple iBeacons and fully parses the open [Eddystone specification](https://github.com/google/eddystone), including all three frame types that have been defined:
+The next step is analyzing the conents of the advertisement payloads. The library recognizes Apple iBeacons and fully parses the open [Eddystone specification](https://github.com/google/eddystone), including three frame types that have been defined:
 
 * UID frames
 * URL frames
@@ -61,9 +61,9 @@ Instead of having to implement the Eddystone specification yourself and worry ab
 
 ## Windows 10 Example App
 
-The included Windows 10 example app continuously scans for Bluetooth LE advertisements. It associates these with known or new Bluetooth MAC addresses to identify beacons. The individual advertisement frames are then parsed for known frame types - which are currently the three frame types defined by the Google Eddystone specification.
+The included Windows 10 example app continuously scans for Bluetooth LE advertisements. It associates these with known or new Bluetooth MAC addresses to identify beacons. The individual advertisement frames are then parsed for known frame types - which are currently the three frame types defined by the Eddystone beacon format by Google.
 
-The app has been tested on Windows 10 tablets and phones and requires Bluetooth LE / Smart capable hardware. Make sure your device has Bluetooth activated (in Windows settings and also in hardware in case your device allows turning off bluetooth using a key combination) and is not in airplane mode.
+The app has been tested on Windows 10 tablets and phones and requires Bluetooth LE (BLE) capable hardware. Make sure your device has Bluetooth activated (in Windows settings and also in hardware in case your device allows turning off bluetooth using a key combination) and is not in airplane mode.
 
 Download and test the example app from the Windows 10 store: https://www.microsoft.com/store/apps/9NBLGGH1Z24K
 
@@ -153,7 +153,7 @@ public sealed partial class MainPage : Page
 
 ## Availability
 
-The Universal Beacon Library is available in C# and includes a dependency to .NETCore the Universal Windows Platform (UWP / UAP) for Windows 10 to directly work with received advertisement packets from the Windows Bluetooth API. The library can therefore be used in applications targeting Windows 10 with support for Bluetooth Smart / LE.
+The Universal Beacon Library is available in C# and includes a dependency to .NETCore the Universal Windows Platform (UWP / UAP) for Windows 10 to directly work with received advertisement packets from the Windows Bluetooth API. The library can therefore be used in applications targeting Windows 10 with support for Bluetooth Low Energy / LE (BLE).
 
 To keep up to date, either watch this project or [follow me on Twitter](https://twitter.com/andijakl).
 
@@ -229,6 +229,7 @@ The example application is licensed under the GPL v3 license - see LICENSE.GPL f
 
 Developed by Andreas Jakl
 https://twitter.com/andijakl
+https://www.andreasjakl.com/
 
 Library homepage on GitHub:
 https://github.com/andijakl/universal-beacon
