@@ -1,6 +1,6 @@
 # Universal Beacon Library for Windows 10
 
-Support for Bluetooth® Beacons for the Universal Windows Platform (Windows 10), including the open Eddystone™ Bluetooth beacon format from Google.
+Support for Bluetooth® Beacons for the Universal Windows Platform (Windows 10), including the open Eddystone™ Bluetooth beacon format from Google and Apple® iBeacon™ compatible beacons.
 
 Directly use the received Bluetooth Low Energy Advertisement notifications from the Windows 10 base system and let the library take care of the rest for you. It extracts, combines and updates unique beacons, associated individual frames to the beacons and parses their contents - e.g., the beacon IDs, URLs or telemetry information like temperature or battery voltage.
 
@@ -26,13 +26,15 @@ As a developer, you only have to feed the received Bluetooth advertisements into
 
 Clustering is achieved through the Bluetooth address (MAC): the constant and regular advertisements of multiple beacons are matched to unique beacons.
 
-The next step is analyzing the conents of the advertisement payloads. The library recognizes Apple iBeacons and fully parses the open [Eddystone specification](https://github.com/google/eddystone), including three frame types that have been defined:
+The next step is analyzing the conents of the advertisement payloads. The library can work with data comparable to Apple iBeacon (Proximity Beacon), as well as the open [Eddystone specification](https://github.com/google/eddystone), including three frame types that have been defined:
 
 * UID frames
 * URL frames
 * Telemetry frames
 
-Instead of having to implement the Eddystone specification yourself and worry about encodings and byte orderings, you can directly access the latest available information through convenient classes and properties. For unknown frames of other beacon types, it's easy to extend the library to parse the payload in a derived beacon frame class and make use of the beacon management and information update features of the library.
+Instead of having to implement the specifications yourself and worry about encodings and byte orderings, you can directly access the latest available information through convenient classes and properties. For unknown frames of other beacon types, it's easy to extend the library to parse the payload in a derived beacon frame class and make use of the beacon management and information update features of the library.
+
+Note: for using iBeacon functionality you need to agree to and comply with the [Apple iBeacon license agreement](https://developer.apple.com/ibeacon/). The purpose of this library is to assist in making your services compatible with iOS devices.
 
 
 
@@ -175,6 +177,11 @@ To try the Windows 10 example app, download the complete library package from th
 
 
 ## Version History
+
+### 2.0.0 - March 2017 (work in progress)
+* Add iBeacon support (contribution from kobush, https://github.com/andijakl/universal-beacon/pull/4)
+* Make Eddystone URLs clickable
+* Updated dependencies
 
 ### 1.8.1 - February 2016
 * Use sbyte instead of byte for accessing ranging data in Eddystone UID and URL frames to ease development and remove the need for manual casting.
