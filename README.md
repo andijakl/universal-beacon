@@ -26,7 +26,7 @@ As a developer, you only have to feed the received Bluetooth advertisements into
 
 Clustering is achieved through the Bluetooth address (MAC): the constant and regular advertisements of multiple beacons are matched to unique beacons.
 
-The next step is analyzing the conents of the advertisement payloads. The library can work with data comparable to Apple iBeacon (Proximity Beacon), as well as the open [Eddystone specification](https://github.com/google/eddystone), including three frame types that have been defined:
+The next step is analyzing the conents of the advertisement payloads. The library can work with data comparable to Apple iBeacon (Proximity Beacon) frames, as well as the open [Eddystone specification](https://github.com/google/eddystone), including three frame types that have been defined:
 
 * UID frames
 * URL frames
@@ -34,7 +34,7 @@ The next step is analyzing the conents of the advertisement payloads. The librar
 
 Instead of having to implement the specifications yourself and worry about encodings and byte orderings, you can directly access the latest available information through convenient classes and properties. For unknown frames of other beacon types, it's easy to extend the library to parse the payload in a derived beacon frame class and make use of the beacon management and information update features of the library.
 
-Note: for using iBeacon functionality you need to agree to and comply with the [Apple iBeacon license agreement](https://developer.apple.com/ibeacon/). The purpose of this library is to assist in making your services compatible with iOS devices.
+Note: for using Apple iBeacon technology in your services (in order to make your services compatible to iOS devices), you need to agree to and comply with the [Apple iBeacon license agreement](https://developer.apple.com/ibeacon/).
 
 
 
@@ -57,6 +57,7 @@ Note: for using iBeacon functionality you need to agree to and comply with the [
 - Eddystone URL frame:
   - Ranging data
   - Complete URL
+- Frames comparable to the Apple iBeacon format
 - Raw payload for all other beacons, including Apple iBeacon
 
 
