@@ -1,6 +1,6 @@
 # Universal Beacon Library for Windows 10
 
-Support for Bluetooth® Beacons for the Universal Windows Platform (Windows 10), including the open Eddystone™ Bluetooth beacon format from Google and Apple® iBeacon™ compatible beacons.
+Support for Bluetooth® Beacons for the Universal Windows Platform (Windows 10), including the open Eddystone™ Bluetooth beacon format from Google, as well as beacons comparable to Apple® iBeacon™.
 
 Directly use the received Bluetooth Low Energy Advertisement notifications from the Windows 10 base system and let the library take care of the rest for you. It extracts, combines and updates unique beacons, associated individual frames to the beacons and parses their contents - e.g., the beacon IDs, URLs or telemetry information like temperature or battery voltage.
 
@@ -58,7 +58,7 @@ Note: for using Apple iBeacon technology in your services (in order to make your
   - Ranging data
   - Complete URL
 - Frames comparable to the Apple iBeacon format
-- Raw payload for all other beacons, including Apple iBeacon
+- Raw payload for all other beacons
 
 
 
@@ -179,10 +179,11 @@ To try the Windows 10 example app, download the complete library package from th
 
 ## Version History
 
-### 2.0.0 - March 2017 (work in progress)
-* Add iBeacon support (contribution from kobush, https://github.com/andijakl/universal-beacon/pull/4)
+### 2.0.0 - April 2017
+* Add support for beacons comparable to iBeacons (contribution from kobush, https://github.com/andijakl/universal-beacon/pull/4)
 * Make Eddystone URLs clickable
 * Updated dependencies
+* Fix status bar color on Windows 10 Mobile (thanks to Jesse Leskinen for the hint https://twitter.com/jessenic/status/806869124056043521)
 
 ### 1.8.1 - February 2016
 * Use sbyte instead of byte for accessing ranging data in Eddystone UID and URL frames to ease development and remove the need for manual casting.
@@ -231,7 +232,7 @@ https://github.com/andijakl/universal-beacon/issues
 ## License & Related Information
 
 The library is released under the Apache license and is partly based on the [Eddystone™](https://github.com/google/eddystone) specification, which is also released under Apache license - see the LICENSE file for details.
-iBeacon™ is a Trademark by Apple Inc. Bluetooth® and Bluetooth Smart are registered trademarks of Bluetooth SIG, Inc.
+iBeacon™ is a Trademark by Apple Inc. Bluetooth® is a registered trademarks of Bluetooth SIG, Inc.
 
 The example application is licensed under the GPL v3 license - see LICENSE.GPL for details.
 

@@ -1,7 +1,7 @@
 ﻿// Copyright 2015 - 2017 Andreas Jakl. All rights reserved. 
 // https://github.com/andijakl/universal-beacon 
 // 
-// Based on the Google Eddystone specification, 
+// Based on the Eddystone specification by Google, 
 // available under Apache License, Version 2.0 from
 // https://github.com/google/eddystone
 // 
@@ -65,7 +65,10 @@ namespace UniversalBeaconLibrary.Beacon
 
             // Beacon was not yet known - add it to the list.
             var newBeacon = new Beacon(btAdv);
-            BluetoothBeacons.Add(newBeacon);
+            if (newBeacon.BeaconType != Beacon.BeaconTypeEnum.Unknown)
+            {
+                BluetoothBeacons.Add(newBeacon);
+            }
         }
     }
 }

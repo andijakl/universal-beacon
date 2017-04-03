@@ -135,6 +135,12 @@
   <data name="BatteryInMilliV.Text" xml:space="preserve">
     <value>Batterie [mV]: </value>
   </data>
+  <data name="BlogButton.Content" xml:space="preserve">
+    <value>Blog</value>
+  </data>
+  <data name="BlogButton.NavigateUri" xml:space="preserve">
+    <value>https://www.andreasjakl.com</value>
+  </data>
   <data name="BluetoothAddress.Text" xml:space="preserve">
     <value>Adresse: </value>
   </data>
@@ -169,9 +175,9 @@
     <value>Instanz ID: </value>
   </data>
   <data name="Instructions.Text" xml:space="preserve">
-    <value>Sucht kontinuierlich nach Bluetooth Beacons in der Nähe deines Geräts. Wenn ein Beacon gefunden wird, wird dessen Nachricht automatisch analysiert - derzeit für Eddystone™, ein offenes Bluetooth® Smart Beacon Format von Google.
+    <value>Sucht kontinuierlich nach Bluetooth Beacons in der Nähe deines Geräts. Wenn ein Beacon gefunden wird, wird dessen Nachricht automatisch analysiert – derzeit für Eddystone™, ein offenes Bluetooth® Smart Beacon Format von Google®, sowie für Beacons, die kompatibel zum iBeacon™ Format von Apple® sind.
 
-Stelle sicher, dass dein Gerät Bluetooth Smart (LE) unterstützt und dass Bluetooth in deinem Gerät aktiviert ist!</value>
+Stelle sicher, dass dein Gerät Bluetooth LE unterstützt und dass Bluetooth in deinem Gerät aktiviert ist!</value>
   </data>
   <data name="LibraryUrlButton.Content" xml:space="preserve">
     <value>github.com/andijakl/universal-beacon</value>

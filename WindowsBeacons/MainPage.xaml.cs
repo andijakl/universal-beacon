@@ -23,6 +23,8 @@ using System.Runtime.CompilerServices;
 using Windows.ApplicationModel.Resources;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.Advertisement;
+using Windows.Foundation.Metadata;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -82,22 +84,30 @@ namespace WindowsBeacons
             _beaconManager = new BeaconManager();
             BeaconListView.ItemsSource = _beaconManager.BluetoothBeacons;
 
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                // Make sure the status bar is visible also in the light mode on Windows 10 Mobile
+                Windows.UI.ViewManagement.StatusBar.GetForCurrentView().BackgroundColor = Color.FromArgb(0, 255, 255, 255);
+                Windows.UI.ViewManagement.StatusBar.GetForCurrentView().BackgroundOpacity = 1;
+                Windows.UI.ViewManagement.StatusBar.GetForCurrentView().ForegroundColor = Colors.Black;
+            }
+
             // Simulate beacon info
-//#if DEBUG
-//            var eddystoneBeacon = new Beacon(Beacon.BeaconTypeEnum.Eddystone);
-//            eddystoneBeacon.BeaconFrames.Add(new TlmEddystoneFrame(0, 3100, (float)25.5, 2000, 1000));
-//            // Ranging Data 0xEE = -18dbM: needs unchecked syntax to cast constants, works without unchecked for runtime variables
-//            // (sbyte)0x12 = +18dbM
-//            // Sample values from: https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.tx_power_level.xml
-//            eddystoneBeacon.BeaconFrames.Add(new UidEddystoneFrame(unchecked((sbyte)0xEE),
-//                new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A },
-//                new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 }));
-//            eddystoneBeacon.BeaconFrames.Add(new UrlEddystoneFrame(unchecked((sbyte) 220), "http://www.nfcinteractor.com"));
-//            eddystoneBeacon.Rssi = -49;
-//            eddystoneBeacon.BluetoothAddress = 0x0000e27ef189f6c4; // 3
-//            eddystoneBeacon.Timestamp = DateTimeOffset.Now;
-//            _beaconManager.BluetoothBeacons.Add(eddystoneBeacon);
-//#endif
+            //#if DEBUG
+            //            var eddystoneBeacon = new Beacon(Beacon.BeaconTypeEnum.Eddystone);
+            //            eddystoneBeacon.BeaconFrames.Add(new TlmEddystoneFrame(0, 3100, (float)25.5, 2000, 1000));
+            //            // Ranging Data 0xEE = -18dbM: needs unchecked syntax to cast constants, works without unchecked for runtime variables
+            //            // (sbyte)0x12 = +18dbM
+            //            // Sample values from: https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.tx_power_level.xml
+            //            eddystoneBeacon.BeaconFrames.Add(new UidEddystoneFrame(unchecked((sbyte)0xEE),
+            //                new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A },
+            //                new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 }));
+            //            eddystoneBeacon.BeaconFrames.Add(new UrlEddystoneFrame(unchecked((sbyte) 220), "http://www.nfcinteractor.com"));
+            //            eddystoneBeacon.Rssi = -49;
+            //            eddystoneBeacon.BluetoothAddress = 0x0000e27ef189f6c4; // 3
+            //            eddystoneBeacon.Timestamp = DateTimeOffset.Now;
+            //            _beaconManager.BluetoothBeacons.Add(eddystoneBeacon);
+            //#endif
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

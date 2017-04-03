@@ -246,4 +246,10 @@
   <data name="ContactEmailButton.NavigateUri" xml:space="preserve">
     <value>mailto:andreas.jakl@live.com</value>
   </data>
+  <data name="BlogButton.Content" xml:space="preserve">
+    <value>Блог</value>
+  </data>
+  <data name="BlogButton.NavigateUri" xml:space="preserve">
+    <value>https://www.andreasjakl.com</value>
+  </data>
 </root>

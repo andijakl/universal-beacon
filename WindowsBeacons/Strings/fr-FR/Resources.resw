@@ -142,19 +142,19 @@
     <value>Contacter par e-mail :</value>
   </data>
   <data name="ErrorDeviceNotConnected" xml:space="preserve">
-    <value>Impossible de se connecter à un module radio compatible Bluetooth Low Energy sur votre appareil. Assurez-vous de sa disponibilité et de son activation (qu&apos;il n&apos;est pas, par exemple, en mode avion) et réessayez.</value>
+    <value>Impossible de se connecter à un module radio compatible Bluetooth Low Energy sur votre appareil. Assurez-vous de sa disponibilité et de son activation (qu'il n'est pas, par exemple, en mode avion) et réessayez.</value>
   </data>
   <data name="ErrorDisabledByPolicy" xml:space="preserve">
-    <value>Une politique empêche cette application d&apos;accéder à votre module radio Bluetooth. Assurez-vous d&apos;autoriser l&apos;application à accéder au Bluetooth ou aux appareils à proximité.</value>
+    <value>Une politique empêche cette application d'accéder à votre module radio Bluetooth. Assurez-vous d'autoriser l'application à accéder au Bluetooth ou aux appareils à proximité.</value>
   </data>
   <data name="ErrorNoRadioAvailable" xml:space="preserve">
-    <value>Aucun module radio compatible Bluetooth Low Energy n&apos;est disponible ou il a été désactivé (par ex., mode avion)</value>
+    <value>Aucun module radio compatible Bluetooth Low Energy n'est disponible ou il a été désactivé (par ex., mode avion)</value>
   </data>
   <data name="ErrorNotSupported" xml:space="preserve">
-    <value>Votre appareil n&apos;autorise pas l&apos;accès à un module radio compatible Bluetooth Low Energy. Vérifiez que votre appareil est équipé du matériel requis pour rechercher les balises Bluetooth et qu&apos;il est activé.</value>
+    <value>Votre appareil n'autorise pas l'accès à un module radio compatible Bluetooth Low Energy. Vérifiez que votre appareil est équipé du matériel requis pour rechercher les balises Bluetooth et qu'il est activé.</value>
   </data>
   <data name="ErrorResourceInUse" xml:space="preserve">
-    <value>La radio Bluetooth est déjà utilisée et il est impossible d&apos;y accéder. Réessayez plus tard.</value>
+    <value>La radio Bluetooth est déjà utilisée et il est impossible d'y accéder. Réessayez plus tard.</value>
   </data>
   <data name="FailedRestartingBluetoothWatch" xml:space="preserve">
     <value>Échec au redémarrage de la recherche Bluetooth. Vérifiez que le Bluetooth est activé sur votre appareil et que le mode avion est désactivé. Appuyez ici pour réessayer.</value>
@@ -163,10 +163,10 @@
     <value>&lt; Infos</value>
   </data>
   <data name="InstanceId.Text" xml:space="preserve">
-    <value>ID de l&apos;instance : </value>
+    <value>ID de l'instance : </value>
   </data>
   <data name="Instructions.Text" xml:space="preserve">
-    <value>Recherche automatiquement les balises Bluetooth à proximité de votre appareil. Si une balise est détectée, son message est analysé - actuellement pour Eddystone™, un format ouvert de balises intelligentes Bluetooth® fourni par Google. Assurez-vous que votre appareil prend en charge ce format et que le Bluetooth est activé dans les paramètres de votre appareil !</value>
+    <value>Recherche automatiquement les balises Bluetooth à proximité de votre appareil. Si une balise est détectée, son message est analysé – actuellement pour Eddystone™, un format ouvert de balises intelligentes Bluetooth® fourni par Google. Assurez-vous que votre appareil prend en charge ce format et que le Bluetooth est activé dans les paramètres de votre appareil !</value>
   </data>
   <data name="MajorId.Text" xml:space="preserve">
     <value>ID majeure</value>
@@ -184,7 +184,7 @@
     <value>Confidentialité</value>
   </data>
   <data name="PrivacyText.Text" xml:space="preserve">
-    <value>Cette application ne stocke, ne collecte ou ne transmet aucune données d&apos;identification personnelle.</value>
+    <value>Cette application ne stocke, ne collecte ou ne transmet aucune données d'identification personnelle.</value>
   </data>
   <data name="RangingData.Text" xml:space="preserve">
     <value>Plage de données : </value>
@@ -208,7 +208,7 @@
     <value>Conditions générales</value>
   </data>
   <data name="TermsText.Text" xml:space="preserve">
-    <value>Cette application est un échantillon d&apos;une bibliothèque de balises universelles Open Source. Eddystone est un format ouvert de balises intelligentes Bluetooth® fourni par Google et distribué sous une licence Apache. iBeacon est une marque de commerce d&apos;Apple Inc.</value>
+    <value>Cette application est un échantillon d'une bibliothèque de balises universelles Open Source. Eddystone est un format ouvert de balises intelligentes Bluetooth® fourni par Google et distribué sous une licence Apache. iBeacon est une marque de commerce d'Apple Inc.</value>
   </data>
   <data name="TimeSincePowerUp.Text" xml:space="preserve">
     <value>Durée depuis mise sous tension [.1 s] : </value>
@@ -245,5 +245,11 @@
   </data>
   <data name="ContactEmailButton.NavigateUri" xml:space="preserve">
     <value>mailto:andreas.jakl@live.com</value>
+  </data>
+  <data name="BlogButton.Content" xml:space="preserve">
+    <value>Blog</value>
+  </data>
+  <data name="BlogButton.NavigateUri" xml:space="preserve">
+    <value>https://www.andreasjakl.com</value>
   </data>
 </root>
