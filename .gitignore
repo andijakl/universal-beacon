@@ -21,6 +21,7 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+*.appx
 
 # Visual Studo 2015 cache/options directory
 .vs/
@@ -197,3 +198,5 @@ FakesAssemblies/
 /UniversalBeaconLibrary/nuget.exe
 /UniversalBeaconLibrary/project.lock.json
 /WindowsBeacons/project.lock.json
+/WindowsBeacons/BundleArtifacts
+/WindowsBeacons/Package.StoreAssociation.xml
