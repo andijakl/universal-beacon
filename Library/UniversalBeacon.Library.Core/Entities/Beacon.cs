@@ -22,11 +22,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Devices.Bluetooth.Advertisement;
-using UniversalBeaconLibrary.Annotations;
 
-namespace UniversalBeaconLibrary.Beacon
+namespace UniversalBeaconLibrary
 {
     /// <summary>
     /// Represents a single unique beacon that has a specified Bluetooth MAC address.
@@ -139,7 +136,7 @@ namespace UniversalBeaconLibrary.Beacon
         /// </summary>
         /// <param name="btAdv">Bluetooth advertisement to parse, as received from
         /// the Windows Bluetooth LE API.</param>
-        public Beacon(BluetoothLEAdvertisementReceivedEventArgs btAdv)
+        public Beacon(BLEAdvertisementPacket btAdv)
         {
             BluetoothAddress = btAdv.BluetoothAddress;
             UpdateBeacon(btAdv);
@@ -161,7 +158,7 @@ namespace UniversalBeaconLibrary.Beacon
         /// </summary>
         /// <param name="btAdv">Bluetooth advertisement to parse, as received from
         /// the Windows Bluetooth LE API.</param>
-        public void UpdateBeacon(BluetoothLEAdvertisementReceivedEventArgs btAdv)
+        public void UpdateBeacon(BLEAdvertisementPacket btAdv)
         {
             if (btAdv == null) return;
 
@@ -218,6 +215,7 @@ namespace UniversalBeaconLibrary.Beacon
             }
 
             // Manufacturer data - currently unused
+/*
             if (btAdv.Advertisement.ManufacturerData.Any())
             {
                 foreach (var manufacturerData in btAdv.Advertisement.ManufacturerData)
@@ -246,9 +244,10 @@ namespace UniversalBeaconLibrary.Beacon
                     }
                 }
             }
+*/
         }
 
-        private void ParseEddystoneData(BluetoothLEAdvertisementReceivedEventArgs btAdv)
+        private void ParseEddystoneData(BLEAdvertisementPacket btAdv)
         {
             // Parse Eddystone data
             foreach (var dataSection in btAdv.Advertisement.DataSections)
@@ -257,7 +256,7 @@ namespace UniversalBeaconLibrary.Beacon
                 //                BitConverter.ToString(dataSection.Data.ToArray()));
                 //+ " (" + Encoding.UTF8.GetString(dataSection.Data.ToArray()) + ")\n");
 
-                // Relevant data of Eddystone is in data section 0x16
+                // Relvant data of Eddystone is in data section 0x16
                 // Windows receives: 0x01 = 0x06
                 //                   0x03 = 0xAA 0xFE
                 //                   0x16 = 0xAA 0xFE [type] [data]
@@ -307,7 +306,6 @@ namespace UniversalBeaconLibrary.Beacon
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
