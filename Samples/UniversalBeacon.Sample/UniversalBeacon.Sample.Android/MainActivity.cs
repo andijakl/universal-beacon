@@ -6,6 +6,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using OpenNETCF.IoC;
+using UniversalBeaconLibrary;
 
 namespace UniversalBeacon.Sample.Droid
 {
@@ -14,6 +16,13 @@ namespace UniversalBeacon.Sample.Droid
     {
         protected override void OnCreate(Bundle bundle)
         {
+            var provider = RootWorkItem.Services.Get<IBluetoothPacketProvider>();
+            if (provider == null)
+            {
+                provider = new AndroidBluetoothPacketProvider(this);
+                RootWorkItem.Services.Add<IBluetoothPacketProvider>(provider);
+            }
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 

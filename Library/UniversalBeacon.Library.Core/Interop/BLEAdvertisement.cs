@@ -7,9 +7,9 @@ namespace UniversalBeaconLibrary
     public sealed class BLEAdvertisement
     {
         public string LocalName { get; set; }
-        public List<Guid> ServiceUuids { get; private set; }
-        public List<BLEAdvertisementDataSection> DataSections { get; private set; }
-        public List<BLEManufacturerData> ManufacturerData { get; private set; }
+        public List<Guid> ServiceUuids { get; set; }
+        public List<BLEAdvertisementDataSection> DataSections { get; set; }
+        public List<BLEManufacturerData> ManufacturerData { get; set; }
 
         public BLEAdvertisement()
         {

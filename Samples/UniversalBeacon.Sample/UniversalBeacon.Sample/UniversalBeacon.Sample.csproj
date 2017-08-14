@@ -5,8 +5,13 @@
         <TargetFramework>netstandard1.3</TargetFramework>
         <PackageTargetFallback>portable-net45+win8+wpa81+wp8</PackageTargetFallback>
         <DebugType>full</DebugType>
-        <RootNamespace>EnRoute.Mobile</RootNamespace>
+        <RootNamespace>UniversalBeacon.Sample</RootNamespace>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="ViewCells\EddystoneTLMViewCell.xaml" />
+      <None Remove="ViewCells\GenericViewCell.xaml" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="opennetcf-analytics-netstandard" Version="1.0.17184" />
@@ -21,6 +26,12 @@
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewCells\EddystoneTLMViewCell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewCells\GenericViewCell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
@@ -49,5 +60,13 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Library\UniversalBeacon.Library.Core\UniversalBeacon.Library.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="ViewCells\EddystoneTLMViewCell.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ViewCells\GenericViewCell.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

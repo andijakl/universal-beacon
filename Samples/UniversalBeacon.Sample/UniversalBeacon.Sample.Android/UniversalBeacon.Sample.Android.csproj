@@ -128,6 +128,14 @@
     <AndroidResource Include="Resources\values\styles.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Library\UniversalBeacon.Library.Android\UniversalBeacon.Library.Android.csproj">
+      <Project>{6adc54d4-3b9b-495e-a2b8-f9cf5fd623ce}</Project>
+      <Name>UniversalBeacon.Library.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Library\UniversalBeacon.Library.Core\UniversalBeacon.Library.Core.csproj">
+      <Project>{83be2e56-2400-40a2-8d88-b5dae98213e1}</Project>
+      <Name>UniversalBeacon.Library.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UniversalBeacon.Sample\UniversalBeacon.Sample.csproj">
       <Project>{cb0cdd3c-f400-458c-ae3a-337087944257}</Project>
       <Name>UniversalBeacon.Sample</Name>
