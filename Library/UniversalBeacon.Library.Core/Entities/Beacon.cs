@@ -215,7 +215,6 @@ namespace UniversalBeaconLibrary
             }
 
             // Manufacturer data - currently unused
-/*
             if (btAdv.Advertisement.ManufacturerData.Any())
             {
                 foreach (var manufacturerData in btAdv.Advertisement.ManufacturerData)
@@ -244,7 +243,6 @@ namespace UniversalBeaconLibrary
                     }
                 }
             }
-*/
         }
 
         private void ParseEddystoneData(BLEAdvertisementPacket btAdv)

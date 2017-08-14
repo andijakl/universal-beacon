@@ -17,6 +17,8 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License. 
 
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace UniversalBeaconLibrary
@@ -33,17 +35,38 @@ namespace UniversalBeaconLibrary
     /// </summary>
     public class BeaconManager
     {
-        private IBluetoothPacketProvider m_provider;
+        public event EventHandler BeaconAdded;
 
-        public BeaconManager(IBluetoothPacketProvider provider)
+        private IBluetoothPacketProvider m_provider;
+        private Action<Action> m_invokeAction;
+
+        public BeaconManager(IBluetoothPacketProvider provider, Action<Action> invokeAction = null)
         {
             m_provider = provider;
             m_provider.AdvertisementPacketReceived += OnAdvertisementPacketReceived;
+            m_invokeAction = invokeAction;
+        }
+
+        public void Start()
+        {
+            m_provider.Start();
+        }
+
+        public void Stop()
+        {
+            m_provider.Stop();
         }
 
         private void OnAdvertisementPacketReceived(object sender, BLEAdvertisementPacketArgs e)
         {
-            ReceivedAdvertisement(e.Data);
+            if (m_invokeAction != null)
+            {
+                m_invokeAction(() => { ReceivedAdvertisement(e.Data); });
+            }
+            else
+            {
+                ReceivedAdvertisement(e.Data);
+            }
         }
 
         /// <summary>
@@ -77,10 +100,7 @@ namespace UniversalBeaconLibrary
 
             // Beacon was not yet known - add it to the list.
             var newBeacon = new Beacon(btAdv);
-            if (newBeacon.BeaconType != Beacon.BeaconTypeEnum.Unknown)
-            {
-                BluetoothBeacons.Add(newBeacon);
-            }
+            BluetoothBeacons.Add(newBeacon);
         }
     }
 }

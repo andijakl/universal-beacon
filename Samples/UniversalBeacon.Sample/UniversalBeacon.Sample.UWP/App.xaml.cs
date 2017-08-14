@@ -1,8 +1,10 @@
-﻿using System;
+﻿using OpenNETCF.IoC;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UniversalBeaconLibrary;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -39,10 +41,13 @@ namespace UniversalBeacon.Sample.UWP
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            var provider = new UniversalBeaconLibrary.WindowsBluetoothPacketProvider();
-            BeaconManager manager = new UniversalBeaconLibrary.Beacon.BeaconManager(provider);
-            
-//            RootWorkItem
+            // create the bluetooth provider if it doesn't yet exist
+            var existing = RootWorkItem.Services.Get<IBluetoothPacketProvider>();
+            if (existing == null)
+            {
+                RootWorkItem.Services.AddNew<WindowsBluetoothPacketProvider, IBluetoothPacketProvider>();
+            }
+
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {

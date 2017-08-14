@@ -22,60 +22,21 @@ namespace UniversalBeaconLibrary
                 };
 
             _watcher.Received += WatcherOnReceived;
-//            _watcher.Stopped += WatcherOnStopped;
-            _watcher.Start();
         }
 
         private void WatcherOnReceived(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs eventArgs)
         {
-
             AdvertisementPacketReceived?.Invoke(this, new BLEAdvertisementPacketArgs(eventArgs.ToUniversalBLEPacket()));
         }
 
         public void Start()
         {
+            _watcher.Start();
         }
 
         public void Stop()
         {
-        }
-    }
-
-    internal static class PacketExtensions
-    {
-        public static BLEAdvertisementPacket ToUniversalBLEPacket(this BluetoothLEAdvertisementReceivedEventArgs args)
-        {
-            var packet = new BLEAdvertisementPacket()
-            {
-                Timestamp = args.Timestamp,
-                BluetoothAddress = args.BluetoothAddress,
-                RawSignalStrengthInDBm = args.RawSignalStrengthInDBm,
-                AdvertisementType = (BLEAdvertisementType)args.AdvertisementType
-            };
-
-            packet.Advertisement = args.Advertisement.ToUniversalAdvertisement();
-            return packet;
-        }
-
-        public static BLEAdvertisement ToUniversalAdvertisement(this BluetoothLEAdvertisement a)
-        {
-            var result = new BLEAdvertisement()
-            {
-                LocalName = a.LocalName
-            };
-
-            result.ServiceUuids.AddRange(a.ServiceUuids);
-
-            foreach (var d in a.DataSections)
-            {
-                var data = new BLEAdvertisementDataSection();
-                data.DataType = d.DataType;
-                data.Data = d.Data.ToArray();
-
-                result.DataSections.Add(data);
-            }
-
-            return result;
+            _watcher.Stop();
         }
     }
 }

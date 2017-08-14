@@ -158,7 +158,9 @@ namespace UniversalBeaconLibrary
                     // If not supported (for example in a USB-powered beacon) the value should be zeroed.
                     var batteryBytes = reader.ReadBytes(2);
                     if (BitConverter.IsLittleEndian)
+                    {
                         Array.Reverse(batteryBytes);
+                    }
                     var newBatteryInMilliV = BitConverter.ToUInt16(batteryBytes, 0);
                     if (BatteryInMilliV != newBatteryInMilliV)
                     {
@@ -174,7 +176,9 @@ namespace UniversalBeaconLibrary
                     // #define fix2float(a) ((float)(a)/256.0)         //Convert fix to float. a is an int 
                     var temperatureBytes = reader.ReadBytes(2);
                     if (BitConverter.IsLittleEndian)
+                    {
                         Array.Reverse(temperatureBytes);
+                    }
                     var newTemperatureInC = BitConverter.ToInt16(temperatureBytes, 0) / (float)256.0;
                     if (Math.Abs(newTemperatureInC - TemperatureInC) > 0.0001 )
                     {
@@ -188,7 +192,9 @@ namespace UniversalBeaconLibrary
                     // If this value is reset (e.g.on reboot), the current time field must also be reset.
                     var advCntBytes = reader.ReadBytes(4);
                     if (BitConverter.IsLittleEndian)
+                    {
                         Array.Reverse(advCntBytes);
+                    }
                     var newAdvertisementFrameCount = BitConverter.ToUInt32(advCntBytes, 0);
                     if (newAdvertisementFrameCount != AdvertisementFrameCount)
                     {
@@ -200,7 +206,9 @@ namespace UniversalBeaconLibrary
                     // up or reboot. If this value is reset (e.g.on a reboot), the ADV count field must also be reset.
                     var secCntBytes = reader.ReadBytes(4);
                     if (BitConverter.IsLittleEndian)
+                    {
                         Array.Reverse(secCntBytes);
+                    }
                     var newTimeSincePowerUp = BitConverter.ToUInt32(secCntBytes, 0);
                     if (newTimeSincePowerUp != TimeSincePowerUp)
                     {

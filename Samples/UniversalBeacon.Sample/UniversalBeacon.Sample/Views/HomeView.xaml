@@ -6,13 +6,27 @@
         <StackLayout>
             <Label Text="Universal Beacon Sample" />
             <ListView
-                IsPullToRefreshEnabled="True"
-                RefreshCommand="{Binding RefreshListCommand}"
-                ItemsSource="{Binding Drivers}"
-                SelectedItem="{Binding SelectedDriver}">
+                ItemsSource="{Binding Beacons}"
+                SelectedItem="{Binding SelectedBeacon}"
+                HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
+                            <StackLayout
+                                Orientation="Vertical">
+                                <Label
+                                    FontSize="Medium"
+                                    Text="{Binding BeaconType}"
+                                    />
+                                <Label
+                                    FontSize="Small"
+                                    Text="{Binding BluetoothAddressAsString}"
+                                    />
+                                <Label
+                                    FontSize="Small"
+                                    Text="{Binding Rssi, StringFormat='Signal: {0}'}"
+                                    />
+                            </StackLayout>
                             <!--
                             <StackLayout Orientation="Horizontal">
                                 <Label
