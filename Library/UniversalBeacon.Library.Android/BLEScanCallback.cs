@@ -25,47 +25,53 @@ namespace UniversalBeaconLibrary
             switch (result.Device.Type)
             {
                 case BluetoothDeviceType.Le:
-                    var p = new BLEAdvertisementPacket();
-
-                    // address will be in the form "D1:36:E6:9D:46:52"
-                    p.BluetoothAddress = result.Device.Address.ToNumericAddress();
-                    p.RawSignalStrengthInDBm = (short)result.Rssi;
-                    p.Timestamp = DateTimeOffset.FromUnixTimeMilliseconds(result.TimestampNanos / 1000); // TODO: probably needs adjustment
-                    p.AdvertisementType = (BLEAdvertisementType)result.ScanRecord.AdvertiseFlags; // TODO: validate this
-                    p.Advertisement = new BLEAdvertisement()
+                case BluetoothDeviceType.Unknown:
+                    try
                     {
-                        LocalName = result.ScanRecord.DeviceName
-                    };
+                        var p = new BLEAdvertisementPacket();
 
-                    var recordData = result.ScanRecord.GetBytes();
-                    var rec = RecordParser.Parse(recordData);
-
-                    if (result.ScanRecord.ServiceUuids != null)
-                    {
-                        foreach(var svc in result.ScanRecord.ServiceUuids)
+                        // address will be in the form "D1:36:E6:9D:46:52"
+                        p.BluetoothAddress = result.Device.Address.ToNumericAddress();
+                        p.RawSignalStrengthInDBm = (short)result.Rssi;
+                        p.Timestamp = DateTimeOffset.FromUnixTimeMilliseconds(result.TimestampNanos / 1000); // TODO: probably needs adjustment
+                        p.AdvertisementType = (BLEAdvertisementType)result.ScanRecord.AdvertiseFlags; // TODO: validate this
+                        p.Advertisement = new BLEAdvertisement()
                         {
-                            var guid = new Guid(svc.Uuid.ToString());
-                            var data = result.ScanRecord.GetServiceData(svc);
-
-                            p.Advertisement.ServiceUuids.Add(guid);
-                            p.Advertisement.DataSections.Add(new BLEAdvertisementDataSection()
+                            LocalName = result.ScanRecord.DeviceName
+                        };
+                    
+                        if (result.ScanRecord.ServiceUuids != null)
+                        {
+                            foreach(var svc in result.ScanRecord.ServiceUuids)
                             {
-                                DataType = 0, // TODO: where does this come from?
-                                Data = data
-                            });
-                        }
-                    }
+                                var guid = new Guid(svc.Uuid.ToString());
+                                var data = result.ScanRecord.GetServiceData(svc);
 
-                    foreach (var o in rec)
-                    {
-                        var md = o as BLEManufacturerData;
-                        if(md != null)
+                                p.Advertisement.ServiceUuids.Add(guid);
+                            }
+                        }
+
+                        var recordData = result.ScanRecord.GetBytes();
+                        var rec = RecordParser.Parse(recordData);
+
+                        foreach (var o in rec)
                         {
-                            p.Advertisement.ManufacturerData.Add(md);
+                            var md = o as BLEManufacturerData;
+                            if (md != null)
+                            {
+                                p.Advertisement.ManufacturerData.Add(md);
+                            }
+                            var sd = o as BLEAdvertisementDataSection;
+                            if (sd != null)
+                            {
+                                p.Advertisement.DataSections.Add(sd);
+                            }
                         }
+                        OnAdvertisementPacketReceived?.Invoke(this, new BLEAdvertisementPacketArgs(p));
                     }
-
-                    OnAdvertisementPacketReceived?.Invoke(this, new BLEAdvertisementPacketArgs(p));
+                    catch (Exception ex)
+                    {
+                    }
                     break;
                 default:
                     break;

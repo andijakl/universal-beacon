@@ -10,8 +10,7 @@ using Android.Runtime;
 namespace UniversalBeaconLibrary
 {
     public class AndroidBluetoothPacketProvider : Java.Lang.Object, IBluetoothPacketProvider
-    {
-        
+    {        
         public event EventHandler<BLEAdvertisementPacketArgs> AdvertisementPacketReceived;
 
         private Context m_context;

@@ -43,8 +43,8 @@ namespace UniversalBeaconLibrary
                     case BLEPacketType.ManufacturerData:
                         results.Add(new BLEManufacturerData(type, data));
                         break;
-                    case BLEPacketType.UUID16:
-                        results.Add(new GenericRecord(type, data));
+                    case BLEPacketType.ServiceData:
+                        results.Add(new BLEAdvertisementDataSection(type, data));
                         break;
                     case BLEPacketType.UUID16List:
                         // swap endianness
