@@ -17,6 +17,7 @@
             FontSize="Small"
             Text="{Binding Rssi, StringFormat='Signal: {0}'}"
             />
+        <!--
         <ListView
                 Margin="20,0,0,0"
                 ItemsSource="{Binding BeaconFrames}"
@@ -36,5 +37,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        -->
     </StackLayout>
 </ViewCell>

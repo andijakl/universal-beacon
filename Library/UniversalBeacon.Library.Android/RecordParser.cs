@@ -35,7 +35,7 @@ namespace UniversalBeaconLibrary
                         // zero is invalid
                         break;
                     case BLEPacketType.Flags:
-                        // TODO: do we care?
+                        results.Add(new FlagData(type, data[0]));
                         break;
                     case  BLEPacketType.LocalName:
                         results.Add(new NameData(type, data));

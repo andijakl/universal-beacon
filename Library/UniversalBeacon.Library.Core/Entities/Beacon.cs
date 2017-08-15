@@ -258,7 +258,7 @@ namespace UniversalBeaconLibrary
                 // Windows receives: 0x01 = 0x06
                 //                   0x03 = 0xAA 0xFE
                 //                   0x16 = 0xAA 0xFE [type] [data]
-                if (dataSection.DataType == 0x16)
+                if ((dataSection.DataType == 0x16) || (dataSection.Manufacturer == (ushort)BTMember.GoogleEddystone))
                 {
                     var beaconFrame = dataSection.Data.ToArray().CreateEddystoneBeaconFrame();
                     if (beaconFrame == null) continue;

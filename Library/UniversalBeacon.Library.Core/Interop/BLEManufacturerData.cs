@@ -8,6 +8,7 @@ namespace UniversalBeaconLibrary
     public enum BTMember
     {
         Estimote = 0xFE9A,
+        GoogleEddystone = 0xFEAA
     }
 
     // https://www.bluetooth.com/specifications/assigned-numbers/company-identifiers
@@ -24,6 +25,17 @@ namespace UniversalBeaconLibrary
         UUID16List = 0x03,
         ServiceData = 0x16,
         ManufacturerData = 0xff
+    }
+
+    public class FlagData : BLERecord
+    {
+        public byte Flags { get; private set; }
+
+        public FlagData(BLEPacketType packetType, byte flags)
+            : base(packetType)
+        {
+            Flags = flags;
+        }
     }
 
     public class NameData : BLERecord

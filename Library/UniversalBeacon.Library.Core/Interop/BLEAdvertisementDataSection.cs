@@ -20,8 +20,13 @@ namespace UniversalBeaconLibrary
             : base(packetType)
         {
             Manufacturer = BitConverter.ToUInt16(data, 0);
-            Data = new byte[data.Length - 2];
-            Buffer.BlockCopy(data, 2, Data, 0, Data.Length);
+            Data = new byte[data.Length];
+            Buffer.BlockCopy(data, 0, Data, 0, Data.Length);
+
+            // TODO:        
+            // it's unclear to me where this comes from
+            // The WIndows API sets it for Eddystone packets, but I can't find it in any documentation
+            //DataType = 0x16;
         }
     }
 
