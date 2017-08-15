@@ -22,30 +22,19 @@ using System.Text;
 
 namespace UniversalBeaconLibrary
 {
-    public sealed class BLEAdvertisementDataSection : BLERecord
+    public class BLENameRecord : BLERecord
     {
-        public ushort Manufacturer { get; private set; }
+        private string m_name;
 
-        public byte[] Data { get; set; }
-        public byte DataType { get; set; }
-
-        public BLEAdvertisementDataSection()
-            : base(BLEPacketType.ServiceData)
-        {
-        }
-
-        public BLEAdvertisementDataSection(BLEPacketType packetType, byte[] data)
+        public BLENameRecord(BLEPacketType packetType, byte[] data)
             : base(packetType)
         {
-            Manufacturer = BitConverter.ToUInt16(data, 0);
-            Data = new byte[data.Length];
-            Buffer.BlockCopy(data, 0, Data, 0, Data.Length);
+            m_name = Encoding.ASCII.GetString(data);
+        }
 
-            // TODO:        
-            // it's unclear to me where this comes from
-            // The WIndows API sets it for Eddystone packets, but I can't find it in any documentation
-            //DataType = 0x16;
+        public string Name
+        {
+            get { return m_name; }
         }
     }
-
 }

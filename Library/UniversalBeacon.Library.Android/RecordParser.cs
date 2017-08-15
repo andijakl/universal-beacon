@@ -35,10 +35,10 @@ namespace UniversalBeaconLibrary
                         // zero is invalid
                         break;
                     case BLEPacketType.Flags:
-                        results.Add(new FlagData(type, data[0]));
+                        results.Add(new BLEFlagRecord(type, data[0]));
                         break;
                     case  BLEPacketType.LocalName:
-                        results.Add(new NameData(type, data));
+                        results.Add(new BLENameRecord(type, data));
                         break;
                     case BLEPacketType.ManufacturerData:
                         results.Add(new BLEManufacturerData(type, data));
@@ -49,10 +49,10 @@ namespace UniversalBeaconLibrary
                     case BLEPacketType.UUID16List:
                         // swap endianness
                         Array.Reverse(data);
-                        results.Add(new GenericRecord(type, data));
+                        results.Add(new BLEGenericRecord(type, data));
                         break;
                     default:
-                        results.Add(new GenericRecord(type, data));
+                        results.Add(new BLEGenericRecord(type, data));
                         break;
                 }
 
