@@ -16,7 +16,7 @@
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using UniversalBeaconLibrary.Beacon;
+using UniversalBeaconLibrary;
 
 namespace WindowsBeacons
 {

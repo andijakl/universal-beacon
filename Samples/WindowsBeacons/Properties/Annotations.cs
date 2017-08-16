@@ -9,7 +9,7 @@
 // ReSharper disable InconsistentNaming
 // ReSharper disable CheckNamespace
 
-namespace UniversalBeaconLibrary.Annotations
+namespace UniversalBeaconLibrary
 {
   /// <summary>
   /// Indicates that the value of the marked element could be <c>null</c> sometimes,

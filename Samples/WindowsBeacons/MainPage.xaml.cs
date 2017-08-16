@@ -30,16 +30,12 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using UniversalBeaconLibrary.Annotations;
-using UniversalBeaconLibrary.Beacon;
+using UniversalBeaconLibrary;
 
 namespace WindowsBeacons
 {
     public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
-        // Bluetooth Beacons
-        private readonly BluetoothLEAdvertisementWatcher _watcher;
-
         private readonly BeaconManager _beaconManager;
 
         // UI
@@ -77,11 +73,12 @@ namespace WindowsBeacons
             DataContext = this;
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
 
-            // Create the Bluetooth LE watcher from the Windows 10 UWP
-            _watcher = new BluetoothLEAdvertisementWatcher { ScanningMode = BluetoothLEScanningMode.Active };
-
             // Construct the Universal Bluetooth Beacon manager
-            _beaconManager = new BeaconManager();
+            var provider = new WindowsBluetoothPacketProvider();
+            _beaconManager = new BeaconManager(provider, async (action) =>
+            {
+                await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { action(); });
+            });
             BeaconListView.ItemsSource = _beaconManager.BluetoothBeacons;
 
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
@@ -115,14 +112,7 @@ namespace WindowsBeacons
             base.OnNavigatedTo(e);
             _resourceLoader = ResourceLoader.GetForCurrentView();
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
-            // Start watching
-            _watcher.Received += WatcherOnReceived;
-            _watcher.Stopped += WatcherOnStopped;
-            _watcher.Start();
-            if (_watcher.Status == BluetoothLEAdvertisementWatcherStatus.Started)
-            {
-                SetStatusOutput(_resourceLoader.GetString("WatchingForBeacons"));
-            }
+            _beaconManager.Start();
         }
 
 
@@ -130,32 +120,11 @@ namespace WindowsBeacons
         {
             base.OnNavigatedFrom(e);
             SetStatusOutput(_resourceLoader.GetString("StoppedWatchingBeacons"));
-            _watcher.Stop();
-            _watcher.Received -= WatcherOnReceived;
+            _beaconManager.Stop();
             _restartingBeaconWatch = false;
         }
 
 #region Bluetooth Beacons
-
-        private async void WatcherOnReceived(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs eventArgs)
-        {
-            await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                try
-                {
-                    _beaconManager.ReceivedAdvertisement(eventArgs);
-                }
-                catch (ArgumentException e)
-                {
-                    // Ignore for real-life scenarios.
-                    // In some very rare cases, analyzing the data can result in an
-                    // Argument_BufferIndexExceedsCapacity. Ignore the error here,
-                    // assuming that the next received frame advertisement will be
-                    // correct.
-                    Debug.WriteLine(e);
-                }
-            });
-        }
 
         private void WatcherOnStopped(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementWatcherStoppedEventArgs args)
         {
@@ -263,13 +232,7 @@ namespace WindowsBeacons
 
         private void StatusMsgArea_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (_watcher.Status == BluetoothLEAdvertisementWatcherStatus.Started) return;
-            _restartingBeaconWatch = true;
-            _watcher.Start();
-            if (_watcher.Status == BluetoothLEAdvertisementWatcherStatus.Started)
-            {
-                SetStatusOutput(_resourceLoader.GetString("WatchingForBeacons"));
-            }
+            _beaconManager.Start();
         }
 
 

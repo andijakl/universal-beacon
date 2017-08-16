@@ -11,8 +11,8 @@
     <AssemblyName>WindowsBeacons</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -23,6 +23,7 @@
     <AppxBundle>Always</AppxBundle>
     <PackageCertificateThumbprint>768C8D59D7BD990D7EFBB8C51BEEA044A28AC2A1</PackageCertificateThumbprint>
     <PackageCertificateKeyFile>WindowsBeacons_StoreKey.pfx</PackageCertificateKeyFile>
+    <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -99,7 +100,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <None Include="project.json" />
     <None Include="Service References\Application Insights\ConnectedService.json" />
     <None Include="WindowsBeacons_StoreKey.pfx" />
     <PRIResource Include="Strings\fr-FR\Resources.resw" />
@@ -122,6 +122,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -166,9 +167,27 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
+    <PackageReference Include="Microsoft.ApplicationInsights.WindowsApps">
+      <Version>1.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>5.3.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsMobile, Version=10.0.15063.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Library\UniversalBeacon.Library.Core\UniversalBeacon.Library.Core.csproj">
+      <Project>{8a11bd89-a4ff-480f-acee-47a2495a16e5}</Project>
+      <Name>UniversalBeacon.Library.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\UniversalBeacon.Library.UWP\UniversalBeacon.Library.UWP.csproj">
+      <Project>{806d344b-4ffa-47bc-9417-2f7b26f20821}</Project>
+      <Name>UniversalBeacon.Library.UWP</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
