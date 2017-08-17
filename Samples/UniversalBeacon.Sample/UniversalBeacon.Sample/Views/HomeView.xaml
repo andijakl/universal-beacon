@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:UniversalBeacon.Sample"
+             x:Class="UniversalBeacon.Sample.Views.HomeView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:FrameTemplateSelector x:Key="FrameTemplateSelector" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Universal Beacon Sample" />
+            <ListView
+                ItemTemplate="{StaticResource FrameTemplateSelector}" 
+                ItemsSource="{Binding Beacons}"
+                SelectedItem="{Binding SelectedBeacon}"
+                HasUnevenRows="True">
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,83 @@
+﻿using Android.Bluetooth;
+using Android.Bluetooth.LE;
+using Android.Content;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Android.Runtime;
+
+namespace UniversalBeaconLibrary
+{
+    internal class BLEScanCallback : ScanCallback
+    {
+        public event EventHandler<BLEAdvertisementPacketArgs> OnAdvertisementPacketReceived;
+
+        public override void OnScanFailed([GeneratedEnum] ScanFailure errorCode)
+        {
+            base.OnScanFailed(errorCode);
+        }
+
+        public override void OnScanResult([GeneratedEnum] ScanCallbackType callbackType, ScanResult result)
+        {
+            base.OnScanResult(callbackType, result);
+
+            switch (result.Device.Type)
+            {
+                case BluetoothDeviceType.Le:
+                case BluetoothDeviceType.Unknown:
+                    try
+                    {
+                        var p = new BLEAdvertisementPacket();
+
+                        // address will be in the form "D1:36:E6:9D:46:52"
+                        p.BluetoothAddress = result.Device.Address.ToNumericAddress();
+                        p.RawSignalStrengthInDBm = (short)result.Rssi;
+                        p.Timestamp = DateTimeOffset.FromUnixTimeMilliseconds(result.TimestampNanos / 1000); // TODO: probably needs adjustment
+                        p.AdvertisementType = (BLEAdvertisementType)result.ScanRecord.AdvertiseFlags; // TODO: validate this
+                        p.Advertisement = new BLEAdvertisement()
+                        {
+                            LocalName = result.ScanRecord.DeviceName
+                        };
+                    
+                        if (result.ScanRecord.ServiceUuids != null)
+                        {
+                            foreach(var svc in result.ScanRecord.ServiceUuids)
+                            {
+                                var guid = new Guid(svc.Uuid.ToString());
+                                var data = result.ScanRecord.GetServiceData(svc);
+
+                                p.Advertisement.ServiceUuids.Add(guid);
+                            }
+                        }
+
+                        var recordData = result.ScanRecord.GetBytes();
+                        var rec = RecordParser.Parse(recordData);
+
+                        foreach (var o in rec)
+                        {
+                            var md = o as BLEManufacturerData;
+                            if (md != null)
+                            {
+                                p.Advertisement.ManufacturerData.Add(md);
+                            }
+                            var sd = o as BLEAdvertisementDataSection;
+                            if (sd != null)
+                            {
+                                p.Advertisement.DataSections.Add(sd);
+                            }
+                        }
+                        OnAdvertisementPacketReceived?.Invoke(this, new BLEAdvertisementPacketArgs(p));
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            // result.Device;
+        }
+    }
+}

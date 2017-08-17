@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard1.3</TargetFramework>
+        <PackageTargetFallback>portable-net45+win8+wpa81+wp8</PackageTargetFallback>
+        <DebugType>full</DebugType>
+        <RootNamespace>UniversalBeacon.Sample</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="ViewCells\EddystoneTLMViewCell.xaml" />
+      <None Remove="ViewCells\GenericViewCell.xaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="opennetcf-analytics-netstandard" Version="1.0.17184" />
+        <PackageReference Include="opennetcf-extensions-standard" Version="1.0.17160" />
+        <PackageReference Include="opennetcf-ioc-standard" Version="1.0.17213" />
+        <PackageReference Include="opennetcf-xamarin-mvvm" Version="1.0.17184" />
+        <PackageReference Include="Xamarin.Forms" Version="2.3.4.247" />
+        <PackageReference Include="Xamarin.Forms.Maps" Version="2.3.4.247" />
+    </ItemGroup>
+
+
+  <ItemGroup>
+    <EmbeddedResource Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewCells\EddystoneTLMViewCell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewCells\GenericViewCell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Xaml.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\HomeView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Library\UniversalBeacon.Library.Core\UniversalBeacon.Library.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="ViewCells\EddystoneTLMViewCell.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ViewCells\GenericViewCell.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>
