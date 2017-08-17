@@ -17,7 +17,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License. 
 
-namespace UniversalBeaconLibrary
+namespace UniversalBeacon.Library.Core.Entities
 {
     /// <summary>
     /// Generic beacon frame class for a frame not known to this library.

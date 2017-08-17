@@ -1,14 +1,9 @@
-﻿using EnRoute.Mobile.Models;
-using OpenNETCF.IoC;
+﻿using OpenNETCF.IoC;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UniversalBeaconLibrary;
-using Xamarin.Forms;
+using UniversalBeacon.Library.Core.Entities;
+using UniversalBeacon.Sample.Models;
 
 namespace UniversalBeacon.Sample.ViewModels
 {
@@ -16,16 +11,16 @@ namespace UniversalBeacon.Sample.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private BeaconService m_service;
-        private Beacon m_selectedBeacon;
+        private readonly BeaconService _service;
+        private Beacon _selectedBeacon;
 
         public HomeViewModel()
         {
-            m_service = RootWorkItem.Services.Get<BeaconService>();
-            if (m_service == null)
+            _service = RootWorkItem.Services.Get<BeaconService>();
+            if (_service == null)
             {
-                m_service = RootWorkItem.Services.AddNew<BeaconService>();
-                m_service.Beacons.CollectionChanged += Beacons_CollectionChanged;
+                _service = RootWorkItem.Services.AddNew<BeaconService>();
+                _service.Beacons.CollectionChanged += Beacons_CollectionChanged;
             }
         }
 
@@ -33,20 +28,14 @@ namespace UniversalBeacon.Sample.ViewModels
         {
         }
 
-        public ObservableCollection<Beacon> Beacons
-        {
-            get
-            {
-                return m_service?.Beacons;
-            }
-        }
+        public ObservableCollection<Beacon> Beacons => _service?.Beacons;
 
         public Beacon SelectedBeacon
         {
-            get { return m_selectedBeacon; }
+            get => _selectedBeacon;
             set
             {
-                m_selectedBeacon = value;
+                _selectedBeacon = value;
                 PropertyChanged.Fire(this, "SelectedBeacon");
             }
         }

@@ -1,35 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UniversalBeacon.Library.Core.Entities;
 using UniversalBeacon.Sample.ViewCells;
-using UniversalBeaconLibrary;
 using Xamarin.Forms;
 
 namespace UniversalBeacon.Sample
 {
     class FrameTemplateSelector : Xamarin.Forms.DataTemplateSelector
     {
-        private readonly DataTemplate EddystoneTLMTemplate;
-        private readonly DataTemplate OtherTemplate;
+        private readonly DataTemplate _eddystoneTlmTemplate;
+        private readonly DataTemplate _otherTemplate;
 
         public FrameTemplateSelector()
         {
-            EddystoneTLMTemplate = new DataTemplate(typeof(EddystoneTLMViewCell));
-            OtherTemplate = new DataTemplate(typeof(GenericViewCell));
+            _eddystoneTlmTemplate = new DataTemplate(typeof(EddystoneTLMViewCell));
+            _otherTemplate = new DataTemplate(typeof(GenericViewCell));
         }
 
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
-            var beacon = item as Beacon;
-            if (beacon.BeaconType == Beacon.BeaconTypeEnum.Eddystone)
+            if (item is Beacon beacon && beacon.BeaconType == Beacon.BeaconTypeEnum.Eddystone)
             {
-                return EddystoneTLMTemplate;
+                return _eddystoneTlmTemplate;
             }
-            else
-            {
-                return OtherTemplate;
-            }
-
+            return _otherTemplate;
         }
     }
 }

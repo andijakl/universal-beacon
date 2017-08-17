@@ -16,25 +16,19 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
 // See the License for the specific language governing permissions and 
 // limitations under the License. using System;
-using System;
-using System.Collections.Generic;
+
 using System.Text;
 
-namespace UniversalBeaconLibrary
+namespace UniversalBeacon.Library.Core.Interop
 {
     public class BLENameRecord : BLERecord
     {
-        private string m_name;
-
         public BLENameRecord(BLEPacketType packetType, byte[] data)
             : base(packetType)
         {
-            m_name = Encoding.ASCII.GetString(data);
+            Name = Encoding.ASCII.GetString(data);
         }
 
-        public string Name
-        {
-            get { return m_name; }
-        }
+        public string Name { get; }
     }
 }

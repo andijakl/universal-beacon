@@ -22,7 +22,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace UniversalBeaconLibrary
+namespace UniversalBeacon.Library.Core.Entities
 {
     /// <summary>
     /// Abstract class for every Bluetooth Beacon frame.
@@ -44,7 +44,7 @@ namespace UniversalBeaconLibrary
         /// </summary>
         public byte[] Payload
         {
-            get { return _payload; }
+            get => _payload;
             set
             {
                 if (value == null)

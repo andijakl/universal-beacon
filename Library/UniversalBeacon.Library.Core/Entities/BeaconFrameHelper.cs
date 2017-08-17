@@ -19,7 +19,7 @@
 
 using System;
 
-namespace UniversalBeaconLibrary
+namespace UniversalBeacon.Library.Core.Entities
 {
     public static class BeaconFrameHelper
     {

@@ -1,52 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Bluetooth.Advertisement;
+using UniversalBeacon.Library.Core.Interop;
 
-namespace UniversalBeaconLibrary
+namespace UniversalBeacon.Library.UWP
 {
     internal static class PacketExtensions
     {
         public static BLEAdvertisementPacket ToUniversalBLEPacket(this BluetoothLEAdvertisementReceivedEventArgs args)
         {
-            var packet = new BLEAdvertisementPacket()
+            var packet = new BLEAdvertisementPacket
             {
                 Timestamp = args.Timestamp,
                 BluetoothAddress = args.BluetoothAddress,
                 RawSignalStrengthInDBm = args.RawSignalStrengthInDBm,
-                AdvertisementType = (BLEAdvertisementType)args.AdvertisementType
+                AdvertisementType = (BLEAdvertisementType) args.AdvertisementType,
+                Advertisement = args.Advertisement.ToUniversalAdvertisement()
             };
 
-            packet.Advertisement = args.Advertisement.ToUniversalAdvertisement();
             return packet;
         }
 
-        public static BLEAdvertisement ToUniversalAdvertisement(this BluetoothLEAdvertisement a)
+        public static BLEAdvertisement ToUniversalAdvertisement(this BluetoothLEAdvertisement convertBleAdvertisment)
         {
-            var result = new BLEAdvertisement()
+            var result = new BLEAdvertisement
             {
-                LocalName = a.LocalName
+                LocalName = convertBleAdvertisment.LocalName
             };
 
-            result.ServiceUuids.AddRange(a.ServiceUuids);
+            result.ServiceUuids.AddRange(convertBleAdvertisment.ServiceUuids);
 
-            foreach (var d in a.DataSections)
+            foreach (var curDataSection in convertBleAdvertisment.DataSections)
             {
-                var data = new BLEAdvertisementDataSection();
-                data.DataType = d.DataType;
-                data.Data = d.Data.ToArray();
+                var data = new BLEAdvertisementDataSection
+                {
+                    DataType = curDataSection.DataType,
+                    Data = curDataSection.Data.ToArray()
+                };
 
                 result.DataSections.Add(data);
             }
 
-            foreach (var m in a.ManufacturerData)
+            foreach (var curManufacturerData in convertBleAdvertisment.ManufacturerData)
             {
-                var data = new BLEManufacturerData();
-                data.CompanyId = m.CompanyId;
-                data.Data = m.Data.ToArray();
+                var data = new BLEManufacturerData
+                {
+                    CompanyId = curManufacturerData.CompanyId,
+                    Data = curManufacturerData.Data.ToArray()
+                };
 
                 result.ManufacturerData.Add(data);
             }

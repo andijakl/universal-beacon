@@ -22,7 +22,7 @@ using System.IO;
 using System.Linq;
 using System.Numerics;
 
-namespace UniversalBeaconLibrary
+namespace UniversalBeacon.Library.Core.Entities
 {
     /// <summary>
     /// An Eddystone UID frame, according to the Google Specification from
@@ -45,7 +45,7 @@ namespace UniversalBeaconLibrary
         /// </summary>
         public sbyte RangingData
         {
-            get { return _rangingData; }
+            get => _rangingData;
             set
             {
                 if (_rangingData == value) return;
@@ -65,7 +65,7 @@ namespace UniversalBeaconLibrary
         /// </summary>
         public byte[] NamespaceId
         {
-            get { return _namespaceId; }
+            get => _namespaceId;
             set
             {
                 if (_namespaceId == value) return;
@@ -98,7 +98,7 @@ namespace UniversalBeaconLibrary
         /// </summary>
         public byte[] InstanceId
         {
-            get { return _instanceId; }
+            get => _instanceId;
             set
             {
                 if (value == null)

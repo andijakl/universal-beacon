@@ -30,6 +30,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using UniversalBeacon.Library.Core.Entities;
+using UniversalBeacon.Library.UWP;
 using UniversalBeaconLibrary;
 
 namespace WindowsBeacons
@@ -48,8 +50,8 @@ namespace WindowsBeacons
 
         public int LeftColumnWidth
         {
-            get { return (int)GetValue(LeftColumnWidthProperty); }
-            set { SetValue(LeftColumnWidthProperty, value); }
+            get => (int)GetValue(LeftColumnWidthProperty);
+            set => SetValue(LeftColumnWidthProperty, value);
         }
 
         private string _statusText;
@@ -57,7 +59,7 @@ namespace WindowsBeacons
 
         public string StatusText
         {
-            get { return _statusText; }
+            get => _statusText;
             set
             {
                 if (_statusText == value) return;
@@ -77,7 +79,7 @@ namespace WindowsBeacons
             var provider = new WindowsBluetoothPacketProvider();
             _beaconManager = new BeaconManager(provider, async (action) =>
             {
-                await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { action(); });
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { action(); });
             });
             BeaconListView.ItemsSource = _beaconManager.BluetoothBeacons;
 

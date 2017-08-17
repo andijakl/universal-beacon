@@ -19,11 +19,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace UniversalBeaconLibrary
+namespace UniversalBeacon.Library.Core.Entities
 {
     /// <summary>
     /// An Eddystone URL frame, according to the Google Specification from
@@ -41,7 +40,7 @@ namespace UniversalBeaconLibrary
         /// </summary>
         public sbyte RangingData
         {
-            get { return _rangingData; }
+            get => _rangingData;
             set
             {
                 if (_rangingData == value) return;
@@ -57,7 +56,7 @@ namespace UniversalBeaconLibrary
         /// </summary>
         public string CompleteUrl
         {
-            get { return _completeUrl; }
+            get => _completeUrl;
             set
             {
                 if (_completeUrl == value) return;

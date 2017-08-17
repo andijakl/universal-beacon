@@ -1,18 +1,15 @@
-﻿using OpenNETCF.IoC;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Text;
-using UniversalBeaconLibrary;
+using OpenNETCF.IoC;
+using UniversalBeacon.Library.Core.Entities;
+using UniversalBeacon.Library.Core.Interfaces;
 using Xamarin.Forms;
 
-namespace EnRoute.Mobile.Models
+namespace UniversalBeacon.Sample.Models
 {
-    class BeaconService : IDisposable
+    internal class BeaconService : IDisposable
     {
-        private BeaconManager m_manager;
+        private readonly BeaconManager _manager;
 
         public BeaconService()
         {
@@ -20,27 +17,18 @@ namespace EnRoute.Mobile.Models
             var provider = RootWorkItem.Services.Get<IBluetoothPacketProvider>();
 
             // create a beacon manager, giving it an invoker to marshal collection changes to the UI thread
-            m_manager = new BeaconManager(provider, (a) =>
-            {
-                Device.BeginInvokeOnMainThread(a);
-            });
+            _manager = new BeaconManager(provider, Device.BeginInvokeOnMainThread);
 
-            //m_manager = new BeaconManager(provider);
+            //_manager = new BeaconManager(provider);
 
-            m_manager.Start();
+            _manager.Start();
         }
 
         public void Dispose()
         {
-            if (m_manager != null)
-            {
-                m_manager.Stop();
-            }
+            _manager?.Stop();
         }
 
-        public ObservableCollection<Beacon> Beacons
-        {
-            get { return m_manager.BluetoothBeacons; }
-        }
+        public ObservableCollection<Beacon> Beacons => _manager.BluetoothBeacons;
     }
 }

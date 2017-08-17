@@ -19,7 +19,7 @@
 
 using System;
 
-namespace UniversalBeaconLibrary
+namespace UniversalBeacon.Library.Core.Entities
 {
     /// <summary>
     /// Exception occured when parsing or assembling Bluetooth Beacons.

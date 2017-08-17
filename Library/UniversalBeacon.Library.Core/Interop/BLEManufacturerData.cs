@@ -16,11 +16,10 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
 // See the License for the specific language governing permissions and 
 // limitations under the License. using System;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace UniversalBeaconLibrary
+using System;
+
+namespace UniversalBeacon.Library.Core.Interop
 {
     public sealed class BLEManufacturerData : BLERecord
     {

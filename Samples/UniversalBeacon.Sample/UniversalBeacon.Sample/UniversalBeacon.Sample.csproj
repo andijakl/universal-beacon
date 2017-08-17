@@ -18,8 +18,8 @@
         <PackageReference Include="opennetcf-extensions-standard" Version="1.0.17160" />
         <PackageReference Include="opennetcf-ioc-standard" Version="1.0.17213" />
         <PackageReference Include="opennetcf-xamarin-mvvm" Version="1.0.17184" />
-        <PackageReference Include="Xamarin.Forms" Version="2.3.4.247" />
-        <PackageReference Include="Xamarin.Forms.Maps" Version="2.3.4.247" />
+        <PackageReference Include="Xamarin.Forms" Version="2.3.4.267" />
+        <PackageReference Include="Xamarin.Forms.Maps" Version="2.3.4.267" />
     </ItemGroup>
 
 
