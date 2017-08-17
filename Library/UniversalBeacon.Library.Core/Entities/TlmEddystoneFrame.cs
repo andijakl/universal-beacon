@@ -18,11 +18,9 @@
 // limitations under the License. 
 
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 
-namespace UniversalBeaconLibrary
+namespace UniversalBeacon.Library.Core.Entities
 {
     /// <summary>
     /// An Eddystone Telemetry frame, according to the Google Specification from
@@ -42,7 +40,7 @@ namespace UniversalBeaconLibrary
         /// </summary>
         public byte Version
         {
-            get { return _version; }
+            get => _version;
             set
             {
                 if (_version == value) return;
@@ -58,7 +56,7 @@ namespace UniversalBeaconLibrary
         /// </summary>
         public ushort BatteryInMilliV
         {
-            get { return _batteryInMilliV; }
+            get => _batteryInMilliV;
             set
             {
                 if (_batteryInMilliV == value) return;
@@ -75,7 +73,7 @@ namespace UniversalBeaconLibrary
         /// </summary>
         public float TemperatureInC
         {
-            get { return _temperatureInC; }
+            get => _temperatureInC;
             set
             {
                 if (Math.Abs(_temperatureInC - value) < 0.0001) return;
@@ -91,7 +89,7 @@ namespace UniversalBeaconLibrary
         /// </summary>
         public uint AdvertisementFrameCount
         {
-            get { return _advertisementFrameCount; }
+            get => _advertisementFrameCount;
             set
             {
                 if (_advertisementFrameCount == value) return;
@@ -106,7 +104,7 @@ namespace UniversalBeaconLibrary
         /// </summary>
         public uint TimeSincePowerUp
         {
-            get { return _timeSincePowerUp; }
+            get => _timeSincePowerUp;
             set
             {
                 if (_timeSincePowerUp == value) return;

@@ -1,13 +1,9 @@
-﻿using System;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
 using OpenNETCF.IoC;
-using UniversalBeaconLibrary;
+using UniversalBeacon.Library;
+using UniversalBeacon.Library.Core.Interfaces;
 
 namespace UniversalBeacon.Sample.Droid
 {

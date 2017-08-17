@@ -9,9 +9,10 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
 // See the License for the specific language governing permissions and 
 // limitations under the License. 
+
 using System;
 
-namespace UniversalBeaconLibrary
+namespace UniversalBeacon.Library.Core.Entities
 {
     public class ProximityBeaconFrame : BeaconFrameBase
     {
@@ -34,7 +35,7 @@ namespace UniversalBeaconLibrary
 
         public Guid Uuid
         {
-            get { return _uuid; }
+            get => _uuid;
             set
             {
                 if (_uuid == value) return;
@@ -48,7 +49,7 @@ namespace UniversalBeaconLibrary
 
         public ushort Major
         {
-            get { return _major; }
+            get => _major;
             set
             {
                 if (_major == value) return;
@@ -62,7 +63,7 @@ namespace UniversalBeaconLibrary
 
         public ushort Minor
         {
-            get { return _minor; }
+            get => _minor;
             set
             {
                 if (_minor == value) return;
@@ -74,7 +75,7 @@ namespace UniversalBeaconLibrary
 
         public sbyte TxPower
         {
-            get { return _txPower; }
+            get => _txPower;
             set
             {
                 if (_txPower == value) return;

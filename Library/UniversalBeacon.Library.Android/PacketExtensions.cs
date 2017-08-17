@@ -1,13 +1,6 @@
-﻿using Android.Bluetooth;
-using Android.Bluetooth.LE;
-using Android.Content;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Android.Runtime;
+﻿using System;
 
-namespace UniversalBeaconLibrary
+namespace UniversalBeacon.Library
 {
     internal static class PacketExtensions
     {

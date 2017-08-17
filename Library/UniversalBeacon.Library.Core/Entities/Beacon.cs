@@ -22,8 +22,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using UniversalBeacon.Library.Core.Interop;
 
-namespace UniversalBeaconLibrary
+namespace UniversalBeacon.Library.Core.Entities
 {
     /// <summary>
     /// Represents a single unique beacon that has a specified Bluetooth MAC address.
@@ -77,7 +78,7 @@ namespace UniversalBeaconLibrary
         /// </summary>
         public short Rssi
         {
-            get { return _rssi; }
+            get => _rssi;
             set
             {
                 if (_rssi == value) return;
@@ -94,7 +95,7 @@ namespace UniversalBeaconLibrary
         /// </summary>
         public ulong BluetoothAddress
         {
-            get { return _bluetoothAddress; }
+            get => _bluetoothAddress;
             set
             {
                 if (_bluetoothAddress == value) return;
@@ -121,7 +122,7 @@ namespace UniversalBeaconLibrary
         /// </summary>
         public DateTimeOffset Timestamp
         {
-            get { return _timestamp; }
+            get => _timestamp;
             set
             {
                 if (_timestamp == value) return;

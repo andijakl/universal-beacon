@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using UniversalBeacon.Library.Core.Interop;
 
-namespace UniversalBeaconLibrary
+namespace UniversalBeacon.Library.Core.Interfaces
 {    
     public interface IBluetoothPacketProvider
     {

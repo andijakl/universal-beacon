@@ -16,7 +16,7 @@
 
 using System;
 using Windows.UI.Xaml.Data;
-using UniversalBeaconLibrary;
+using UniversalBeacon.Library.Core.Entities;
 
 namespace WindowsBeacons.Converter
 {

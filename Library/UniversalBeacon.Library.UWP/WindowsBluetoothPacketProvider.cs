@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Devices.Bluetooth.Advertisement;
+using UniversalBeacon.Library.Core.Interfaces;
+using UniversalBeacon.Library.Core.Interop;
 
-namespace UniversalBeaconLibrary
+namespace UniversalBeacon.Library.UWP
 {
     public class WindowsBluetoothPacketProvider : IBluetoothPacketProvider
     {

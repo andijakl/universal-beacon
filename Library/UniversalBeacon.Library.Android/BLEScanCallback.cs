@@ -1,13 +1,10 @@
-﻿using Android.Bluetooth;
+﻿using System;
+using Android.Bluetooth;
 using Android.Bluetooth.LE;
-using Android.Content;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Android.Runtime;
+using UniversalBeacon.Library.Core.Interop;
 
-namespace UniversalBeaconLibrary
+namespace UniversalBeacon.Library
 {
     internal class BLEScanCallback : ScanCallback
     {

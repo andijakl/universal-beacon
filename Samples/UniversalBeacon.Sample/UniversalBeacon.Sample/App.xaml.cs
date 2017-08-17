@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UniversalBeacon.Sample.Views;
+﻿using UniversalBeacon.Sample.Views;
 using Xamarin.Forms;
 
 namespace UniversalBeacon.Sample

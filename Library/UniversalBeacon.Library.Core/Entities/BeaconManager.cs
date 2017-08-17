@@ -18,10 +18,11 @@
 // limitations under the License. 
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using UniversalBeacon.Library.Core.Interfaces;
+using UniversalBeacon.Library.Core.Interop;
 
-namespace UniversalBeaconLibrary
+namespace UniversalBeacon.Library.Core.Entities
 {
     /// <summary>
     /// Manages multiple beacons and distributes received Bluetooth LE
