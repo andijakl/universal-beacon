@@ -6,6 +6,10 @@ using UniversalBeacon.Library.Core.Interop;
 
 namespace UniversalBeacon.Library
 {
+    /// <summary>
+    /// An Android-specific bluetooth packet provider to be used in the construction of a BeaconManager
+    /// <see cref="UniversalBeacon.Library.Core.Entities.BeaconManager"/>
+    /// </summary>
     public class AndroidBluetoothPacketProvider : Java.Lang.Object, IBluetoothPacketProvider
     {        
         public event EventHandler<BLEAdvertisementPacketArgs> AdvertisementPacketReceived;

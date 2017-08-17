@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UniversalBeacon.Library.Core.Constants;
 using UniversalBeacon.Library.Core.Entities;
 using UniversalBeacon.Sample.ViewCells;
 using Xamarin.Forms;
@@ -20,7 +21,7 @@ namespace UniversalBeacon.Sample
 
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
-            if (item is Beacon beacon && beacon.BeaconType == Beacon.BeaconTypeEnum.Eddystone)
+            if (item is Beacon beacon && beacon.BeaconType == BeaconType.Eddystone)
             {
                 return _eddystoneTlmTemplate;
             }

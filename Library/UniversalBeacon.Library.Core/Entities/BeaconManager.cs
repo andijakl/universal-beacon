@@ -36,28 +36,62 @@ namespace UniversalBeacon.Library.Core.Entities
     /// </summary>
     public class BeaconManager
     {
-        public event EventHandler BeaconAdded;
+        public event EventHandler<BeaconChangedEventArgs> BeaconAdded;
+        public event EventHandler<BeaconChangedEventArgs> BeaconUpdated;
 
         private IBluetoothPacketProvider m_provider;
         private Action<Action> m_invokeAction;
 
+        /// <summary>
+        /// Constructs a Beacon Manager
+        /// </summary>
+        /// <param name="provider">A platform-specific BLE advertisement packet provider</param>
+        /// <param name="invokeAction">An optional Action to synchronize marshaling the population of the Beacons collection to a UI thread</param>
+        /// <example>
+        ///  _beaconManager = new BeaconManager(provider, async (action) =>
+        ///  {
+        ///    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { action(); });
+        ///  });
+        /// </example>
         public BeaconManager(IBluetoothPacketProvider provider, Action<Action> invokeAction = null)
         {
+            if (provider == null)
+            {
+                throw new ArgumentNullException("provider");
+            }
+
             m_provider = provider;
             m_provider.AdvertisementPacketReceived += OnAdvertisementPacketReceived;
             m_invokeAction = invokeAction;
         }
 
+        /// <summary>
+        /// List of known beacons so far, which all have a unique Bluetooth MAC address
+        /// and can have multiple data frames.
+        /// </summary>
+        public ObservableCollection<Beacon> BluetoothBeacons { get; set; } = new ObservableCollection<Beacon>();
+
+        /// <summary>
+        /// Start listening for beacon packets
+        /// </summary>
         public void Start()
         {
             m_provider.Start();
         }
 
+        /// <summary>
+        /// Stop listening for beacon packets
+        /// </summary>
         public void Stop()
         {
             m_provider.Stop();
         }
 
+        /// <summary>
+        /// Event handler called when the constructor-provided IBluetoothPacketManager receives an advertisement packet
+        /// </summary>
+        /// <param name="sender">The instance of the IBluetoothPacketManager sending the event</param>
+        /// <param name="e">The arguments containing the advertisment packet data</param>
         private void OnAdvertisementPacketReceived(object sender, BLEAdvertisementPacketArgs e)
         {
             if (m_invokeAction != null)
@@ -69,12 +103,6 @@ namespace UniversalBeacon.Library.Core.Entities
                 ReceivedAdvertisement(e.Data);
             }
         }
-
-        /// <summary>
-        /// List of known beacons so far, which all have a unique Bluetooth MAC address
-        /// and can have multiple data frames.
-        /// </summary>
-        public ObservableCollection<Beacon> BluetoothBeacons { get; set; } = new ObservableCollection<Beacon>();
 
         /// <summary>
         /// Analyze the received Bluetooth LE advertisement, and either add a new unique
@@ -95,6 +123,7 @@ namespace UniversalBeacon.Library.Core.Entities
                     // We already know this beacon
                     // Update / Add info to existing beacon
                     bluetoothBeacon.UpdateBeacon(btAdv);
+                    BeaconUpdated?.Invoke(this, new BeaconChangedEventArgs(bluetoothBeacon));
                     return;
                 }
             }
@@ -102,6 +131,7 @@ namespace UniversalBeacon.Library.Core.Entities
             // Beacon was not yet known - add it to the list.
             var newBeacon = new Beacon(btAdv);
             BluetoothBeacons.Add(newBeacon);
+            BeaconAdded?.Invoke(this, new BeaconChangedEventArgs(newBeacon));
         }
     }
 }
