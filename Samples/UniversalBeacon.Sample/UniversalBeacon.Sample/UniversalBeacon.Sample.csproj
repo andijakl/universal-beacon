@@ -6,20 +6,12 @@
         <PackageTargetFallback>portable-net45+win8+wpa81+wp8</PackageTargetFallback>
         <DebugType>full</DebugType>
         <RootNamespace>UniversalBeacon.Sample</RootNamespace>
+		<RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     </PropertyGroup>
 
     <ItemGroup>
       <None Remove="ViewCells\EddystoneTLMViewCell.xaml" />
       <None Remove="ViewCells\GenericViewCell.xaml" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="opennetcf-analytics-netstandard" Version="1.0.17184" />
-        <PackageReference Include="opennetcf-extensions-standard" Version="1.0.17160" />
-        <PackageReference Include="opennetcf-ioc-standard" Version="1.0.17213" />
-        <PackageReference Include="opennetcf-xamarin-mvvm" Version="1.0.17184" />
-        <PackageReference Include="Xamarin.Forms" Version="2.3.4.267" />
-        <PackageReference Include="Xamarin.Forms.Maps" Version="2.3.4.267" />
     </ItemGroup>
 
 
@@ -36,18 +28,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Forms.Xaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Xaml.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <PackageReference Include="opennetcf-ioc-standard" Version="1.0.17213" />
+    <PackageReference Include="Xamarin.Forms" Version="2.3.4.267" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\HomeView.xaml">
