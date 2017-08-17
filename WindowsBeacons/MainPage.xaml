@@ -266,7 +266,8 @@
                                      UnknownBeaconFrameTemplate="{StaticResource UnknownBeaconFrameTemplate}" />
 
         <DataTemplate x:Name="BeaconInfoTemplate">
-            <Grid>
+            <Grid 
+                          RightTapped="BeaconListView_OnRightTapped">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="{Binding ElementName=MainPageItem, Path=LeftColumnWidth, Converter={StaticResource IntToGridLengthConverter}}"/>
                     <ColumnDefinition Width="*"/>
@@ -333,6 +334,14 @@
                 </ListView>
                 <!-- Border -->
                 <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource CustomAccentBrush}"/>
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout x:Name="BeaconListViewExportMenu">
+                        <MenuFlyout.Items>
+                            <MenuFlyoutItem x:Name="ExportShareBeacon"  Text="Export / Share" Click="ExportShareBeacon_OnClick"/>
+                            <MenuFlyoutItem x:Name="RemoveBeacon" Text="Remove" Click="RemoveBeacon_OnClick" />
+                        </MenuFlyout.Items>
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
             </Grid>
         </DataTemplate>
     </Page.Resources>

@@ -17,8 +17,16 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License. 
 
+using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.Advertisement;
+using Windows.Devices.Bluetooth.GenericAttributeProfile;
+using Windows.Storage.Streams;
 
 namespace UniversalBeaconLibrary.Beacon
 {
@@ -47,7 +55,7 @@ namespace UniversalBeaconLibrary.Beacon
         /// </summary>
         /// <param name="btAdv">Bluetooth advertisement to parse, as received from
         /// the Windows Bluetooth LE API.</param>
-        public void ReceivedAdvertisement(BluetoothLEAdvertisementReceivedEventArgs btAdv)
+        public async Task ReceivedAdvertisement(BluetoothLEAdvertisementReceivedEventArgs btAdv)
         {
             if (btAdv == null) return;
 
@@ -67,8 +75,73 @@ namespace UniversalBeaconLibrary.Beacon
             var newBeacon = new Beacon(btAdv);
             if (newBeacon.BeaconType != Beacon.BeaconTypeEnum.Unknown)
             {
+                Debug.WriteLine("New beacon: " + btAdv.Advertisement.LocalName);
                 BluetoothBeacons.Add(newBeacon);
+                await ScanBeaconForGattServices(btAdv.BluetoothAddress);
             }
+        }
+
+        public async Task ScanBeaconForGattServices(ulong bluetoothAddress)
+        {
+            var bluetoothInfo = new StringBuilder();
+            try
+            {
+                using (var bluetoothLeDevice =
+                    await BluetoothLEDevice.FromBluetoothAddressAsync(bluetoothAddress))
+                {
+                    var gattServices = await bluetoothLeDevice.GetGattServicesAsync();
+                    bluetoothInfo.AppendLine("**************************");
+                    bluetoothInfo.AppendLine("-- Device: " +
+                                             string.Join(":",
+                                                 BitConverter.GetBytes(bluetoothAddress).Reverse()
+                                                     .Select(b => b.ToString("X2"))).Substring(6));
+
+                    if (gattServices.Status == GattCommunicationStatus.Success)
+                    {
+                        var services = gattServices.Services;
+                        foreach (var curService in services)
+                        {
+                            bluetoothInfo.AppendLine(" - Service: " + curService.Uuid);
+                            var gattCharacteristics = await curService.GetCharacteristicsAsync();
+
+                            if (gattCharacteristics.Status == GattCommunicationStatus.Success)
+                            {
+                                var characteristics = gattCharacteristics.Characteristics;
+                                foreach (var curCharacteristic in characteristics)
+                                {
+                                    var properties = curCharacteristic.CharacteristicProperties;
+                                    bluetoothInfo.AppendLine("   Characteristic Handle: " +
+                                                             curCharacteristic.AttributeHandle + ", UUID: " +
+                                                             curCharacteristic.Uuid + ", Flags: " + properties);
+
+                                    if (properties.HasFlag(GattCharacteristicProperties.Read))
+                                    {
+                                        // This characteristic supports reading from it.
+                                        var result = await curCharacteristic.ReadValueAsync();
+                                        if (result.Status == GattCommunicationStatus.Success)
+                                        {
+                                            bluetoothInfo.AppendLine("    Access: " + result.Status);
+                                            var reader = DataReader.FromBuffer(result.Value);
+                                            var input = new byte[reader.UnconsumedBufferLength];
+                                            reader.ReadBytes(input);
+                                            // Utilize the data as needed
+                                            bluetoothInfo.AppendLine("            " +
+                                                                     BitConverter.ToString(input));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                bluetoothInfo.Append("Error accessing Bluetooth LE object: " + ex);
+            }
+            Debug.WriteLine(bluetoothInfo);
+
         }
     }
 }
+

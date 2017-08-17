@@ -20,14 +20,19 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.Advertisement;
+using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Foundation.Metadata;
+using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using UniversalBeaconLibrary.Annotations;
@@ -92,6 +97,8 @@ namespace WindowsBeacons
                 Windows.UI.ViewManagement.StatusBar.GetForCurrentView().ForegroundColor = Colors.Black;
             }
 
+
+
             // Simulate beacon info
             //#if DEBUG
             //            var eddystoneBeacon = new Beacon(Beacon.BeaconTypeEnum.Eddystone);
@@ -102,7 +109,7 @@ namespace WindowsBeacons
             //            eddystoneBeacon.BeaconFrames.Add(new UidEddystoneFrame(unchecked((sbyte)0xEE),
             //                new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A },
             //                new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 }));
-            //            eddystoneBeacon.BeaconFrames.Add(new UrlEddystoneFrame(unchecked((sbyte) 220), "http://www.nfcinteractor.com"));
+            //            eddystoneBeacon.BeaconFrames.Add(new UrlEddystoneFrame(unchecked((sbyte) 220), "https://www.andreasjakl.com"));
             //            eddystoneBeacon.Rssi = -49;
             //            eddystoneBeacon.BluetoothAddress = 0x0000e27ef189f6c4; // 3
             //            eddystoneBeacon.Timestamp = DateTimeOffset.Now;
@@ -110,7 +117,7 @@ namespace WindowsBeacons
             //#endif
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             _resourceLoader = ResourceLoader.GetForCurrentView();
@@ -123,6 +130,12 @@ namespace WindowsBeacons
             {
                 SetStatusOutput(_resourceLoader.GetString("WatchingForBeacons"));
             }
+
+            // Query if Peripheral role is supported
+            var localAdapter = await BluetoothAdapter.GetDefaultAsync();
+            Debug.WriteLine("Low energy supported? -> " + localAdapter.IsLowEnergySupported);
+            Debug.WriteLine("Central role supported? -> " + localAdapter.IsCentralRoleSupported);
+            Debug.WriteLine("Peripheral role supported? -> " + localAdapter.IsPeripheralRoleSupported);
         }
 
 
@@ -135,15 +148,15 @@ namespace WindowsBeacons
             _restartingBeaconWatch = false;
         }
 
-#region Bluetooth Beacons
+        #region Bluetooth Beacons
 
         private async void WatcherOnReceived(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs eventArgs)
         {
-            await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
                 try
                 {
-                    _beaconManager.ReceivedAdvertisement(eventArgs);
+                    await _beaconManager.ReceivedAdvertisement(eventArgs);
                 }
                 catch (ArgumentException e)
                 {
@@ -156,6 +169,7 @@ namespace WindowsBeacons
                 }
             });
         }
+
 
         private void WatcherOnStopped(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementWatcherStoppedEventArgs args)
         {
@@ -210,33 +224,33 @@ namespace WindowsBeacons
                     if (beaconFrame is UidEddystoneFrame)
                     {
                         Debug.WriteLine("Eddystone UID Frame");
-                        Debug.WriteLine("ID: " + ((UidEddystoneFrame) beaconFrame).NamespaceIdAsNumber.ToString("X") + " / " +
-                                        ((UidEddystoneFrame) beaconFrame).InstanceIdAsNumber.ToString("X"));
+                        Debug.WriteLine("ID: " + ((UidEddystoneFrame)beaconFrame).NamespaceIdAsNumber.ToString("X") + " / " +
+                                        ((UidEddystoneFrame)beaconFrame).InstanceIdAsNumber.ToString("X"));
                     }
                     else if (beaconFrame is UrlEddystoneFrame)
                     {
                         Debug.WriteLine("Eddystone URL Frame");
-                        Debug.WriteLine("URL: " + ((UrlEddystoneFrame) beaconFrame).CompleteUrl);
+                        Debug.WriteLine("URL: " + ((UrlEddystoneFrame)beaconFrame).CompleteUrl);
                     }
                     else if (beaconFrame is TlmEddystoneFrame)
                     {
                         Debug.WriteLine("Eddystone Telemetry Frame");
-                        Debug.WriteLine("Temperature [°C]: " + ((TlmEddystoneFrame) beaconFrame).TemperatureInC);
-                        Debug.WriteLine("Battery [mV]: " + ((TlmEddystoneFrame) beaconFrame).BatteryInMilliV);
+                        Debug.WriteLine("Temperature [°C]: " + ((TlmEddystoneFrame)beaconFrame).TemperatureInC);
+                        Debug.WriteLine("Battery [mV]: " + ((TlmEddystoneFrame)beaconFrame).BatteryInMilliV);
                     }
                     else
                     {
                         Debug.WriteLine("Unknown frame - not parsed by the library, write your own derived beacon frame type!");
-                        Debug.WriteLine("Payload: " + BitConverter.ToString(((UnknownBeaconFrame) beaconFrame).Payload));
+                        Debug.WriteLine("Payload: " + BitConverter.ToString(((UnknownBeaconFrame)beaconFrame).Payload));
                     }
                 }
             }
         }
 #endif
 
-#endregion
+        #endregion
 
-#region UI
+        #region UI
 
         private async void SetStatusOutput(string newStatus)
         {
@@ -318,5 +332,27 @@ namespace WindowsBeacons
             return bytes;
         }
         #endregion
+
+        private void ExportShareBeacon_OnClick(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void RemoveBeacon_OnClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BeaconListView_OnRightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            var senderElement = sender as FrameworkElement;
+            // If you need the clicked element:
+            // Item whichOne = senderElement.DataContext as Item;
+            var flyoutBase = FlyoutBase.GetAttachedFlyout(senderElement);
+            flyoutBase.ShowAt(senderElement);
+            var a = ((FrameworkElement)e.OriginalSource).DataContext;
+            //FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+            // Problem: datacontext can be textbox, frame, or beacon.
+            // Better: work with commands?
+        }
     }
 }
