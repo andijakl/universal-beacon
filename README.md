@@ -1,8 +1,8 @@
-# Universal Beacon Library for Windows 10
+# Universal Bluetooth Beacon Library
 
-Support for Bluetooth® Beacons for the Universal Windows Platform (Windows 10), including the open Eddystone™ Bluetooth beacon format from Google, as well as beacons comparable to Apple® iBeacon™.
+Manage Bluetooth® Beacons through a cross-platform .NET Standard library. Get details for the open Eddystone™ Bluetooth beacon format from Google, as well as beacons comparable to Apple® iBeacon™. Supported on all platforms that are compatible to .NET Standard 1.3+ - including Windows 10, Xamarin (iOS, Android), Mac and Linux.
 
-Directly use the received Bluetooth Low Energy Advertisement notifications from the Windows 10 base system and let the library take care of the rest for you. It extracts, combines and updates unique beacons, associated individual frames to the beacons and parses their contents - e.g., the beacon IDs, URLs or telemetry information like temperature or battery voltage.
+Directly use the received Bluetooth Low Energy Advertisement notifications from the base operating system and let the library take care of the rest for you. It extracts, combines and updates unique beacons, associated individual frames to the beacons and parses their contents - e.g., the beacon IDs, URLs or telemetry information like temperature or battery voltage.
 
 [NuGet Library Download](https://www.nuget.org/packages/UniversalBeaconLibrary) | [Windows 10 Example App Download](https://www.microsoft.com/store/apps/9NBLGGH1Z24K)
 
@@ -10,17 +10,17 @@ Directly use the received Bluetooth Low Energy Advertisement notifications from 
 
 ## Background - Bluetooth Beacons
 
-Bluetooth Low Energy / LE (BLE) allows objects to be discovered - for example, it enables your phone to connect to a heart rate belt or a headset. A Bluetooth Beacon does not connect to your phone; instead, it continuously transmits small amounts of data - no matter if someone is listening or not. The efficient nature of Bluetooth Smart ensures that the battery of a beacon nevertheless lasts several months.
+Bluetooth Low Energy / LE (BLE) allows objects to be discovered - for example, it enables your phone to connect to a heart rate belt or a headset. A Bluetooth Beacon does not connect to your phone; instead, it continuously transmits small amounts of data - no matter if someone is listening or not. The efficient nature of Bluetooth ensures that the battery of a beacon nevertheless lasts several months.
 
 Phones and apps can react to Bluetooth Beacons - e.g., to trigger specific actions when the user is close to a physical location. In contrast to GPS, this works even indoors and has a much better accuracy.
 
-To differentiate between different beacons and to give each one a unique meaning in your virtual world, beacons send out information packages. These are formatted according to a certain specification. While the general way of broadcasting these information packages is standardized by the Bluetooth Core specification, the beacon package contents are not. Windows 10 comes with APIs to receive Bluetooth LE advertisements, but does not contain an SDK to work with common beacon protocols.
+To differentiate between different beacons and to give each one a unique meaning in your virtual world, beacons send out information packages. These are formatted according to a certain specification. While the general way of broadcasting these information packages is standardized by the Bluetooth Core specification, the beacon package contents are not. Platforms like Windows 10 come with APIs to receive Bluetooth LE advertisements, but does not contain an SDK to work with common beacon protocols.
 
 
 
 ## The Universal Beacon Library
 
-Provides an easy way for Universal Windows Apps (for Windows 10) to manage beacons and to parse their information packages.
+Provides an easy way for C#/.NET apps to manage beacons and to parse their information packages.
 
 As a developer, you only have to feed the received Bluetooth advertisements into the library - it will analyze, cluster and parse the contents, so that you can easily access the latest data from each individual beacon.
 
@@ -40,7 +40,7 @@ Note: for using Apple iBeacon technology in your services (in order to make your
 
 ## Feature Overview
 
-- Directly analyzes received Bluetooth LE advertisements (`BluetoothLEAdvertisementReceivedEventArgs`)
+- Directly analyzes received Bluetooth LE advertisements (e.g., `BluetoothLEAdvertisementReceivedEventArgs` for UWP apps)
 - Clusters based on Bluetooth MAC address and keeps frame types up to date with the latest information
 - Retrieve Bluetooth address (MAC), signal strength (RSSI) and latest update timestamp for each beacon
 - Parses individual advertisement frame contents
@@ -179,6 +179,13 @@ To try the Windows 10 example app, download the complete library package from th
 
 ## Version History
 
+### 3.0.0 - August 2017, coming soon!
+* Port from UWP to .NET Standard 1.3, for cross platform compatibility to Windows, Linux, Mac and Xamarin (iOS, Android)
+* Library split into core .NET Standard library, plus platform extension libraries for Android and UWP
+* New Xamarin example app for Android and UWP
+* Some code changes needed to update from the previous to this version!
+* New collaborator: Chris Tacke, https://github.com/ctacke
+
 ### 2.0.0 - April 2017
 * Add support for beacons comparable to iBeacons (contribution from kobush, https://github.com/andijakl/universal-beacon/pull/4)
 * Make Eddystone URLs clickable
@@ -236,7 +243,7 @@ iBeacon™ is a Trademark by Apple Inc. Bluetooth® is a registered trademarks o
 
 The example application is licensed under the GPL v3 license - see LICENSE.GPL for details.
 
-Developed by Andreas Jakl
+Developed by Andreas Jakl and Chris Tacke
 https://twitter.com/andijakl
 https://www.andreasjakl.com/
 
