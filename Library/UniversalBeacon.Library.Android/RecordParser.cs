@@ -11,7 +11,7 @@ namespace UniversalBeacon.Library
         {
             var results = new List<BLERecord>();
 
-            int index = 0;
+            var index = 0;
             while (index < recordData.Length)
             {
                 // first byte in the record length

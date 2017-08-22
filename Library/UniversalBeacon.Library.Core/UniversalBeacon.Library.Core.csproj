@@ -15,7 +15,7 @@
     <PackageIconUrl>https://raw.githubusercontent.com/andijakl/universal-beacon/master/UniversalBeaconLibraryLogo.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/andijakl/universal-beacon</RepositoryUrl>
     <PackageTags>bluetooth beacon beacons ibeacon eddystone altbeacon bluetoothle bluetoothsmart bluetooth le bluetooth smart ble proximity universal</PackageTags>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 

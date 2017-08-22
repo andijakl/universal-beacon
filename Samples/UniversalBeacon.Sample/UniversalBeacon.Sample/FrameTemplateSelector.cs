@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UniversalBeacon.Library.Core.Entities;
+﻿using UniversalBeacon.Library.Core.Entities;
 using UniversalBeacon.Sample.ViewCells;
 using Xamarin.Forms;
 
 namespace UniversalBeacon.Sample
 {
-    class FrameTemplateSelector : Xamarin.Forms.DataTemplateSelector
+    internal class FrameTemplateSelector : DataTemplateSelector
     {
         private readonly DataTemplate _eddystoneTlmTemplate;
         private readonly DataTemplate _otherTemplate;

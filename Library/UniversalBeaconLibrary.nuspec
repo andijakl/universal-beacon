@@ -3,7 +3,7 @@
   <metadata>
     <id>UniversalBeaconLibrary</id>
 	<title>Universal Bluetooth Beacon Library</title>
-    <version>3.0.5</version>
+    <version>3.0.0</version>
     <authors>Andreas Jakl, Chris Tacke</authors>
     <owners>Andreas Jakl, Chris Tacke</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>

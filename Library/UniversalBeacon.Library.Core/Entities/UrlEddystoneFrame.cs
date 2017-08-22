@@ -102,6 +102,11 @@ namespace UniversalBeacon.Library.Core.Entities
             {3, "https://"}
         };
 
+        /// <summary>
+        /// Create new URL Eddystone frame based on the provided data.
+        /// </summary>
+        /// <param name="rangingData">Ranging data (Tx power level) - see property documentation.</param>
+        /// <param name="completeUrl">URL to use for the frame.</param>
         public UrlEddystoneFrame(sbyte rangingData, string completeUrl)
         {
             _rangingData = rangingData;
@@ -109,6 +114,11 @@ namespace UniversalBeacon.Library.Core.Entities
             UpdatePayload();
         }
 
+        /// <summary>
+        /// Create new instance of the URL Eddystone frame based on the provided payload.
+        /// Parses the payload and initializes the instance.
+        /// </summary>
+        /// <param name="payload">Payload to parse for this frame type.</param>
         public UrlEddystoneFrame(byte[] payload) : base(payload)
         {
             ParsePayload();

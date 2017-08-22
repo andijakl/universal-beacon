@@ -36,45 +36,67 @@ namespace UniversalBeacon.Library.Core.Entities
     /// </summary>
     public class BeaconManager
     {
-        public event EventHandler BeaconAdded;
-
-        private IBluetoothPacketProvider m_provider;
-        private Action<Action> m_invokeAction;
-
-        public BeaconManager(IBluetoothPacketProvider provider, Action<Action> invokeAction = null)
-        {
-            m_provider = provider;
-            m_provider.AdvertisementPacketReceived += OnAdvertisementPacketReceived;
-            m_invokeAction = invokeAction;
-        }
-
-        public void Start()
-        {
-            m_provider.Start();
-        }
-
-        public void Stop()
-        {
-            m_provider.Stop();
-        }
-
-        private void OnAdvertisementPacketReceived(object sender, BLEAdvertisementPacketArgs e)
-        {
-            if (m_invokeAction != null)
-            {
-                m_invokeAction(() => { ReceivedAdvertisement(e.Data); });
-            }
-            else
-            {
-                ReceivedAdvertisement(e.Data);
-            }
-        }
+        //public event EventHandler BeaconAdded;
 
         /// <summary>
         /// List of known beacons so far, which all have a unique Bluetooth MAC address
         /// and can have multiple data frames.
         /// </summary>
         public ObservableCollection<Beacon> BluetoothBeacons { get; set; } = new ObservableCollection<Beacon>();
+
+        /// <summary>
+        /// Provider that emits events whenever new Bluetooth advertisement packets have been received.
+        /// </summary>
+        private readonly IBluetoothPacketProvider _provider;
+
+        /// <summary>
+        /// Optional action that is used to handle the received Bluetooth event, e.g., to handle it in a different
+        /// thread. Can be used to handle the added beacons on the UI thread, if these are received in a background thread.
+        /// </summary>
+        private readonly Action<Action> _invokeAction;
+
+        /// <summary>
+        /// Create new Beacon Manager based on the provider that is going to update the manager with
+        /// new received Bluetooth Packets.
+        /// </summary>
+        /// <param name="provider">Package provider that emits events whenever Bluetooth advertisement packets
+        /// have been received.</param>
+        /// <param name="invokeAction">Optional invoke action, e.g., to run the code to handle the received
+        /// event in a different thread.</param>
+        public BeaconManager(IBluetoothPacketProvider provider, Action<Action> invokeAction = null)
+        {
+            _provider = provider;
+            _provider.AdvertisementPacketReceived += OnAdvertisementPacketReceived;
+            _invokeAction = invokeAction;
+        }
+
+        /// <summary>
+        /// Relay the start event to the Blueooth packet provider.
+        /// </summary>
+        public void Start()
+        {
+            _provider.Start();
+        }
+
+        /// <summary>
+        /// Relay the stop event to the Blueooth packet provider.
+        /// </summary>
+        public void Stop()
+        {
+            _provider.Stop();
+        }
+
+        private void OnAdvertisementPacketReceived(object sender, BLEAdvertisementPacketArgs e)
+        {
+            if (_invokeAction != null)
+            {
+                _invokeAction(() => { ReceivedAdvertisement(e.Data); });
+            }
+            else
+            {
+                ReceivedAdvertisement(e.Data);
+            }
+        }
 
         /// <summary>
         /// Analyze the received Bluetooth LE advertisement, and either add a new unique

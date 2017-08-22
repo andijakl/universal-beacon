@@ -25,18 +25,21 @@ namespace UniversalBeacon.Library
                 case BluetoothDeviceType.Unknown:
                     try
                     {
-                        var p = new BLEAdvertisementPacket();
-
-                        // address will be in the form "D1:36:E6:9D:46:52"
-                        p.BluetoothAddress = result.Device.Address.ToNumericAddress();
-                        p.RawSignalStrengthInDBm = (short)result.Rssi;
-                        p.Timestamp = DateTimeOffset.FromUnixTimeMilliseconds(result.TimestampNanos / 1000); // TODO: probably needs adjustment
-                        p.AdvertisementType = (BLEAdvertisementType)result.ScanRecord.AdvertiseFlags; // TODO: validate this
-                        p.Advertisement = new BLEAdvertisement()
+                        var p = new BLEAdvertisementPacket
                         {
-                            LocalName = result.ScanRecord.DeviceName
+                            // address will be in the form "D1:36:E6:9D:46:52"
+                            BluetoothAddress = result.Device.Address.ToNumericAddress(),    
+                            RawSignalStrengthInDBm = (short) result.Rssi,
+                            // TODO: probably needs adjustment
+                            Timestamp = DateTimeOffset.FromUnixTimeMilliseconds(result.TimestampNanos / 1000),
+                            // TODO: validate this
+                            AdvertisementType = (BLEAdvertisementType) result.ScanRecord.AdvertiseFlags, 
+                            Advertisement = new BLEAdvertisement
+                            {
+                                LocalName = result.ScanRecord.DeviceName
+                            }
                         };
-                    
+
                         if (result.ScanRecord.ServiceUuids != null)
                         {
                             foreach(var svc in result.ScanRecord.ServiceUuids)
@@ -51,23 +54,22 @@ namespace UniversalBeacon.Library
                         var recordData = result.ScanRecord.GetBytes();
                         var rec = RecordParser.Parse(recordData);
 
-                        foreach (var o in rec)
+                        foreach (var curRec in rec)
                         {
-                            var md = o as BLEManufacturerData;
-                            if (md != null)
+                            if (curRec is BLEManufacturerData md)
                             {
                                 p.Advertisement.ManufacturerData.Add(md);
                             }
-                            var sd = o as BLEAdvertisementDataSection;
-                            if (sd != null)
+                            if (curRec is BLEAdvertisementDataSection sd)
                             {
                                 p.Advertisement.DataSections.Add(sd);
                             }
                         }
                         OnAdvertisementPacketReceived?.Invoke(this, new BLEAdvertisementPacketArgs(p));
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
+                        // TODO
                     }
                     break;
                 default:

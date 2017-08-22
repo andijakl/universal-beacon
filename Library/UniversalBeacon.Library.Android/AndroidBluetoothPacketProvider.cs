@@ -10,18 +10,14 @@ namespace UniversalBeacon.Library
     {        
         public event EventHandler<BLEAdvertisementPacketArgs> AdvertisementPacketReceived;
 
-        private Context m_context;
-        private BluetoothManager m_manager;
-        private BluetoothAdapter m_adapter;
-        private BLEScanCallback m_scanCallback;
+        private readonly BluetoothAdapter _adapter;
+        private readonly BLEScanCallback _scanCallback;
 
         public AndroidBluetoothPacketProvider(Context context)
         {
-            m_context = context;
-            m_manager = (BluetoothManager)m_context.GetSystemService("bluetooth");
-            m_adapter = m_manager.Adapter;
-            m_scanCallback = new BLEScanCallback();
-            m_scanCallback.OnAdvertisementPacketReceived += ScanCallback_OnAdvertisementPacketReceived;
+            var manager = (BluetoothManager)context.GetSystemService("bluetooth");
+            _adapter = manager.Adapter;
+            _scanCallback = new BLEScanCallback();
         }
 
         private void ScanCallback_OnAdvertisementPacketReceived(object sender, BLEAdvertisementPacketArgs e)
@@ -33,16 +29,19 @@ namespace UniversalBeacon.Library
         {
             try
             {
-                m_adapter.BluetoothLeScanner.StartScan(m_scanCallback);
+                _scanCallback.OnAdvertisementPacketReceived += ScanCallback_OnAdvertisementPacketReceived;
+                _adapter.BluetoothLeScanner.StartScan(_scanCallback);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+                // TODO
             }
         }
 
         public void Stop()
         {
-            m_adapter.CancelDiscovery();
+            _scanCallback.OnAdvertisementPacketReceived -= ScanCallback_OnAdvertisementPacketReceived;
+            _adapter.CancelDiscovery();
         }
     }
 }

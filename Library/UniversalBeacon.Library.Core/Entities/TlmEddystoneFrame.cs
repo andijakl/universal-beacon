@@ -125,7 +125,11 @@ namespace UniversalBeacon.Library.Core.Entities
             UpdatePayload();
         }
 
-
+        /// <summary>
+        /// Create new instance of the TLM Eddystone frame based on the provided payload.
+        /// Parses the payload and initializes the instance.
+        /// </summary>
+        /// <param name="payload">Payload to parse for this frame type.</param>
         public TlmEddystoneFrame(byte[] payload) : base(payload)
         {
             ParsePayload();
