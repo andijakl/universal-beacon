@@ -29,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="opennetcf-ioc-standard" Version="1.0.17213" />
+    <PackageReference Include="UniversalBeaconLibrary" Version="3.0.5" />
     <PackageReference Include="Xamarin.Forms" Version="2.3.4.267" />
   </ItemGroup>
   <ItemGroup>
@@ -39,9 +40,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Library\UniversalBeacon.Library.Core\UniversalBeacon.Library.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="ViewCells\EddystoneTLMViewCell.xaml.cs">

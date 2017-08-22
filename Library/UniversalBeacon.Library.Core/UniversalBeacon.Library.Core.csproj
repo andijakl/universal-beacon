@@ -16,6 +16,7 @@
     <RepositoryUrl>https://github.com/andijakl/universal-beacon</RepositoryUrl>
     <PackageTags>bluetooth beacon beacons ibeacon eddystone altbeacon bluetoothle bluetoothsmart bluetooth le bluetooth smart ble proximity universal</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
 </Project>

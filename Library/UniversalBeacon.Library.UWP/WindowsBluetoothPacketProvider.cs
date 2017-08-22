@@ -17,8 +17,6 @@ namespace UniversalBeacon.Library.UWP
                 {
                     ScanningMode = BluetoothLEScanningMode.Active
                 };
-
-            _watcher.Received += WatcherOnReceived;
         }
 
         private void WatcherOnReceived(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs eventArgs)
@@ -28,11 +26,13 @@ namespace UniversalBeacon.Library.UWP
 
         public void Start()
         {
+            _watcher.Received += WatcherOnReceived;
             _watcher.Start();
         }
 
         public void Stop()
         {
+            _watcher.Received -= WatcherOnReceived;
             _watcher.Stop();
         }
     }
