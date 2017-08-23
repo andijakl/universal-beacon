@@ -36,7 +36,13 @@ namespace UniversalBeacon.Library.Core.Entities
     /// </summary>
     public class BeaconManager
     {
-        //public event EventHandler BeaconAdded;
+        /// <summary>
+        /// Event that is invoked whenever a new (unknown) beacon is discovered and added to the list
+        /// of known beacons (BluetoothBeacons).
+        /// To subscribe to updates of every single received Bluetooth advertisment packet, 
+        /// subscribe to the OnAdvertisementPacketReceived event of the IBluetoothPacketProvider.
+        /// </summary>
+        public event EventHandler<Beacon> BeaconAdded;
 
         /// <summary>
         /// List of known beacons so far, which all have a unique Bluetooth MAC address
@@ -124,6 +130,7 @@ namespace UniversalBeacon.Library.Core.Entities
             // Beacon was not yet known - add it to the list.
             var newBeacon = new Beacon(btAdv);
             BluetoothBeacons.Add(newBeacon);
+            BeaconAdded?.Invoke(this, newBeacon);
         }
     }
 }

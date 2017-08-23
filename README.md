@@ -57,18 +57,22 @@ Note: for using Apple iBeacon technology in your services (in order to make your
 - Eddystone URL frame:
   - Ranging data
   - Complete URL
-- Frames comparable to the Apple iBeacon format
+- Proximity Beacon Frames (comparable to the Apple iBeacon format)
+  - Uuid
+  - Major ID
+  - Minor ID
 - Raw payload for all other beacons
 
 
 
-## Windows 10 Example App
+## Example Apps
 
-The included Windows 10 example app continuously scans for Bluetooth LE advertisements. It associates these with known or new Bluetooth MAC addresses to identify beacons. The individual advertisement frames are then parsed for known frame types - which are currently the three frame types defined by the Eddystone beacon format by Google.
+The included example apps continuously scan for Bluetooth LE advertisements. They associate these with known or new Bluetooth MAC addresses to identify beacons. The individual advertisement frames are then parsed for known frame types - which are currently the three frame types defined by the Eddystone beacon format by Google, as well as Proximity Beacon frames (compatible to iBeacons).
 
-The app has been tested on Windows 10 tablets and phones and requires Bluetooth LE (BLE) capable hardware. Make sure your device has Bluetooth activated (in Windows settings and also in hardware in case your device allows turning off bluetooth using a key combination) and is not in airplane mode.
+The example app comes in two versions:
 
-Download and test the example app from the Windows 10 store: https://www.microsoft.com/store/apps/9NBLGGH1Z24K
+1. WindowsBeacons: Universal Windows app (UWP) called Bluetooth Beacon Interactor. The app has been tested on Windows 10 tablets and phones and requires Bluetooth LE (BLE) capable hardware. Make sure your device has Bluetooth activated (in Windows settings and also in hardware in case your device allows turning off bluetooth using a key combination) and is not in airplane mode. Download and test the example app from the Windows 10 store: https://www.microsoft.com/store/apps/9NBLGGH1Z24K
+2. UniversalBeacon: Cross-Platform implementation with Xamarin. Core part in UniversalBeacon.Sample project. Platform-specific implementations in UniversalBeacon.Sample.Android and UniversalBeacon.Sample.UWP. iOS version is coming later. The Xamarin sample apps currently have a simpler UI than the UWP sample app.
 
 
 ### Permissions and Privacy Settings in Windows 10
@@ -83,7 +87,7 @@ To allow apps to receive data from Bluetooth Beacons, you have to ensure Windows
 
 ## Usage example (C#)
 
-### Registering for beacons and handling the data
+### Registering for beacons and handling the data (C#, UWP)
 
 ```csharp
 public sealed partial class MainPage : Page
@@ -97,55 +101,50 @@ public sealed partial class MainPage : Page
 	{
 		// [...]
 		// Construct the Universal Bluetooth Beacon manager
-		_beaconManager = new BeaconManager();
-		
-		// Create & start the Bluetooth LE watcher from the Windows 10 UWP
-		_watcher = new BluetoothLEAdvertisementWatcher { ScanningMode = BluetoothLEScanningMode.Active };
-		_watcher.Received += WatcherOnReceived;
-		_watcher.Start();
-	}
-	
-	private async void WatcherOnReceived(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs eventArgs)
-	{
-		// Let the library manager handle the advertisement to analyse & store the advertisement
-		_beaconManager.ReceivedAdvertisement(eventArgs);
+		var provider = new WindowsBluetoothPacketProvider();
+		_beaconManager = new BeaconManager(provider);
+		_beaconManager.BeaconAdded += BeaconManagerOnBeaconAdded;
+		_beaconManager.Start();
 	}
 	
 	// Call this method e.g., when tapping a button
-	private void PrintBeaconInfo()
+	private void BeaconManagerOnBeaconAdded(object sender, Beacon beacon)
 	{
-		Debug.WriteLine("Beacons discovered so far\n-------------------------");
-		foreach (var bluetoothBeacon in _beaconManager.BluetoothBeacons.ToList())
+		Debug.WriteLine("\nBeacon: " + beacon.BluetoothAddressAsString);
+		Debug.WriteLine("Type: " + beacon.BeaconType);
+		Debug.WriteLine("Last Update: " + beacon.Timestamp);
+		Debug.WriteLine("RSSI: " + beacon.Rssi);
+		foreach (var beaconFrame in beacon.BeaconFrames.ToList())
 		{
-			Debug.WriteLine("\nBeacon: " + bluetoothBeacon.BluetoothAddressAsString);
-			Debug.WriteLine("Type: " + bluetoothBeacon.BeaconType);
-			Debug.WriteLine("Last Update: " + bluetoothBeacon.Timestamp);
-			Debug.WriteLine("RSSI: " + bluetoothBeacon.Rssi);
-			foreach (var beaconFrame in bluetoothBeacon.BeaconFrames.ToList())
+			// Print a small sample of the available data parsed by the library
+			if (beaconFrame is UidEddystoneFrame)
 			{
-				// Print a small sample of the available data parsed by the library
-				if (beaconFrame is UidEddystoneFrame)
-				{
-					Debug.WriteLine("Eddystone UID Frame");
-					Debug.WriteLine("ID: " + ((UidEddystoneFrame) beaconFrame).NamespaceIdAsNumber.ToString("X") + " / " +
-									((UidEddystoneFrame) beaconFrame).InstanceIdAsNumber.ToString("X"));
-				}
-				else if (beaconFrame is UrlEddystoneFrame)
-				{
-					Debug.WriteLine("Eddystone URL Frame");
-					Debug.WriteLine("URL: " + ((UrlEddystoneFrame) beaconFrame).CompleteUrl);
-				}
-				else if (beaconFrame is TlmEddystoneFrame)
-				{
-					Debug.WriteLine("Eddystone Telemetry Frame");
-					Debug.WriteLine("Temperature [°C]: " + ((TlmEddystoneFrame) beaconFrame).TemperatureInC);
-					Debug.WriteLine("Battery [mV]: " + ((TlmEddystoneFrame) beaconFrame).BatteryInMilliV);
-				}
-				else
-				{
-					Debug.WriteLine("Unknown frame - not parsed by the library, write your own derived beacon frame type!");
-					Debug.WriteLine("Payload: " + BitConverter.ToString(((UnknownBeaconFrame) beaconFrame).Payload));
-				}
+				Debug.WriteLine("Eddystone UID Frame");
+				Debug.WriteLine("ID: " + ((UidEddystoneFrame)beaconFrame).NamespaceIdAsNumber.ToString("X") + " / " +
+								((UidEddystoneFrame)beaconFrame).InstanceIdAsNumber.ToString("X"));
+			}
+			else if (beaconFrame is UrlEddystoneFrame)
+			{
+				Debug.WriteLine("Eddystone URL Frame");
+				Debug.WriteLine("URL: " + ((UrlEddystoneFrame)beaconFrame).CompleteUrl);
+			}
+			else if (beaconFrame is TlmEddystoneFrame)
+			{
+				Debug.WriteLine("Eddystone Telemetry Frame");
+				Debug.WriteLine("Temperature [°C]: " + ((TlmEddystoneFrame)beaconFrame).TemperatureInC);
+				Debug.WriteLine("Battery [mV]: " + ((TlmEddystoneFrame)beaconFrame).BatteryInMilliV);
+			}
+			else if (beaconFrame is ProximityBeaconFrame)
+			{
+				Debug.WriteLine("Proximity Beacon Frame (iBeacon compatible)");
+				Debug.WriteLine("Uuid: " + ((ProximityBeaconFrame)beaconFrame).UuidAsString);
+				Debug.WriteLine("Major: " + ((ProximityBeaconFrame)beaconFrame).MajorAsString);
+				Debug.WriteLine("Major: " + ((ProximityBeaconFrame)beaconFrame).MinorAsString);
+			}
+			else
+			{
+				Debug.WriteLine("Unknown frame - not parsed by the library, write your own derived beacon frame type!");
+				Debug.WriteLine("Payload: " + BitConverter.ToString(((UnknownBeaconFrame)beaconFrame).Payload));
 			}
 		}
 	}
@@ -156,7 +155,7 @@ public sealed partial class MainPage : Page
 
 ## Availability
 
-The Universal Beacon Library is available in C# and includes a dependency to .NETCore the Universal Windows Platform (UWP / UAP) for Windows 10 to directly work with received advertisement packets from the Windows Bluetooth API. The library can therefore be used in applications targeting Windows 10 with support for Bluetooth Low Energy / LE (BLE).
+The Core Universal Beacon Library is available in C# for .NET Standard 1.3 - it is therefore compatible to Windows UWP, Xamarin (Android / iOS / UWP / Mac / Linux) and other platforms supported by .NET Standard. Extension libraries are currently included for UWP and Xamarin/Android to interface with the platform Bluetooth APIs.
 
 To keep up to date, either watch this project or [follow me on Twitter](https://twitter.com/andijakl).
 
@@ -173,13 +172,19 @@ If you want to use the Universal Beacon Library from your own app, the easiest o
 
 Alternatively, use the NuGet Package Manager console as described here: https://www.nuget.org/packages/UniversalBeaconLibrary
 
-To try the Windows 10 example app, download the complete library package from this site.
+To try the Xamarin (Android / UWP) or Windows 10 (UWP) example apps, download the complete library package from this site.
 
 
 
 ## Version History
 
-### 3.0.0 - August 2017, coming soon!
+### 3.1.0 - August 2017
+* Improve events provided by cross-platform interop code to surface more events to the custom app implementation. Based on these improvements, the UWP example app now again correctly displays status and error messages.
+* Adds BeaconAdded event to the BeaconManager class
+* Updated sample code to also include handling Proximity Beacon frames (iBeacon compatible)
+* UWP Sample app handles additional Bluetooth error status codes
+
+### 3.0.0 - August 2017
 * Port from UWP to .NET Standard 1.3, for cross platform compatibility to Windows, Linux, Mac and Xamarin (iOS, Android)
 * Library split into core .NET Standard library, plus platform extension libraries for Android and UWP
 * New Xamarin example app for Android and UWP

@@ -9,6 +9,7 @@ namespace UniversalBeacon.Library
     public class AndroidBluetoothPacketProvider : Java.Lang.Object, IBluetoothPacketProvider
     {        
         public event EventHandler<BLEAdvertisementPacketArgs> AdvertisementPacketReceived;
+        public event EventHandler<BTError> WatcherStopped;
 
         private readonly BluetoothAdapter _adapter;
         private readonly BLEScanCallback _scanCallback;
@@ -27,15 +28,15 @@ namespace UniversalBeacon.Library
 
         public void Start()
         {
-            try
-            {
+            //try
+            //{
                 _scanCallback.OnAdvertisementPacketReceived += ScanCallback_OnAdvertisementPacketReceived;
                 _adapter.BluetoothLeScanner.StartScan(_scanCallback);
-            }
-            catch (Exception)
-            {
-                // TODO
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    // TODO
+            //}
         }
 
         public void Stop()
