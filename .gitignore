@@ -200,3 +200,5 @@ FakesAssemblies/
 /WindowsBeacons/project.lock.json
 /WindowsBeacons/BundleArtifacts
 /WindowsBeacons/Package.StoreAssociation.xml
+/Samples/WindowsBeacons/BundleArtifacts
+/Samples/WindowsBeacons/Package.StoreAssociation.xml

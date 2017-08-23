@@ -21,8 +21,8 @@
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <ApplicationInsightsResourceId />
     <AppxBundle>Always</AppxBundle>
-    <PackageCertificateThumbprint>D4FDC789584C61B5D6B0280C84F32C86AD523F2C</PackageCertificateThumbprint>
-    <PackageCertificateKeyFile>WindowsBeacons_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>8A3EEBA035599FCCDF21F216761E5A3CB368450F</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>WindowsBeacons_StoreKey.pfx</PackageCertificateKeyFile>
     <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
@@ -101,6 +101,7 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Service References\Application Insights\ConnectedService.json" />
+    <None Include="WindowsBeacons_StoreKey.pfx" />
     <None Include="WindowsBeacons_TemporaryKey.pfx" />
     <PRIResource Include="Strings\fr-FR\Resources.resw">
       <SubType>Designer</SubType>
@@ -152,6 +153,7 @@
     <Content Include="Assets\StoreLogo.scale-200.png" />
     <Content Include="Assets\StoreLogo.scale-400.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
