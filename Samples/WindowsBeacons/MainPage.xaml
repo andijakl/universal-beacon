@@ -172,6 +172,42 @@
             </Grid>
         </DataTemplate>
 
+        <DataTemplate x:Key="EidEddystoneFrameTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding ElementName=MainPageItem, Path=LeftColumnWidth, Converter={StaticResource IntToGridLengthConverter}}"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <!-- Frame type -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                           TextWrapping="Wrap"
+                           Text="{Binding Converter={StaticResource BeaconFrameTypeToTextConverter}}"
+                           Style="{StaticResource FrameTypeTextBlockStyle}"/>
+                <!-- Ranging Data -->
+                <TextBlock Grid.Row="1" Grid.Column="0"
+                           x:Uid="RangingData"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource BoldInfoTextBlockStyle}"/>
+                <TextBlock Grid.Row="1" Grid.Column="1"
+                           Text="{Binding RangingData, Mode=OneWay}"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource InfoTextBlockStyle}"/>
+                <!-- Ephemeral Identifier -->
+                <TextBlock Grid.Row="2" Grid.Column="0"
+                           x:Uid="EphemeralIdentifier"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource BoldInfoTextBlockStyle}"/>
+                <TextBlock Grid.Row="2" Grid.Column="1"
+                           Text="{Binding EphemeralIdentifier, Mode=OneWay, Converter={StaticResource IdToHexTextConverter}}"
+                           Style="{StaticResource InfoTextBlockStyle}"/>
+            </Grid>
+        </DataTemplate>
 
         <DataTemplate x:Key="ProximityBeaconFrameTemplate">
             <Grid>
@@ -262,6 +298,7 @@
                                      UrlEddystoneFrameTemplate="{StaticResource UrlEddystoneFrameTemplate}"
                                      TlmEddystoneFrameTemplate="{StaticResource TlmEddystoneFrameTemplate}"
                                      UidEddystoneFrameTemplate="{StaticResource UidEddystoneFrameTemplate}"
+                                     EidEddystoneFrameTemplate="{StaticResource EidEddystoneFrameTemplate}"
                                      ProximityBeaconFrameTemplate="{StaticResource ProximityBeaconFrameTemplate}"
                                      UnknownBeaconFrameTemplate="{StaticResource UnknownBeaconFrameTemplate}" />
 

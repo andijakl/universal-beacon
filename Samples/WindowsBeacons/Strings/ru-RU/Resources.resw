@@ -252,16 +252,4 @@
   <data name="BlogButton.NavigateUri" xml:space="preserve">
     <value>https://www.andreasjakl.com</value>
   </data>
-  <data name="ErrorConsentRequired" xml:space="preserve">
-    <value>User consent is required to watch for Bluetooth Beacons.</value>
-  </data>
-  <data name="ErrorDisabledByUser" xml:space="preserve">
-    <value>Watching for Bluetooth Beacons has been disabled by the user.</value>
-  </data>
-  <data name="ErrorOtherError" xml:space="preserve">
-    <value>Watching for Bluetooth Beacons has stopped - an unexpected error has been reported by the system.</value>
-  </data>
-  <data name="ErrorTransportNotSupported" xml:space="preserve">
-    <value>Bluetooth transport protocol not supported.</value>
-  </data>
 </root>

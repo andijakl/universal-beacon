@@ -15,6 +15,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml.Data;
 using UniversalBeacon.Library.Core.Entities;
 
@@ -24,17 +25,19 @@ namespace WindowsBeacons.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            // TODO Translate and get from resource file
+            var resourceLoader = ResourceLoader.GetForCurrentView();
             if (value is UnknownBeaconFrame)
-                return "Unknown Frame";
+                return resourceLoader.GetString("UnknownBeaconFrame");
             if (value is TlmEddystoneFrame)
-                return "Telemetry Frame";
+                return resourceLoader.GetString("TlmEddystoneFrame");
             if (value is UidEddystoneFrame)
-                return "UID Frame";
+                return resourceLoader.GetString("UidEddystoneFrame");
             if (value is UrlEddystoneFrame)
-                return "URL Frame";
+                return resourceLoader.GetString("UrlEddystoneFrame");
+            if (value is EidEddystoneFrame)
+                return resourceLoader.GetString("EidEddystoneFrame");
             if (value is ProximityBeaconFrame)
-                return "Proximity Frame";
+                return resourceLoader.GetString("ProximityBeaconFrame");
 
             return null;
         }

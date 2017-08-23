@@ -21,9 +21,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Windows.ApplicationModel.Resources;
-using Windows.Devices.Bluetooth;
-using Windows.Devices.Bluetooth.Advertisement;
 using Windows.Foundation.Metadata;
+using Windows.Globalization;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -177,6 +176,12 @@ namespace WindowsBeacons
                     Debug.WriteLine("Temperature [°C]: " + ((TlmEddystoneFrame)beaconFrame).TemperatureInC);
                     Debug.WriteLine("Battery [mV]: " + ((TlmEddystoneFrame)beaconFrame).BatteryInMilliV);
                 }
+                else if (beaconFrame is EidEddystoneFrame)
+                {
+                    Debug.WriteLine("Eddystone EID Frame");
+                    Debug.WriteLine("Ranging Data: " + ((EidEddystoneFrame)beaconFrame).RangingData);
+                    Debug.WriteLine("Ephemeral Identifier: " + BitConverter.ToString(((EidEddystoneFrame)beaconFrame).EphemeralIdentifier));
+                }
                 else if (beaconFrame is ProximityBeaconFrame)
                 {
                     Debug.WriteLine("Proximity Beacon Frame (iBeacon compatible)");
@@ -272,6 +277,12 @@ namespace WindowsBeacons
                         Debug.WriteLine("Eddystone Telemetry Frame");
                         Debug.WriteLine("Temperature [°C]: " + ((TlmEddystoneFrame) beaconFrame).TemperatureInC);
                         Debug.WriteLine("Battery [mV]: " + ((TlmEddystoneFrame) beaconFrame).BatteryInMilliV);
+                    }
+                    else if (beaconFrame is EidEddystoneFrame)
+                    {
+                        Debug.WriteLine("Eddystone EID Frame");
+                        Debug.WriteLine("Ranging Data: " + ((EidEddystoneFrame)beaconFrame).RangingData);
+                        Debug.WriteLine("Ephemeral Identifier: " + BitConverter.ToString(((EidEddystoneFrame)beaconFrame).EphemeralIdentifier));
                     }
                     else if (beaconFrame is ProximityBeaconFrame)
                     {

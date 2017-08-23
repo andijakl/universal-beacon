@@ -264,6 +264,11 @@ namespace UniversalBeacon.Library.Core.Entities
             // 1 byte frame type
             if (!Payload.IsEddystoneFrameType()) return false;
 
+            // Check if the frame type is correct for UID
+            var eddystoneFrameType = Payload.GetEddystoneFrameType();
+            if (eddystoneFrameType == null || eddystoneFrameType !=
+                BeaconFrameHelper.EddystoneFrameType.UidFrameType) return false;
+
             // 1 byte ranging data
             // 10 bytes namespace id
             // 6 bytes instance id

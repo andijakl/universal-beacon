@@ -292,6 +292,11 @@ namespace UniversalBeacon.Library.Core.Entities
             // 1 byte frame type
             if (!Payload.IsEddystoneFrameType()) return false;
 
+            // Check if the frame type is correct for TLM
+            var eddystoneFrameType = Payload.GetEddystoneFrameType();
+            if (eddystoneFrameType == null || eddystoneFrameType !=
+                BeaconFrameHelper.EddystoneFrameType.TelemetryFrameType) return false;
+
             // 1 byte version
             // 2 bytes battery voltage
             // 2 bytes beacon temperature

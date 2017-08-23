@@ -150,6 +150,12 @@
   <data name="ContactEmailButton.NavigateUri" xml:space="preserve">
     <value>mailto:andreas.jakl@live.com</value>
   </data>
+  <data name="EidEddystoneFrame" xml:space="preserve">
+    <value>EID Frame</value>
+  </data>
+  <data name="EphemeralIdentifier.Text" xml:space="preserve">
+    <value>Ephemeral Identifier:</value>
+  </data>
   <data name="ErrorConsentRequired" xml:space="preserve">
     <value>User consent is required to watch for Bluetooth Beacons.</value>
   </data>
@@ -221,6 +227,9 @@ Make sure your device supports Bluetooth LE and that Bluetooth is activated in y
   <data name="PrivacyText.Text" xml:space="preserve">
     <value>The app does not store, collect or transmit any personally identifiable data.</value>
   </data>
+  <data name="ProximityBeaconFrame" xml:space="preserve">
+    <value>Proximity Frame</value>
+  </data>
   <data name="RangingData.Text" xml:space="preserve">
     <value>Ranging Data: </value>
   </data>
@@ -248,6 +257,9 @@ Make sure your device supports Bluetooth LE and that Bluetooth is activated in y
   <data name="TimeSincePowerUp.Text" xml:space="preserve">
     <value>Time since power up [.1 s]: </value>
   </data>
+  <data name="TlmEddystoneFrame" xml:space="preserve">
+    <value>Telemetry Frame</value>
+  </data>
   <data name="TwitterButton.Content" xml:space="preserve">
     <value>Follow on Twitter</value>
   </data>
@@ -257,11 +269,20 @@ Make sure your device supports Bluetooth LE and that Bluetooth is activated in y
   <data name="TxPower.Text" xml:space="preserve">
     <value>TX Power:</value>
   </data>
+  <data name="UidEddystoneFrame" xml:space="preserve">
+    <value>UID Frame</value>
+  </data>
+  <data name="UnknownBeaconFrame" xml:space="preserve">
+    <value>Unknown Frame</value>
+  </data>
   <data name="Updated.Text" xml:space="preserve">
     <value>Updated: </value>
   </data>
   <data name="Url.Text" xml:space="preserve">
     <value>URL: </value>
+  </data>
+  <data name="UrlEddystoneFrame" xml:space="preserve">
+    <value>URL Frame</value>
   </data>
   <data name="Uuid.Text" xml:space="preserve">
     <value>UUID</value>

@@ -323,6 +323,11 @@ namespace UniversalBeacon.Library.Core.Entities
             // 2 bytes ID: AA FE
             // 1 byte frame type
             if (!Payload.IsEddystoneFrameType()) return false;
+            
+            // Check if the frame type is correct for URL
+            var eddystoneFrameType = Payload.GetEddystoneFrameType();
+            if (eddystoneFrameType == null || eddystoneFrameType !=
+                BeaconFrameHelper.EddystoneFrameType.UrlFrameType) return false;
 
             // 1 byte ranging data
             // 1 byte url scheme prefix

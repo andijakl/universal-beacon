@@ -30,7 +30,8 @@ The next step is analyzing the conents of the advertisement payloads. The librar
 
 * UID frames
 * URL frames
-* Telemetry frames
+* TLM (Telemetry) frames
+* EID frames
 
 Instead of having to implement the specifications yourself and worry about encodings and byte orderings, you can directly access the latest available information through convenient classes and properties. For unknown frames of other beacon types, it's easy to extend the library to parse the payload in a derived beacon frame class and make use of the beacon management and information update features of the library.
 
@@ -57,6 +58,9 @@ Note: for using Apple iBeacon technology in your services (in order to make your
 - Eddystone URL frame:
   - Ranging data
   - Complete URL
+- Eddystone EID frame:
+  - Ranging data
+  - Ephemeral Identifier
 - Proximity Beacon Frames (comparable to the Apple iBeacon format)
   - Uuid
   - Major ID
@@ -134,6 +138,12 @@ public sealed partial class MainPage : Page
 				Debug.WriteLine("Temperature [°C]: " + ((TlmEddystoneFrame)beaconFrame).TemperatureInC);
 				Debug.WriteLine("Battery [mV]: " + ((TlmEddystoneFrame)beaconFrame).BatteryInMilliV);
 			}
+			else if (beaconFrame is EidEddystoneFrame)
+			{
+				Debug.WriteLine("Eddystone EID Frame");
+				Debug.WriteLine("Ranging Data: " + ((EidEddystoneFrame)beaconFrame).RangingData);
+				Debug.WriteLine("Ephemeral Identifier: " + BitConverter.ToString(((EidEddystoneFrame)beaconFrame).EphemeralIdentifier));
+			}
 			else if (beaconFrame is ProximityBeaconFrame)
 			{
 				Debug.WriteLine("Proximity Beacon Frame (iBeacon compatible)");
@@ -177,6 +187,10 @@ To try the Xamarin (Android / UWP) or Windows 10 (UWP) example apps, download th
 
 
 ## Version History
+
+### 3.2.0 - August 2017
+* Add support for Eddystone EID frame type: https://github.com/google/eddystone/tree/master/eddystone-eid
+* Additional check for type in IsValid implementation of Eddystone frame types
 
 ### 3.1.0 - August 2017
 * Improve events provided by cross-platform interop code to surface more events to the custom app implementation. Based on these improvements, the UWP example app now again correctly displays status and error messages.

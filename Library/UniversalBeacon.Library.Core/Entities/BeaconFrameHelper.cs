@@ -37,7 +37,8 @@ namespace UniversalBeacon.Library.Core.Entities
         {
             UidFrameType = 0x00,
             UrlFrameType = 0x10,
-            TelemetryFrameType = 0x20
+            TelemetryFrameType = 0x20,
+            EidFrameType = 0x30
         }
 
         /// <summary>
@@ -59,6 +60,8 @@ namespace UniversalBeacon.Library.Core.Entities
                     return new UrlEddystoneFrame(payload);
                 case EddystoneFrameType.TelemetryFrameType:
                     return new TlmEddystoneFrame(payload);
+                case EddystoneFrameType.EidFrameType:
+                    return new EidEddystoneFrame(payload);
                 case null:
                     return null;
                 default:
