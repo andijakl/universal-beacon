@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="6e8f6c3f-bd35-4fd6-88f2-4b227a2e7e2a" Publisher="CN=Andreas Jakl" Version="3.0.0.0" />
+  <Identity Name="6e8f6c3f-bd35-4fd6-88f2-4b227a2e7e2a" Publisher="CN=Andreas Jakl" Version="3.2.0.0" />
   <mp:PhoneIdentity PhoneProductId="6e8f6c3f-bd35-4fd6-88f2-4b227a2e7e2a" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Universal Beacon Library - Xamarin UWP Sample</DisplayName>
