@@ -47,12 +47,12 @@ namespace UniversalBeacon.Library.Core.Entities
         /// </summary>
         /// <param name="provider">A platform-specific BLE advertisement packet provider</param>
         /// <param name="invokeAction">An optional Action to synchronize marshaling the population of the Beacons collection to a UI thread</param>
-        /// <example>
+        /// <example><code>
         ///  _beaconManager = new BeaconManager(provider, async (action) =>
         ///  {
         ///    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { action(); });
         ///  });
-        /// </example>
+        /// </code></example>
         public BeaconManager(IBluetoothPacketProvider provider, Action<Action> invokeAction = null)
         {
             if (provider == null)
