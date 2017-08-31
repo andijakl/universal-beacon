@@ -39,6 +39,9 @@ namespace UniversalBeacon.Library.Core.Entities
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Bluetooth Service UUID for Eddystone beacons.
+        /// </summary>
         private readonly Guid _eddystoneGuid = new Guid("0000FEAA-0000-1000-8000-00805F9B34FB");
 
         private short _rssi;
@@ -148,6 +151,7 @@ namespace UniversalBeacon.Library.Core.Entities
         {
             if (btAdv == null) return;
 
+            // Only update beacon info if it's the same beacon
             if (btAdv.BluetoothAddress != BluetoothAddress)
             {
                 throw new BeaconException("Bluetooth address of beacon does not match - not updating beacon information");
@@ -161,6 +165,7 @@ namespace UniversalBeacon.Library.Core.Entities
             // Check if beacon advertisement contains any actual usable data
             if (btAdv.Advertisement == null) return;
 
+            // Service UUID identifies Eddystone beacon - iBeacon is identified via manufacturer ID
             if (btAdv.Advertisement.ServiceUuids.Any())
             {
                 foreach (var serviceUuid in btAdv.Advertisement.ServiceUuids)
@@ -180,7 +185,7 @@ namespace UniversalBeacon.Library.Core.Entities
                 //Debug.WriteLine("Bluetooth LE device does not send Service UUIDs");
             }
 
-            // Data sections
+            // Data sections - used by Eddystone Beacon type
             if (btAdv.Advertisement.DataSections.Any())
             {
                 if (BeaconType == BeaconType.Eddystone)
@@ -200,7 +205,7 @@ namespace UniversalBeacon.Library.Core.Entities
                 }
             }
 
-            // Manufacturer data - currently unused
+            // Manufacturer data - used by Proximity Beacon type (iBeacon)
             if (btAdv.Advertisement.ManufacturerData.Any())
             {
                 foreach (var manufacturerData in btAdv.Advertisement.ManufacturerData)
@@ -270,8 +275,10 @@ namespace UniversalBeacon.Library.Core.Entities
                             }
                             else
                             {
+                                // Frame type of the new frame is equal to the stored one in BeaconFrames[i] - udpate it right away.
                                 updateFrame = true;
                             }
+                            // If we know this frame already, update the existing info.
                             if (updateFrame)
                             {
                                 BeaconFrames[i].Update(beaconFrame);
@@ -282,6 +289,7 @@ namespace UniversalBeacon.Library.Core.Entities
                     }
                     if (!found)
                     {
+                        // We didn't know this beacon frame so far - add it to the list of known frames.
                         BeaconFrames.Add(beaconFrame);
                     }
                 }

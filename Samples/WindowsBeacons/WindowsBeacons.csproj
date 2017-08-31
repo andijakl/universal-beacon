@@ -21,8 +21,8 @@
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <ApplicationInsightsResourceId />
     <AppxBundle>Always</AppxBundle>
-    <PackageCertificateThumbprint>D4FDC789584C61B5D6B0280C84F32C86AD523F2C</PackageCertificateThumbprint>
-    <PackageCertificateKeyFile>WindowsBeacons_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>8A3EEBA035599FCCDF21F216761E5A3CB368450F</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>WindowsBeacons_StoreKey.pfx</PackageCertificateKeyFile>
     <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
@@ -101,11 +101,20 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Service References\Application Insights\ConnectedService.json" />
+    <None Include="WindowsBeacons_StoreKey.pfx" />
     <None Include="WindowsBeacons_TemporaryKey.pfx" />
-    <PRIResource Include="Strings\fr-FR\Resources.resw" />
-    <PRIResource Include="Strings\pt-BR\Resources.resw" />
-    <PRIResource Include="Strings\ru-RU\Resources.resw" />
-    <PRIResource Include="Strings\zh-CN\Resources.resw" />
+    <PRIResource Include="Strings\fr-FR\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+    <PRIResource Include="Strings\pt-BR\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+    <PRIResource Include="Strings\ru-RU\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+    <PRIResource Include="Strings\zh-CN\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
     <PRIResource Include="Strings\de-DE\Resources.resw">
       <SubType>Designer</SubType>
     </PRIResource>
@@ -144,6 +153,7 @@
     <Content Include="Assets\StoreLogo.scale-200.png" />
     <Content Include="Assets\StoreLogo.scale-400.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -172,21 +182,14 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.4.0</Version>
     </PackageReference>
+    <PackageReference Include="UniversalBeaconLibrary">
+      <Version>3.2.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="WindowsMobile, Version=10.0.15063.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Library\UniversalBeacon.Library.Core\UniversalBeacon.Library.Core.csproj">
-      <Project>{8a11bd89-a4ff-480f-acee-47a2495a16e5}</Project>
-      <Name>UniversalBeacon.Library.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Library\UniversalBeacon.Library.UWP\UniversalBeacon.Library.UWP.csproj">
-      <Project>{806d344b-4ffa-47bc-9417-2f7b26f20821}</Project>
-      <Name>UniversalBeacon.Library.UWP</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

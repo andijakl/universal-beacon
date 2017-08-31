@@ -14,6 +14,9 @@ using System;
 
 namespace UniversalBeacon.Library.Core.Entities
 {
+    /// <summary>
+    /// Frame type for Proximity Beacon frames (compatible to iBeacon).
+    /// </summary>
     public class ProximityBeaconFrame : BeaconFrameBase
     {
         public const ushort CompanyId = 0x004C;

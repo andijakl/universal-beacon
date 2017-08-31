@@ -30,6 +30,8 @@ namespace WindowsBeacons
 
         public DataTemplate UrlEddystoneFrameTemplate { get; set; }
 
+        public DataTemplate EidEddystoneFrameTemplate { get; set; }
+
         public DataTemplate ProximityBeaconFrameTemplate { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item)
@@ -44,6 +46,8 @@ namespace WindowsBeacons
                 return UidEddystoneFrameTemplate;
             if (itemType == typeof(UrlEddystoneFrame))
                 return UrlEddystoneFrameTemplate;
+            if (itemType == typeof(EidEddystoneFrame))
+                return EidEddystoneFrameTemplate;
             if (itemType == typeof (ProximityBeaconFrame))
                 return ProximityBeaconFrameTemplate;
 

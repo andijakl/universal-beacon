@@ -74,11 +74,20 @@ namespace UniversalBeacon.Library.Core.Entities
             Payload = other.Payload;
         }
 
+        /// <summary>
+        /// Update payload based on supplied other frame.
+        /// </summary>
+        /// <param name="otherFrame"></param>
         public virtual void Update(BeaconFrameBase otherFrame)
         {
             Payload = otherFrame.Payload;
         }
 
+        /// <summary>
+        /// Checks if the payload is valid.
+        /// Base implementation only checks if payload is not null.
+        /// </summary>
+        /// <returns></returns>
         public virtual bool IsValid()
         {
             return Payload != null;

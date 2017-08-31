@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="6e8f6c3f-bd35-4fd6-88f2-4b227a2e7e2a" Publisher="CN=ctacke" Version="1.0.0.0" />
+  <Identity Name="6e8f6c3f-bd35-4fd6-88f2-4b227a2e7e2a" Publisher="CN=Andreas Jakl" Version="3.2.0.0" />
   <mp:PhoneIdentity PhoneProductId="6e8f6c3f-bd35-4fd6-88f2-4b227a2e7e2a" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>UniversalBeacon.Sample.UWP</DisplayName>
+    <DisplayName>Universal Beacon Library - Xamarin UWP Sample</DisplayName>
     <PublisherDisplayName>ctacke</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -15,10 +15,15 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="UniversalBeacon.Sample.UWP.App">
-      <uap:VisualElements DisplayName="UniversalBeacon.Sample.UWP" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="UniversalBeacon.Sample.UWP" BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
+      <uap:VisualElements DisplayName="Universal Beacon Library - Xamarin UWP Sample" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="View information from nearby Bluetooth Beacons - currently supporting Eddystone and iBeacon." BackgroundColor="#0089ff">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Universal Bluetooth Beacon Sample" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo" />
+            <uap:ShowOn Tile="wide310x150Logo" />
+            <uap:ShowOn Tile="square310x310Logo" />
+          </uap:ShowNameOnTiles>
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#0089ff" />
       </uap:VisualElements>
     </Application>
   </Applications>

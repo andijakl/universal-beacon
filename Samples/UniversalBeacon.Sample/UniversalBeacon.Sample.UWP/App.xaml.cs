@@ -48,13 +48,7 @@ namespace UniversalBeacon.Sample.UWP
             {
                 RootWorkItem.Services.AddNew<WindowsBluetoothPacketProvider, IBluetoothPacketProvider>();
             }
-
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                this.DebugSettings.EnableFrameRateCounter = true;
-            }
-#endif
+            
 
             Frame rootFrame = Window.Current.Content as Frame;
 

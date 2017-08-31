@@ -21,9 +21,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Windows.ApplicationModel.Resources;
-using Windows.Devices.Bluetooth;
-using Windows.Devices.Bluetooth.Advertisement;
 using Windows.Foundation.Metadata;
+using Windows.Globalization;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -31,6 +30,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using UniversalBeacon.Library.Core.Entities;
+using UniversalBeacon.Library.Core.Interop;
 using UniversalBeacon.Library.UWP;
 using UniversalBeaconLibrary;
 
@@ -38,6 +38,7 @@ namespace WindowsBeacons
 {
     public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
+        private readonly WindowsBluetoothPacketProvider _provider;
         private readonly BeaconManager _beaconManager;
 
         // UI
@@ -76,12 +77,16 @@ namespace WindowsBeacons
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
 
             // Construct the Universal Bluetooth Beacon manager
-            var provider = new WindowsBluetoothPacketProvider();
-            _beaconManager = new BeaconManager(provider, async (action) =>
+            _provider = new WindowsBluetoothPacketProvider();
+            _beaconManager = new BeaconManager(_provider, async (action) =>
             {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { action(); });
             });
             BeaconListView.ItemsSource = _beaconManager.BluetoothBeacons;
+
+            // Subscribe to status change events of the provider
+            _provider.WatcherStopped += WatcherOnStopped;
+            _beaconManager.BeaconAdded += BeaconManagerOnBeaconAdded;
 
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
@@ -109,12 +114,18 @@ namespace WindowsBeacons
             //#endif
         }
 
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             _resourceLoader = ResourceLoader.GetForCurrentView();
             _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
             _beaconManager.Start();
+
+            if (_provider.WatcherStatus == BLEAdvertisementWatcherStatusCodes.Started)
+            {
+                SetStatusOutput(_resourceLoader.GetString("WatchingForBeacons"));
+            }
         }
 
 
@@ -126,33 +137,105 @@ namespace WindowsBeacons
             _restartingBeaconWatch = false;
         }
 
-#region Bluetooth Beacons
+        #region Bluetooth Beacons
+        /// <summary>
+        /// Method demonstrating how to handle individual new beacons found by the manager.
+        /// This event will only be invoked once, the very first time a beacon is discovered.
+        /// For more fine-grained status updates, subscribe to changes of the ObservableCollection in
+        /// BeaconManager.BluetoothBeacons (_beaconManager).
+        /// To handle all individual received Bluetooth packets in your main app and outside of the
+        /// library, subscribe to AdvertisementPacketReceived event of the IBluetoothPacketProvider
+        /// (_provider).
+        /// </summary>
+        /// <param name="sender">Reference to the sender instance of the event.</param>
+        /// <param name="beacon">Beacon class instance containing all known and parsed information about
+        /// the Bluetooth beacon.</param>
+        private void BeaconManagerOnBeaconAdded(object sender, Beacon beacon)
+        {
+            Debug.WriteLine("\nBeacon: " + beacon.BluetoothAddressAsString);
+            Debug.WriteLine("Type: " + beacon.BeaconType);
+            Debug.WriteLine("Last Update: " + beacon.Timestamp);
+            Debug.WriteLine("RSSI: " + beacon.Rssi);
+            foreach (var beaconFrame in beacon.BeaconFrames.ToList())
+            {
+                // Print a small sample of the available data parsed by the library
+                if (beaconFrame is UidEddystoneFrame)
+                {
+                    Debug.WriteLine("Eddystone UID Frame");
+                    Debug.WriteLine("ID: " + ((UidEddystoneFrame)beaconFrame).NamespaceIdAsNumber.ToString("X") + " / " +
+                                    ((UidEddystoneFrame)beaconFrame).InstanceIdAsNumber.ToString("X"));
+                }
+                else if (beaconFrame is UrlEddystoneFrame)
+                {
+                    Debug.WriteLine("Eddystone URL Frame");
+                    Debug.WriteLine("URL: " + ((UrlEddystoneFrame)beaconFrame).CompleteUrl);
+                }
+                else if (beaconFrame is TlmEddystoneFrame)
+                {
+                    Debug.WriteLine("Eddystone Telemetry Frame");
+                    Debug.WriteLine("Temperature [°C]: " + ((TlmEddystoneFrame)beaconFrame).TemperatureInC);
+                    Debug.WriteLine("Battery [mV]: " + ((TlmEddystoneFrame)beaconFrame).BatteryInMilliV);
+                }
+                else if (beaconFrame is EidEddystoneFrame)
+                {
+                    Debug.WriteLine("Eddystone EID Frame");
+                    Debug.WriteLine("Ranging Data: " + ((EidEddystoneFrame)beaconFrame).RangingData);
+                    Debug.WriteLine("Ephemeral Identifier: " + BitConverter.ToString(((EidEddystoneFrame)beaconFrame).EphemeralIdentifier));
+                }
+                else if (beaconFrame is ProximityBeaconFrame)
+                {
+                    Debug.WriteLine("Proximity Beacon Frame (iBeacon compatible)");
+                    Debug.WriteLine("Uuid: " + ((ProximityBeaconFrame)beaconFrame).UuidAsString);
+                    Debug.WriteLine("Major: " + ((ProximityBeaconFrame)beaconFrame).MajorAsString);
+                    Debug.WriteLine("Major: " + ((ProximityBeaconFrame)beaconFrame).MinorAsString);
+                }
+                else
+                {
+                    Debug.WriteLine("Unknown frame - not parsed by the library, write your own derived beacon frame type!");
+                    Debug.WriteLine("Payload: " + BitConverter.ToString(((UnknownBeaconFrame)beaconFrame).Payload));
+                }
+            }
+        }
 
-        private void WatcherOnStopped(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementWatcherStoppedEventArgs args)
+        private void WatcherOnStopped(object sender, BTError btError)
         {
             string errorMsg = null;
-            if (args != null)
+            if (btError != null)
             {
-                switch (args.Error)
+                switch (btError.BluetoothErrorCode)
                 {
-                    case BluetoothError.Success:
+                    case BTError.BluetoothError.Success:
                         errorMsg = "WatchingSuccessfullyStopped";
                         break;
-                    case BluetoothError.RadioNotAvailable:
+                    case BTError.BluetoothError.RadioNotAvailable:
                         errorMsg = "ErrorNoRadioAvailable";
                         break;
-                    case BluetoothError.ResourceInUse:
+                    case BTError.BluetoothError.ResourceInUse:
                         errorMsg = "ErrorResourceInUse";
                         break;
-                    case BluetoothError.DeviceNotConnected:
+                    case BTError.BluetoothError.DeviceNotConnected:
                         errorMsg = "ErrorDeviceNotConnected";
                         break;
-                    case BluetoothError.DisabledByPolicy:
+                    case BTError.BluetoothError.DisabledByPolicy:
                         errorMsg = "ErrorDisabledByPolicy";
                         break;
-                    case BluetoothError.NotSupported:
+                    case BTError.BluetoothError.NotSupported:
                         errorMsg = "ErrorNotSupported";
                         break;
+                    case BTError.BluetoothError.OtherError:
+                        errorMsg = "ErrorOtherError";
+                        break;
+                    case BTError.BluetoothError.DisabledByUser:
+                        errorMsg = "ErrorDisabledByUser";
+                        break;
+                    case BTError.BluetoothError.ConsentRequired:
+                        errorMsg = "ErrorConsentRequired";
+                        break;
+                    case BTError.BluetoothError.TransportNotSupported:
+                        errorMsg = "ErrorTransportNotSupported";
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
             }
             if (errorMsg == null)
@@ -194,6 +277,19 @@ namespace WindowsBeacons
                         Debug.WriteLine("Eddystone Telemetry Frame");
                         Debug.WriteLine("Temperature [°C]: " + ((TlmEddystoneFrame) beaconFrame).TemperatureInC);
                         Debug.WriteLine("Battery [mV]: " + ((TlmEddystoneFrame) beaconFrame).BatteryInMilliV);
+                    }
+                    else if (beaconFrame is EidEddystoneFrame)
+                    {
+                        Debug.WriteLine("Eddystone EID Frame");
+                        Debug.WriteLine("Ranging Data: " + ((EidEddystoneFrame)beaconFrame).RangingData);
+                        Debug.WriteLine("Ephemeral Identifier: " + BitConverter.ToString(((EidEddystoneFrame)beaconFrame).EphemeralIdentifier));
+                    }
+                    else if (beaconFrame is ProximityBeaconFrame)
+                    {
+                        Debug.WriteLine("Proximity Beacon Frame (iBeacon compatible)");
+                        Debug.WriteLine("Uuid: " + ((ProximityBeaconFrame)beaconFrame).UuidAsString);
+                        Debug.WriteLine("Major: " + ((ProximityBeaconFrame)beaconFrame).MajorAsString);
+                        Debug.WriteLine("Major: " + ((ProximityBeaconFrame)beaconFrame).MinorAsString);
                     }
                     else
                     {

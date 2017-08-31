@@ -129,6 +129,12 @@ namespace UniversalBeacon.Library.Core.Entities
             }
         }
 
+        /// <summary>
+        /// Create new UID Eddystone frame based on the provided data.
+        /// </summary>
+        /// <param name="rangingData">Ranging data (Tx power level) - see property documentation.</param>
+        /// <param name="namespaceId">Namespace ID - see property documentation.</param>
+        /// <param name="instanceId">Instance ID - see property documentation.</param>
         public UidEddystoneFrame(sbyte rangingData, byte[] namespaceId, byte[] instanceId)
         {
             _rangingData = rangingData;
@@ -145,6 +151,11 @@ namespace UniversalBeacon.Library.Core.Entities
             UpdatePayload();
         }
 
+        /// <summary>
+        /// Create new instance of the UID Eddystone frame based on the provided payload.
+        /// Parses the payload and initializes the instance.
+        /// </summary>
+        /// <param name="payload">Payload to parse for this frame type.</param>
         public UidEddystoneFrame(byte[] payload) : base(payload)
         {
             ParsePayload();
@@ -252,6 +263,11 @@ namespace UniversalBeacon.Library.Core.Entities
             // 2 bytes ID: AA FE
             // 1 byte frame type
             if (!Payload.IsEddystoneFrameType()) return false;
+
+            // Check if the frame type is correct for UID
+            var eddystoneFrameType = Payload.GetEddystoneFrameType();
+            if (eddystoneFrameType == null || eddystoneFrameType !=
+                BeaconFrameHelper.EddystoneFrameType.UidFrameType) return false;
 
             // 1 byte ranging data
             // 10 bytes namespace id

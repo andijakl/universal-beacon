@@ -25,6 +25,11 @@ namespace UniversalBeacon.Library.Core.Entities
     /// </summary>
     public class UnknownBeaconFrame : BeaconFrameBase
     {
+        /// <summary>
+        /// Construct a new instance of an unknown beacon frame.
+        /// Only stores the payload, does not do any further processing.
+        /// </summary>
+        /// <param name="payload">Payload to parse for this frame type.</param>
         public UnknownBeaconFrame(byte[] payload) : base(payload)
         {
         }

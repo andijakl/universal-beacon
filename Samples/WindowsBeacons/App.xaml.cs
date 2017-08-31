@@ -18,6 +18,7 @@ using System;
 using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Globalization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -48,6 +49,7 @@ namespace WindowsBeacons
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            //ApplicationLanguages.PrimaryLanguageOverride = "de";
 
 #if DEBUG
             if (Debugger.IsAttached)

@@ -23,7 +23,7 @@ namespace UniversalBeacon.Library.Core.Interop
     {
         public BLEPacketType PacketType { get; set; }
 
-        public BLERecord(BLEPacketType packetType)
+        protected BLERecord(BLEPacketType packetType)
         {
             PacketType = packetType;
         }

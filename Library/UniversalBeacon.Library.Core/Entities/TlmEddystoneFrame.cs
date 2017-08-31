@@ -125,7 +125,11 @@ namespace UniversalBeacon.Library.Core.Entities
             UpdatePayload();
         }
 
-
+        /// <summary>
+        /// Create new instance of the TLM Eddystone frame based on the provided payload.
+        /// Parses the payload and initializes the instance.
+        /// </summary>
+        /// <param name="payload">Payload to parse for this frame type.</param>
         public TlmEddystoneFrame(byte[] payload) : base(payload)
         {
             ParsePayload();
@@ -287,6 +291,11 @@ namespace UniversalBeacon.Library.Core.Entities
             // 2 bytes ID: AA FE
             // 1 byte frame type
             if (!Payload.IsEddystoneFrameType()) return false;
+
+            // Check if the frame type is correct for TLM
+            var eddystoneFrameType = Payload.GetEddystoneFrameType();
+            if (eddystoneFrameType == null || eddystoneFrameType !=
+                BeaconFrameHelper.EddystoneFrameType.TelemetryFrameType) return false;
 
             // 1 byte version
             // 2 bytes battery voltage

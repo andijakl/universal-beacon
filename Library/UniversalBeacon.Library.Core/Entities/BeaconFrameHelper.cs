@@ -30,11 +30,15 @@ namespace UniversalBeacon.Library.Core.Entities
         /// </summary>
         public const int EddystoneHeaderSize = 3;
 
+        /// <summary>
+        /// Frame types as defined by the Eddystone specification.
+        /// </summary>
         public enum EddystoneFrameType : byte
         {
             UidFrameType = 0x00,
             UrlFrameType = 0x10,
-            TelemetryFrameType = 0x20
+            TelemetryFrameType = 0x20,
+            EidFrameType = 0x30
         }
 
         /// <summary>
@@ -42,7 +46,7 @@ namespace UniversalBeacon.Library.Core.Entities
         /// the according specialized Bluetooth frame class.
         /// Currently handles Eddystone frames.
         /// </summary>
-        /// <param name="payload"></param>
+        /// <param name="payload">New payload to analyze.</param>
         /// <returns>Base class for Bluetooth frames, which is either a specialized
         /// class or an UnknownBeaconFrame.</returns>
         public static BeaconFrameBase CreateEddystoneBeaconFrame(this byte[] payload)
@@ -56,6 +60,8 @@ namespace UniversalBeacon.Library.Core.Entities
                     return new UrlEddystoneFrame(payload);
                 case EddystoneFrameType.TelemetryFrameType:
                     return new TlmEddystoneFrame(payload);
+                case EddystoneFrameType.EidFrameType:
+                    return new EidEddystoneFrame(payload);
                 case null:
                     return null;
                 default:
@@ -108,6 +114,12 @@ namespace UniversalBeacon.Library.Core.Entities
             return new byte[] {0xAA, 0xFE, (byte)eddystoneType};
         }
 
+        /// <summary>
+        /// Check if the beacon information corresponds to the Proximity Beacon type (compatible to iBeacon).
+        /// </summary>
+        /// <param name="companyId">Company ID of the beacon advertisment to check.</param>
+        /// <param name="manufacturerData">Manufacturer data segment of the beacon advertisment to check.</param>
+        /// <returns>True if the supplied data indicates that this is Proximity Beacon (iBeacon) frame data.</returns>
         public static bool IsProximityBeaconPayload(ushort companyId, byte[] manufacturerData)
         {
             return companyId == ProximityBeaconFrame.CompanyId &&

@@ -36,17 +36,45 @@ namespace UniversalBeacon.Library.Core.Entities
     /// </summary>
     public class BeaconManager
     {
+        /// <summary>
+        /// Event that is invoked whenever a new (unknown) beacon is discovered and added to the list
+        /// of known beacons (BluetoothBeacons).
+        /// To subscribe to updates of every single received Bluetooth advertisment packet, 
+        /// subscribe to the OnAdvertisementPacketReceived event of the IBluetoothPacketProvider.
+        /// </summary>
         public event EventHandler<BeaconChangedEventArgs> BeaconAdded;
+        /// <summary>
+        /// Event that is invoked whenever a known beacon ischanges.
+        /// To subscribe to updates of every single received Bluetooth advertisment packet, 
+        /// subscribe to the OnAdvertisementPacketReceived event of the IBluetoothPacketProvider.
+        /// </summary>
         public event EventHandler<BeaconChangedEventArgs> BeaconUpdated;
 
-        private IBluetoothPacketProvider m_provider;
-        private Action<Action> m_invokeAction;
+        /// <summary>
+        /// List of known beacons so far, which all have a unique Bluetooth MAC address
+        /// and can have multiple data frames.
+        /// </summary>
+        public ObservableCollection<Beacon> BluetoothBeacons { get; set; } = new ObservableCollection<Beacon>();
 
         /// <summary>
-        /// Constructs a Beacon Manager
+        /// Provider that emits events whenever new Bluetooth advertisement packets have been received.
         /// </summary>
-        /// <param name="provider">A platform-specific BLE advertisement packet provider</param>
-        /// <param name="invokeAction">An optional Action to synchronize marshaling the population of the Beacons collection to a UI thread</param>
+        private readonly IBluetoothPacketProvider _provider;
+
+        /// <summary>
+        /// Optional action that is used to handle the received Bluetooth event, e.g., to handle it in a different
+        /// thread. Can be used to handle the added beacons on the UI thread, if these are received in a background thread.
+        /// </summary>
+        private readonly Action<Action> _invokeAction;
+
+        /// <summary>
+        /// Create new Beacon Manager based on the provider that is going to update the manager with
+        /// new received Bluetooth Packets.
+        /// </summary>
+        /// <param name="provider">Package provider that emits events whenever Bluetooth advertisement packets
+        /// have been received.</param>
+        /// <param name="invokeAction">Optional invoke action, e.g., to run the code to handle the received
+        /// event in a different thread.</param>
         /// <example><code>
         ///  _beaconManager = new BeaconManager(provider, async (action) =>
         ///  {
@@ -60,31 +88,25 @@ namespace UniversalBeacon.Library.Core.Entities
                 throw new ArgumentNullException("provider");
             }
 
-            m_provider = provider;
-            m_provider.AdvertisementPacketReceived += OnAdvertisementPacketReceived;
-            m_invokeAction = invokeAction;
+            _provider = provider;
+            _provider.AdvertisementPacketReceived += OnAdvertisementPacketReceived;
+            _invokeAction = invokeAction;
         }
 
         /// <summary>
-        /// List of known beacons so far, which all have a unique Bluetooth MAC address
-        /// and can have multiple data frames.
-        /// </summary>
-        public ObservableCollection<Beacon> BluetoothBeacons { get; set; } = new ObservableCollection<Beacon>();
-
-        /// <summary>
-        /// Start listening for beacon packets
+        /// Relay the start event to the Blueooth packet provider.
         /// </summary>
         public void Start()
         {
-            m_provider.Start();
+            _provider.Start();
         }
 
         /// <summary>
-        /// Stop listening for beacon packets
+        /// Relay the stop event to the Blueooth packet provider.
         /// </summary>
         public void Stop()
         {
-            m_provider.Stop();
+            _provider.Stop();
         }
 
         /// <summary>
@@ -94,9 +116,9 @@ namespace UniversalBeacon.Library.Core.Entities
         /// <param name="e">The arguments containing the advertisment packet data</param>
         private void OnAdvertisementPacketReceived(object sender, BLEAdvertisementPacketArgs e)
         {
-            if (m_invokeAction != null)
+            if (_invokeAction != null)
             {
-                m_invokeAction(() => { ReceivedAdvertisement(e.Data); });
+                _invokeAction(() => { ReceivedAdvertisement(e.Data); });
             }
             else
             {
