@@ -28,15 +28,8 @@ namespace UniversalBeacon.Library
 
         public void Start()
         {
-            //try
-            //{
-                _scanCallback.OnAdvertisementPacketReceived += ScanCallback_OnAdvertisementPacketReceived;
-                _adapter.BluetoothLeScanner.StartScan(_scanCallback);
-            //}
-            //catch (Exception)
-            //{
-            //    // TODO
-            //}
+            _scanCallback.OnAdvertisementPacketReceived += ScanCallback_OnAdvertisementPacketReceived;
+            _adapter.BluetoothLeScanner.StartScan(_scanCallback);
         }
 
         public void Stop()
