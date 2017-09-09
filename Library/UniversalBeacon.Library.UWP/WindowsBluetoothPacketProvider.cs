@@ -7,27 +7,39 @@ namespace UniversalBeacon.Library.UWP
 {
     public class WindowsBluetoothPacketProvider : IBluetoothPacketProvider
     {
-        private readonly BluetoothLEAdvertisementWatcher _watcher;
-
         public event EventHandler<BLEAdvertisementPacketArgs> AdvertisementPacketReceived;
         public event EventHandler<BTError> WatcherStopped;
+
+        private readonly BluetoothLEAdvertisementWatcher _watcher;
+        private bool _running;
+
+        public WindowsBluetoothPacketProvider()
+        {
+            _watcher = new BluetoothLEAdvertisementWatcher
+            {
+                ScanningMode = BluetoothLEScanningMode.Active
+            };
+        }
+
+        /// <summary>
+        /// Gets the BluetoothLEAdvertisementWatcher used by the provider instance
+        /// </summary>
+        public BluetoothLEAdvertisementWatcher AdvertisementWatcher
+        {
+            get => _watcher;
+        }
 
         public BLEAdvertisementWatcherStatusCodes WatcherStatus
         {
             get
             {
                 if (_watcher == null)
-                    return BLEAdvertisementWatcherStatusCodes.Stopped;
-                return (BLEAdvertisementWatcherStatusCodes) _watcher.Status;
-            }
-        }
-
-        public WindowsBluetoothPacketProvider()
-        {
-            _watcher = new BluetoothLEAdvertisementWatcher
                 {
-                    ScanningMode = BluetoothLEScanningMode.Active
-                };
+                    return BLEAdvertisementWatcherStatusCodes.Stopped;
+                }
+
+                return (BLEAdvertisementWatcherStatusCodes)_watcher.Status;
+            }
         }
 
         private void WatcherOnReceived(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs eventArgs)
@@ -37,9 +49,16 @@ namespace UniversalBeacon.Library.UWP
 
         public void Start()
         {
-            _watcher.Received += WatcherOnReceived;
-            _watcher.Stopped += WatcherOnStopped;
-            _watcher.Start();
+            if (_running) return;
+
+            lock (_watcher)
+            {
+                _watcher.Received += WatcherOnReceived;
+                _watcher.Stopped += WatcherOnStopped;
+                _watcher.Start();
+
+                _running = true;
+            }
         }
 
         private void WatcherOnStopped(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementWatcherStoppedEventArgs args)
@@ -49,8 +68,15 @@ namespace UniversalBeacon.Library.UWP
 
         public void Stop()
         {
-            _watcher.Received -= WatcherOnReceived;
-            _watcher.Stop();
+            if (!_running) return;
+
+            lock (_watcher)
+            {
+                _watcher.Received -= WatcherOnReceived;
+                _watcher.Stop();
+
+                _running = false;
+            }
         }
     }
 }
