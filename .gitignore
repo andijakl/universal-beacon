@@ -202,3 +202,7 @@ FakesAssemblies/
 /WindowsBeacons/Package.StoreAssociation.xml
 /Samples/WindowsBeacons/BundleArtifacts
 /Samples/WindowsBeacons/Package.StoreAssociation.xml
+
+# OS X
+.DS_Store
+
