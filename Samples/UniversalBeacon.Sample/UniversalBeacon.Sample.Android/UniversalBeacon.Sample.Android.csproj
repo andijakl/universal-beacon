@@ -82,16 +82,29 @@
     <AndroidResource Include="Resources\values\styles.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="opennetcf-ioc-standard">
+      <Version>1.0.17213</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms">
+      <Version>3.1.0.583944</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\UniversalBeacon.Sample\UniversalBeacon.Sample.csproj">
       <Project>{7F9A4EB5-C7E0-49E5-BB4E-D7B7E41C4429}</Project>
       <Name>UniversalBeacon.Sample</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Library\UniversalBeacon.Library.Android\UniversalBeacon.Library.Android.csproj">
+      <Project>{6ADC54D4-3B9B-495E-A2B8-F9CF5FD623CE}</Project>
+      <Name>UniversalBeacon.Library.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Library\UniversalBeacon.Library.Core\UniversalBeacon.Library.Core.csproj">
+      <Project>{83BE2E56-2400-40A2-8D88-B5DAE98213E1}</Project>
+      <Name>UniversalBeacon.Library.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="UniversalBeaconLibrary" Version="3.2.0" />
-    <PackageReference Include="Xamarin.Forms">
-      <Version>2.5.1.444934</Version>
-    </PackageReference>
+    <InterfaceDefinition Include="Main.storyboard" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

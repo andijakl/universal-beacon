@@ -2,8 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard1.3</TargetFramework>
-        <PackageTargetFallback>portable-net45+win8+wpa81+wp8</PackageTargetFallback>
+        <TargetFramework>netstandard2.0</TargetFramework>
         <DebugType>full</DebugType>
         <RootNamespace>UniversalBeacon.Sample</RootNamespace>
 		<RestoreProjectStyle>PackageReference</RestoreProjectStyle>
@@ -26,8 +25,7 @@
 
   <ItemGroup>
     <PackageReference Include="opennetcf-ioc-standard" Version="1.0.17213" />
-    <PackageReference Include="UniversalBeaconLibrary" Version="3.2.0" />
-    <PackageReference Include="Xamarin.Forms" Version="2.5.1.444934" />
+    <PackageReference Include="Xamarin.Forms" Version="3.1.0.583944" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -57,5 +55,8 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Library\UniversalBeacon.Library.Core\UniversalBeacon.Library.Core.csproj" />
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using UniversalBeacon.Library.Core.Entities;
 using UniversalBeacon.Sample.Models;
 
@@ -26,6 +27,7 @@ namespace UniversalBeacon.Sample.ViewModels
 
         private void Beacons_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
+            Debug.WriteLine($"Beacons_CollectionChanged {sender} e {e}");
         }
 
         public ObservableCollection<Beacon> Beacons => _service?.Beacons;
