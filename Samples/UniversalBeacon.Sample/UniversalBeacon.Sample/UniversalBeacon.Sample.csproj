@@ -25,7 +25,8 @@
 
   <ItemGroup>
     <PackageReference Include="opennetcf-ioc-standard" Version="1.0.17213" />
-    <PackageReference Include="Xamarin.Forms" Version="3.1.0.583944" />
+    <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
+    <PackageReference Include="Xamarin.Forms" Version="3.1.0.697729" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -58,5 +59,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Library\UniversalBeacon.Library.Core\UniversalBeacon.Library.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Plugin.CurrentActivity">
+      <HintPath>$(NugetPackagesPath)\plugin.currentactivity\2.1.0.2\lib\monoandroid44\Plugin.CurrentActivity.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
