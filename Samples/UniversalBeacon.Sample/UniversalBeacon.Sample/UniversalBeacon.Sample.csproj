@@ -10,7 +10,7 @@
 		<Description>Generic sample code for the Universal Bluetooth Beacon Library used by the cross platform Xamarin examples.</Description>
 		<Authors>Andreas Jakl, Chris Tacke</Authors>
 		<Company>Andreas Jakl, Chris Tacke</Company>
-		<Copyright>Copyright 2015 - 2017 Andreas Jakl, Chris Tacke. All rights reserved.</Copyright>
+		<Copyright>Copyright 2015 - 2018 Andreas Jakl, Chris Tacke. All rights reserved.</Copyright>
 		<PackageLicenseUrl>https://github.com/andijakl/universal-beacon/blob/master/LICENSE</PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/andijakl/universal-beacon</PackageProjectUrl>
 		<PackageIconUrl>https://raw.githubusercontent.com/andijakl/universal-beacon/master/UniversalBeaconLibraryLogo.png</PackageIconUrl>
