@@ -2,8 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard1.3</TargetFramework>
-        <PackageTargetFallback>portable-net45+win8+wpa81+wp8</PackageTargetFallback>
+        <TargetFramework>netstandard2.0</TargetFramework>
         <DebugType>full</DebugType>
         <RootNamespace>UniversalBeacon.Sample</RootNamespace>
 		<RestoreProjectStyle>PackageReference</RestoreProjectStyle>
@@ -11,7 +10,7 @@
 		<Description>Generic sample code for the Universal Bluetooth Beacon Library used by the cross platform Xamarin examples.</Description>
 		<Authors>Andreas Jakl, Chris Tacke</Authors>
 		<Company>Andreas Jakl, Chris Tacke</Company>
-		<Copyright>Copyright 2015 - 2017 Andreas Jakl, Chris Tacke. All rights reserved.</Copyright>
+		<Copyright>Copyright 2015 - 2018 Andreas Jakl, Chris Tacke. All rights reserved.</Copyright>
 		<PackageLicenseUrl>https://github.com/andijakl/universal-beacon/blob/master/LICENSE</PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/andijakl/universal-beacon</PackageProjectUrl>
 		<PackageIconUrl>https://raw.githubusercontent.com/andijakl/universal-beacon/master/UniversalBeaconLibraryLogo.png</PackageIconUrl>
@@ -25,27 +24,9 @@
 
 
   <ItemGroup>
-    <EmbeddedResource Include="App.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ViewCells\EddystoneTLMViewCell.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ViewCells\GenericViewCell.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="opennetcf-ioc-standard" Version="1.0.17213" />
-    <PackageReference Include="UniversalBeaconLibrary" Version="3.2.0" />
-    <PackageReference Include="Xamarin.Forms" Version="2.3.4.267" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\HomeView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+    <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
+    <PackageReference Include="Xamarin.Forms" Version="3.1.0.697729" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -57,5 +38,31 @@
     <Compile Update="ViewCells\GenericViewCell.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </None>
+    <None Update="ViewCells\EddystoneTLMViewCell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </None>
+    <None Update="ViewCells\GenericViewCell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </None>
+    <None Update="Views\HomeView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Library\UniversalBeacon.Library.Core\UniversalBeacon.Library.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Plugin.CurrentActivity">
+      <HintPath>$(NugetPackagesPath)\plugin.currentactivity\2.1.0.2\lib\monoandroid44\Plugin.CurrentActivity.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

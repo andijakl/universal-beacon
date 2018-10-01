@@ -4,8 +4,8 @@
     <id>UniversalBeaconLibrary</id>
 	<title>Universal Bluetooth Beacon Library</title>
     <version>3.2.0</version>
-    <authors>Andreas Jakl, Chris Tacke</authors>
-    <owners>Andreas Jakl, Chris Tacke</owners>
+    <authors>Andreas Jakl, Chris Tacke, Xavier Schott</authors>
+    <owners>Andreas Jakl, Chris Tacke, Xavier Schott</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://github.com/andijakl/universal-beacon/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/andijakl/universal-beacon</projectUrl>

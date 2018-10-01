@@ -12,8 +12,8 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.17134.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -169,13 +169,21 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>5.4.0</Version>
+      <Version>6.1.7</Version>
     </PackageReference>
     <PackageReference Include="UniversalBeaconLibrary">
       <Version>3.2.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Library\UniversalBeacon.Library.Core\UniversalBeacon.Library.Core.csproj">
+      <Project>{83be2e56-2400-40a2-8d88-b5dae98213e1}</Project>
+      <Name>UniversalBeacon.Library.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Library\UniversalBeacon.Library.UWP\UniversalBeacon.Library.UWP.csproj">
+      <Project>{806d344b-4ffa-47bc-9417-2f7b26f20821}</Project>
+      <Name>UniversalBeacon.Library.UWP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UniversalBeacon.Sample\UniversalBeacon.Sample.csproj">
       <Project>{cb0cdd3c-f400-458c-ae3a-337087944257}</Project>
       <Name>UniversalBeacon.Sample</Name>

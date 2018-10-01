@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:UniversalBeacon.Sample"
@@ -9,8 +9,18 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Universal Beacon Sample" />
+        <StackLayout Spacing="0">
+            <BoxView BackgroundColor="#0089ff">
+                <BoxView.HeightRequest>
+                    <OnPlatform x:TypeArguments="x:Double"
+                                Android="20"
+                                WinPhone="20"
+                                Default="20"
+                                iOS="40"/>
+                </BoxView.HeightRequest>
+            </BoxView>
+            <Label Text="Universal Beacon Sample" TextColor="White" BackgroundColor="#0089ff" HorizontalTextAlignment="Center"/>
+            <BoxView HeightRequest="20" BackgroundColor="#0089ff"/>
             <ListView
                 ItemTemplate="{StaticResource FrameTemplateSelector}" 
                 ItemsSource="{Binding Beacons}"

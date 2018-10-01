@@ -5,16 +5,21 @@ namespace UniversalBeacon.Sample
 {
     public partial class App : Application
     {
+        private readonly HomeView _viewInstance;
+
         public App()
         {
             InitializeComponent();
-
-            MainPage = new HomeView();
+           
+            _viewInstance = new HomeView();
+            MainPage = _viewInstance;
         }
+       
 
-        protected override void OnStart()
+        protected override async void OnStart()
         {
             // Handle when your app starts
+            await _viewInstance.Init();
         }
 
         protected override void OnSleep()

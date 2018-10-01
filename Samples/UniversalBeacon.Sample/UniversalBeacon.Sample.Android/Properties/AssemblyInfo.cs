@@ -11,7 +11,7 @@ using Android.App;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Chris Tacke, Andreas Jakl")]
 [assembly: AssemblyProduct("UniversalBeacon.Sample.Android")]
-[assembly: AssemblyCopyright("Copyright © 2015 - 2017 Chris Tacke, Andreas Jakl")]
+[assembly: AssemblyCopyright("Copyright © 2015 - 2018 Chris Tacke, Andreas Jakl")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
