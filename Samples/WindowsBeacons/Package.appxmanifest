@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="39745AndreasJakl.BluetoothBeaconInteractor" Publisher="CN=AA09B9A0-DEBB-4495-BAA8-7D2028458E75" Version="3.2.0.0" />
+  <Identity Name="39745AndreasJakl.BluetoothBeaconInteractor" Publisher="CN=AA09B9A0-DEBB-4495-BAA8-7D2028458E75" Version="4.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="4b50cd1b-5deb-4588-9cfe-b0da04ee67c2" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Bluetooth Beacon Interactor</DisplayName>

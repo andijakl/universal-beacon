@@ -1,4 +1,4 @@
-﻿// Copyright 2015 - 2017 Andreas Jakl. All rights reserved. 
+﻿// Copyright 2015 - 2019 Andreas Jakl, Chris Tacke and Contributors. All rights reserved. 
 // https://github.com/andijakl/universal-beacon 
 // 
 // This program is free software: you can redistribute it and/or modify

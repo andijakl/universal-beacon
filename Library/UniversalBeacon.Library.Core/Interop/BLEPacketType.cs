@@ -1,4 +1,4 @@
-﻿// Copyright 2015 - 2017 Chris Tacke. All rights reserved. 
+﻿// Copyright 2015 - 2019 Andreas Jakl, Chris Tacke and Contributors. All rights reserved. 
 // https://github.com/andijakl/universal-beacon 
 // 
 // Based on the Eddystone specification by Google, 

@@ -22,7 +22,7 @@ namespace UniversalBeacon.Sample.Models
                 _manager = new BeaconManager(provider, Device.BeginInvokeOnMainThread);
                 _manager.Start();
                 #if DEBUG
-                _manager.BeaconAdded += _manager_BeaconAdded;
+                _manager.BeaconAdded += Manager_BeaconAdded;
                 provider.AdvertisementPacketReceived += Provider_AdvertisementPacketReceived;
                 #endif // DEBUG
             }
@@ -30,18 +30,21 @@ namespace UniversalBeacon.Sample.Models
 
         public void Dispose()
         {
+#if DEBUG
+            _manager.BeaconAdded -= Manager_BeaconAdded;
+#endif
             _manager?.Stop();
         }
 
         public ObservableCollection<Beacon> Beacons => _manager?.BluetoothBeacons;
 
 #if DEBUG
-        void _manager_BeaconAdded(object sender, Beacon e)
+        private void Manager_BeaconAdded(object sender, Beacon e)
         {
-            Debug.WriteLine($"_manager_BeaconAdded {sender} Beacon {e}");
+            Debug.WriteLine($"Manager_BeaconAdded {sender} Beacon {e}");
         }
 
-        void Provider_AdvertisementPacketReceived(object sender, UniversalBeacon.Library.Core.Interop.BLEAdvertisementPacketArgs e)
+        private void Provider_AdvertisementPacketReceived(object sender, UniversalBeacon.Library.Core.Interop.BLEAdvertisementPacketArgs e)
         {
             Debug.WriteLine($"Provider_AdvertisementPacketReceived {sender} Beacon {e}");
         }
