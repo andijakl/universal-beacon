@@ -1,4 +1,10 @@
-﻿using Android.App;
+﻿// Copyright 2015 - 2019 Andreas Jakl, Chris Tacke and Contributors. All rights reserved. 
+// https://github.com/andijakl/universal-beacon 
+// 
+// This code is licensed under the MIT License.
+// See the LICENSE file in the project root for more information.
+
+using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using OpenNETCF.IoC;

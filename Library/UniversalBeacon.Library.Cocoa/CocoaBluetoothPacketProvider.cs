@@ -1,4 +1,10 @@
-﻿using System;
+﻿// Copyright 2015 - 2019 Andreas Jakl, Chris Tacke and Contributors. All rights reserved. 
+// https://github.com/andijakl/universal-beacon 
+// 
+// This code is licensed under the MIT License.
+// See the LICENSE file in the project root for more information.
+
+using System;
 using System.Diagnostics;
 using CoreBluetooth;
 using Foundation;
@@ -12,15 +18,15 @@ namespace UniversalBeacon.Library
         public event EventHandler<BLEAdvertisementPacketArgs> AdvertisementPacketReceived;
         public event EventHandler<BTError> WatcherStopped;
 
-        private readonly CocoaBluetoothCentralDelegate centralDelegate;
-        private readonly CBCentralManager central;
+        private readonly CocoaBluetoothCentralDelegate _centralDelegate;
+        private readonly CBCentralManager _central;
 
         public CocoaBluetoothPacketProvider()
         {
             Debug.WriteLine("BluetoothPacketProvider()");
 
-            centralDelegate = new CocoaBluetoothCentralDelegate();
-            central = new CBCentralManager(centralDelegate, null);
+            _centralDelegate = new CocoaBluetoothCentralDelegate();
+            _central = new CBCentralManager(_centralDelegate, null);
         }
 
         private void ScanCallback_OnAdvertisementPacketReceived(object sender, BLEAdvertisementPacketArgs e)
@@ -31,7 +37,7 @@ namespace UniversalBeacon.Library
         public void Start()
         {
             Debug.WriteLine("BluetoothPacketProvider:Start()");
-            centralDelegate.OnAdvertisementPacketReceived += ScanCallback_OnAdvertisementPacketReceived;
+            _centralDelegate.OnAdvertisementPacketReceived += ScanCallback_OnAdvertisementPacketReceived;
 
             // Wait for the PoweredOn state
 
@@ -44,9 +50,9 @@ namespace UniversalBeacon.Library
         public void Stop()
         {
             Debug.WriteLine("BluetoothPacketProvider:Stop()");
-            centralDelegate.OnAdvertisementPacketReceived -= ScanCallback_OnAdvertisementPacketReceived;
+            _centralDelegate.OnAdvertisementPacketReceived -= ScanCallback_OnAdvertisementPacketReceived;
  
-            central.StopScan();
+            _central.StopScan();
             WatcherStopped?.Invoke(sender: this, e: new BTError(BTError.BluetoothError.Success));
         }
     }

@@ -1,4 +1,14 @@
-﻿using System;
+﻿// Copyright 2015 - 2019 Andreas Jakl, Chris Tacke and Contributors. All rights reserved. 
+// https://github.com/andijakl/universal-beacon 
+// 
+// This code is licensed under the MIT License.
+// See the LICENSE file in the project root for more information.
+//
+// Includes code based on the Eddystone specification by Google, 
+// available under Apache License, Version 2.0 from
+// https://github.com/google/eddystone
+
+using System;
 using System.IO;
 using System.Linq;
 
