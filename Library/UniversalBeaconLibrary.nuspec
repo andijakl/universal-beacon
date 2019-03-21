@@ -3,7 +3,7 @@
   <metadata>
     <id>UniversalBeaconLibrary</id>
 	<title>Universal Bluetooth Beacon Library</title>
-    <version>3.2.0</version>
+    <version>4.0.0</version>
     <authors>Andreas Jakl, Chris Tacke, Xavier Schott</authors>
     <owners>Andreas Jakl, Chris Tacke, Xavier Schott</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -12,7 +12,7 @@
     <iconUrl>https://raw.githubusercontent.com/andijakl/universal-beacon/master/UniversalBeaconLibraryLogo.png</iconUrl>
 	<summary>Bluetooth Beacon specification parsing support for Eddystone, iBeacon. Beacon discovery and received frame update management.</summary>
     <description>Provides support for several Bluetooth Beacon specifications. Manages received Bluetooth advertisements, clusters them into individual beacons and parses the advertisement payloads according to specifications including the Eddystone open Bluetooth beacon format from Google, as well as beacons comparable to the iBeacon / Proximity Beacon format by Apple.</description>
-    <copyright>Copyright 2015 - 2017 Andreas Jakl, Chris Tacke. All rights reserved.</copyright>
+    <copyright>Copyright 2015 - 2019 Andreas Jakl, Chris Tacke, Xavier Schott. All rights reserved.</copyright>
     <tags>bluetooth beacon beacons ibeacon eddystone altbeacon bluetoothle bluetoothsmart bluetooth le bluetooth smart ble proximity universal</tags>
     <repository url="https://github.com/andijakl/universal-beacon" />
     <dependencies>
@@ -22,7 +22,11 @@
     </dependencies>
   </metadata>
   <files>
-	<!-- Cross-platform reference assemblies -->
+	<!-- Cross-platform reference assemblies for net standard 2.0 -->
+    <file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.Core\bin\Release\netstandard2.0\UniversalBeacon.Library.Core.dll" target="lib\netstandard1.3\UniversalBeacon.Library.Core.dll" />
+    <file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.Core\bin\Release\netstandard2.0\UniversalBeacon.Library.Core.pdb" target="lib\netstandard1.3\UniversalBeacon.Library.Core.pdb" />
+	
+	<!-- Cross-platform reference assemblies for net standard 1.3 -->
     <file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.Core\bin\Release\netstandard1.3\UniversalBeacon.Library.Core.dll" target="lib\netstandard1.3\UniversalBeacon.Library.Core.dll" />
     <file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.Core\bin\Release\netstandard1.3\UniversalBeacon.Library.Core.pdb" target="lib\netstandard1.3\UniversalBeacon.Library.Core.pdb" />
 	
@@ -35,8 +39,8 @@
 	<!-- UWP reference assemblies -->
 	<file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.UWP\bin\Release\UniversalBeacon.Library.Core.dll" target="lib\UAP10\UniversalBeacon.Library.Core.dll" />
 	<file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.UWP\bin\Release\UniversalBeacon.Library.Core.pdb" target="lib\UAP10\UniversalBeacon.Library.Core.pdb" />
-	<file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.UWP\bin\Release\UniversalBeacon.Library.UWP.dll" target="lib\UAP10\UniversalBeacon.Library.UWP.dll" />
-	<file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.UWP\bin\Release\UniversalBeacon.Library.UWP.pdb" target="lib\UAP10\UniversalBeacon.Library.UWP.pdb" />
+	<file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.UWP\bin\Release\UniversalBeacon.Library.UWP.dll" target="lib\uap\UniversalBeacon.Library.UWP.dll" />
+	<file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.UWP\bin\Release\UniversalBeacon.Library.UWP.pdb" target="lib\uap\UniversalBeacon.Library.UWP.pdb" />
 	
 	<!-- iOS reference assemblies -->
   </files>

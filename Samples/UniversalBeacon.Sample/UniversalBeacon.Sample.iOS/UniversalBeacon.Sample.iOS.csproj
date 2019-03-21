@@ -157,6 +157,8 @@
     <ProjectReference Include="..\..\..\Library\UniversalBeacon.Library.iOS\UniversalBeacon.Library.iOS.csproj">
       <Project>{430362FE-C759-4D51-890F-1BF8308FC99F}</Project>
       <Name>UniversalBeacon.Library.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
