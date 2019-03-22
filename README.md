@@ -1,6 +1,6 @@
 # Universal Bluetooth Beacon Library
 
-Manage Bluetooth® Beacons through a cross-platform .NET Standard library. Get details for the open Eddystone™ Bluetooth beacon format from Google, as well as beacons comparable to Apple® iBeacon™. Supported on all platforms that are compatible to .NET Standard 2.0+ - including Windows 10, Xamarin (iOS, Android), Mac and Linux.
+Manage Bluetooth® Beacons through a cross-platform .NET Standard library. Get details for the open Eddystone™ Bluetooth beacon format from Google, as well as beacons comparable to Apple® iBeacon™. Supported on all platforms that are compatible to .NET Standard 1.3/2.0+ - including Windows 10, Xamarin (iOS, Android), Mac and Linux.
 
 Directly use the received Bluetooth Low Energy Advertisement notifications from the base operating system and let the library take care of the rest for you. It extracts, combines and updates unique beacons, associated individual frames to the beacons and parses their contents - e.g., the beacon IDs, URLs or telemetry information like temperature or battery voltage.
 
@@ -87,6 +87,9 @@ To allow apps to receive data from Bluetooth Beacons, you have to ensure Windows
 2. Turn on Bluetooth: Settings -> Devices -> Bluetooth
 3. Turn on Device Sync: Settings -> Privacy -> Other devices -> Sync with devices (Example: beacons).
 
+### Bluetooth on Android
+
+Make sure that you activate Bluetooth on your Android device prior to running the example app. The app doesn't currently check if Bluetooth is active on your phone and you would otherwise get an exception about a missing "BLUETOOTH_PRIVILEGED" permission. This is unrelated to the actual Bluetooth Beacon library and just a small current limitation of the example.
 
 
 ## Usage example (C#)
