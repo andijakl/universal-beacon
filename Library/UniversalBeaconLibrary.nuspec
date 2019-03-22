@@ -3,7 +3,7 @@
   <metadata>
     <id>UniversalBeaconLibrary</id>
 	<title>Universal Bluetooth Beacon Library</title>
-    <version>4.0.0</version>
+    <version>4.0.0-alpha</version>
     <authors>Andreas Jakl, Chris Tacke, Xavier Schott</authors>
     <owners>Andreas Jakl, Chris Tacke, Xavier Schott</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -23,24 +23,24 @@
   </metadata>
   <files>
 	<!-- Cross-platform reference assemblies for net standard 2.0 -->
-    <file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.Core\bin\Release\netstandard2.0\UniversalBeacon.Library.Core.dll" target="lib\netstandard1.3\UniversalBeacon.Library.Core.dll" />
-    <file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.Core\bin\Release\netstandard2.0\UniversalBeacon.Library.Core.pdb" target="lib\netstandard1.3\UniversalBeacon.Library.Core.pdb" />
+    <file src="D:\Source\universal-beacon\Library\UniversalBeacon.Library.Core\bin\Release\netstandard2.0\UniversalBeacon.Library.Core.dll" target="lib\netstandard1.3\UniversalBeacon.Library.Core.dll" />
+    <file src="D:\Source\universal-beacon\Library\UniversalBeacon.Library.Core\bin\Release\netstandard2.0\UniversalBeacon.Library.Core.pdb" target="lib\netstandard1.3\UniversalBeacon.Library.Core.pdb" />
 	
 	<!-- Cross-platform reference assemblies for net standard 1.3 -->
-    <file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.Core\bin\Release\netstandard1.3\UniversalBeacon.Library.Core.dll" target="lib\netstandard1.3\UniversalBeacon.Library.Core.dll" />
-    <file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.Core\bin\Release\netstandard1.3\UniversalBeacon.Library.Core.pdb" target="lib\netstandard1.3\UniversalBeacon.Library.Core.pdb" />
+    <file src="D:\Source\universal-beacon\Library\UniversalBeacon.Library.Core\bin\Release\netstandard1.3\UniversalBeacon.Library.Core.dll" target="lib\netstandard1.3\UniversalBeacon.Library.Core.dll" />
+    <file src="D:\Source\universal-beacon\Library\UniversalBeacon.Library.Core\bin\Release\netstandard1.3\UniversalBeacon.Library.Core.pdb" target="lib\netstandard1.3\UniversalBeacon.Library.Core.pdb" />
 	
 	<!-- Android reference assemblies -->
-	<file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.Android\bin\Release\UniversalBeacon.Library.Core.dll" target="lib\MonoAndroid10\UniversalBeacon.Library.Core.dll" />
-	<file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.Android\bin\Release\UniversalBeacon.Library.Core.pdb" target="lib\MonoAndroid10\UniversalBeacon.Library.Core.pdb" />
-	<file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.Android\bin\Release\UniversalBeacon.Library.Android.dll" target="lib\MonoAndroid10\UniversalBeacon.Library.Android.dll" />
-	<file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.Android\bin\Release\UniversalBeacon.Library.Android.pdb" target="lib\MonoAndroid10\UniversalBeacon.Library.Android.pdb" />
+	<file src="D:\Source\universal-beacon\Library\UniversalBeacon.Library.Android\bin\Release\UniversalBeacon.Library.Core.dll" target="lib\MonoAndroid10\UniversalBeacon.Library.Core.dll" />
+	<file src="D:\Source\universal-beacon\Library\UniversalBeacon.Library.Android\bin\Release\UniversalBeacon.Library.Core.pdb" target="lib\MonoAndroid10\UniversalBeacon.Library.Core.pdb" />
+	<file src="D:\Source\universal-beacon\Library\UniversalBeacon.Library.Android\bin\Release\UniversalBeacon.Library.Android.dll" target="lib\MonoAndroid10\UniversalBeacon.Library.Android.dll" />
+	<file src="D:\Source\universal-beacon\Library\UniversalBeacon.Library.Android\bin\Release\UniversalBeacon.Library.Android.pdb" target="lib\MonoAndroid10\UniversalBeacon.Library.Android.pdb" />
     
 	<!-- UWP reference assemblies -->
-	<file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.UWP\bin\Release\UniversalBeacon.Library.Core.dll" target="lib\UAP10\UniversalBeacon.Library.Core.dll" />
-	<file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.UWP\bin\Release\UniversalBeacon.Library.Core.pdb" target="lib\UAP10\UniversalBeacon.Library.Core.pdb" />
-	<file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.UWP\bin\Release\UniversalBeacon.Library.UWP.dll" target="lib\uap\UniversalBeacon.Library.UWP.dll" />
-	<file src="D:\Source\GitHub\universal-beacon\Library\UniversalBeacon.Library.UWP\bin\Release\UniversalBeacon.Library.UWP.pdb" target="lib\uap\UniversalBeacon.Library.UWP.pdb" />
+	<file src="D:\Source\universal-beacon\Library\UniversalBeacon.Library.UWP\bin\Release\UniversalBeacon.Library.Core.dll" target="lib\UAP10\UniversalBeacon.Library.Core.dll" />
+	<file src="D:\Source\universal-beacon\Library\UniversalBeacon.Library.UWP\bin\Release\UniversalBeacon.Library.Core.pdb" target="lib\UAP10\UniversalBeacon.Library.Core.pdb" />
+	<file src="D:\Source\universal-beacon\Library\UniversalBeacon.Library.UWP\bin\Release\UniversalBeacon.Library.UWP.dll" target="lib\uap\UniversalBeacon.Library.UWP.dll" />
+	<file src="D:\Source\universal-beacon\Library\UniversalBeacon.Library.UWP\bin\Release\UniversalBeacon.Library.UWP.pdb" target="lib\uap\UniversalBeacon.Library.UWP.pdb" />
 	
 	<!-- iOS reference assemblies -->
   </files>
