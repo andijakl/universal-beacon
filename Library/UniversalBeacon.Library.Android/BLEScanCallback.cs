@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Xml.XPath;
 using Android.Bluetooth;
 using Android.Bluetooth.LE;
 using Android.Runtime;
@@ -8,10 +10,14 @@ namespace UniversalBeacon.Library
 {
     internal class BLEScanCallback : ScanCallback
     {
+        private readonly string LogTag = nameof(BLEScanCallback);
+
         public event EventHandler<BeaconPacketArgs> OnAdvertisementPacketReceived;
 
         public override void OnScanFailed([GeneratedEnum] ScanFailure errorCode)
         {
+            Debug.WriteLine($"{LogTag} scan failed, error: {errorCode}");
+
             base.OnScanFailed(errorCode);
         }
 
@@ -34,9 +40,11 @@ namespace UniversalBeacon.Library
                             Timestamp = DateTimeOffset.FromUnixTimeMilliseconds(result.TimestampNanos / 1000),
                         };
 
+                        Debug.WriteLine($"{LogTag} BLE advertisement received from {result.Device.Address}");
+                        Debug.WriteLine($"{LogTag} BLE advertisement power {result.TxPower}");
 
-                        var recordData = result.ScanRecord.GetBytes();
-                        var rec = RecordParser.Parse(recordData);
+                        // TODO: parse manufacturer data to get beaconing UUID, etc
+                        // var manufacturerData = result.ScanRecord.ManufacturerSpecificData;
 
                         OnAdvertisementPacketReceived?.Invoke(this, new BeaconPacketArgs(p));
                     }
@@ -48,8 +56,6 @@ namespace UniversalBeacon.Library
                 default:
                     break;
             }
-
-            // result.Device;
         }
     }
 }
