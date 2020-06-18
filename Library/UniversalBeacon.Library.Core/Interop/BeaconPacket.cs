@@ -17,14 +17,16 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License. using System;
 
+using System;
+
 namespace UniversalBeacon.Library.Core.Interop
 {    
-    public enum BLEAdvertisementType
+    public class BeaconPacket
     {
-        ConnectableUndirected = 0,
-        ConnectableDirected = 1,
-        ScannableUndirected = 2,
-        NonConnectableUndirected = 3,
-        ScanResponse = 4
+        public BeaconRegion Region { get; set; }
+
+        public ulong BluetoothAddress { get; set; }
+        public short RawSignalStrengthInDBm { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
     }
 }

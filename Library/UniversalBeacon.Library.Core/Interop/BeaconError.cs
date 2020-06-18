@@ -1,12 +1,12 @@
 ﻿namespace UniversalBeacon.Library.Core.Interop
 {
-    public class BTError
+    public class BeaconError
     {
         /// <summary>
         /// Possible error codes for Bluetooth handling.
         /// Binary compatible to the UWP implementation.
         /// </summary>
-        public enum BluetoothError
+        public enum BeaconErrorType
         {
             //
             // Summary:
@@ -51,11 +51,11 @@
         }
 
 
-        public BluetoothError BluetoothErrorCode { get; set; }
+        public BeaconErrorType BeaconErrorCode { get; set; }
 
-        public BTError(BluetoothError btErrorCode)
+        public BeaconError(BeaconErrorType beaconErrorCode)
         {
-            BluetoothErrorCode = btErrorCode;
+            BeaconErrorCode = beaconErrorCode;
         }
     }
 }

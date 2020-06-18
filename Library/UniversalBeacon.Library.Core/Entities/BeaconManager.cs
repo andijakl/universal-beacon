@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using UniversalBeacon.Library.Core.Interfaces;
 using UniversalBeacon.Library.Core.Interop;
 
@@ -42,13 +43,16 @@ namespace UniversalBeacon.Library.Core.Entities
         /// To subscribe to updates of every single received Bluetooth advertisment packet, 
         /// subscribe to the OnAdvertisementPacketReceived event of the IBluetoothPacketProvider.
         /// </summary>
-        public event EventHandler<Beacon> BeaconAdded;
+        public event EventHandler<Beacon> BeaconEntered;
 
         /// <summary>
-        /// List of known beacons so far, which all have a unique Bluetooth MAC address
-        /// and can have multiple data frames.
+        /// Event that is invoked whenever a new (unknown) beacon is discovered and added to the list
+        /// of known beacons (BluetoothBeacons).
+        /// To subscribe to updates of every single received Bluetooth advertisment packet, 
+        /// subscribe to the OnAdvertisementPacketReceived event of the IBluetoothPacketProvider.
         /// </summary>
-        public ObservableCollection<Beacon> BluetoothBeacons { get; set; } = new ObservableCollection<Beacon>();
+        public event EventHandler<Beacon> BeaconExited;
+
 
         /// <summary>
         /// Provider that emits events whenever new Bluetooth advertisement packets have been received.
@@ -72,7 +76,8 @@ namespace UniversalBeacon.Library.Core.Entities
         public BeaconManager(IBluetoothPacketProvider provider, Action<Action> invokeAction = null)
         {
             _provider = provider;
-            _provider.AdvertisementPacketReceived += OnAdvertisementPacketReceived;
+            _provider.BeaconRegionEntered += OnBeaconRegionEntered;
+            _provider.BeaconRegionExited += OnBeaconRegionExited;
             _invokeAction = invokeAction;
         }
 
@@ -92,15 +97,27 @@ namespace UniversalBeacon.Library.Core.Entities
             _provider.Stop();
         }
 
-        private void OnAdvertisementPacketReceived(object sender, BLEAdvertisementPacketArgs e)
+        private void OnBeaconRegionEntered(object sender, BeaconPacketArgs e)
         {
             if (_invokeAction != null)
             {
-                _invokeAction(() => { ReceivedAdvertisement(e.Data); });
+                _invokeAction(() => { ReceivedBeaconRegionEnter(e.Data); });
             }
             else
             {
-                ReceivedAdvertisement(e.Data);
+                ReceivedBeaconRegionEnter(e.Data);
+            }
+        }
+
+        private void OnBeaconRegionExited(object sender, BeaconPacketArgs e)
+        {
+            if (_invokeAction != null)
+            {
+                _invokeAction(() => { ReceivedBeaconRegionExit(e.Data); });
+            }
+            else
+            {
+                ReceivedBeaconRegionExit(e.Data);
             }
         }
 
@@ -111,26 +128,29 @@ namespace UniversalBeacon.Library.Core.Entities
         /// </summary>
         /// <param name="btAdv">Bluetooth advertisement to parse, as received from
         /// the Windows Bluetooth LE API.</param>
-        private void ReceivedAdvertisement(BLEAdvertisementPacket btAdv)
+        private void ReceivedBeaconRegionEnter(BeaconPacket btAdv)
         {
             if (btAdv == null) return;
 
-            // Check if we already know this bluetooth address
-            foreach (var bluetoothBeacon in BluetoothBeacons)
-            {
-                if (bluetoothBeacon.BluetoothAddress == btAdv.BluetoothAddress)
-                {
-                    // We already know this beacon
-                    // Update / Add info to existing beacon
-                    bluetoothBeacon.UpdateBeacon(btAdv);
-                    return;
-                }
-            }
+            // Beacon was not yet known - add it to the list.
+            var newBeacon = new Beacon(btAdv);
+            BeaconEntered?.Invoke(this, newBeacon);
+        }
+
+        /// <summary>
+        /// Analyze the received Bluetooth LE advertisement, and either add a new unique
+        /// beacon to the list of known beacons, or update a previously known beacon
+        /// with the new information.
+        /// </summary>
+        /// <param name="btAdv">Bluetooth advertisement to parse, as received from
+        /// the Windows Bluetooth LE API.</param>
+        private void ReceivedBeaconRegionExit(BeaconPacket btAdv)
+        {
+            if (btAdv == null) return;
 
             // Beacon was not yet known - add it to the list.
             var newBeacon = new Beacon(btAdv);
-            BluetoothBeacons.Add(newBeacon);
-            BeaconAdded?.Invoke(this, newBeacon);
+            BeaconExited?.Invoke(this, newBeacon);
         }
     }
 }

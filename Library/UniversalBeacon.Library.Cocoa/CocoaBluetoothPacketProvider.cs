@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using CoreBluetooth;
 using Foundation;
+using CoreLocation;
 using UniversalBeacon.Library.Core.Interfaces;
 using UniversalBeacon.Library.Core.Interop;
 
@@ -9,45 +9,82 @@ namespace UniversalBeacon.Library
 {
     public class CocoaBluetoothPacketProvider : NSObject, IBluetoothPacketProvider
     {
-        public event EventHandler<BLEAdvertisementPacketArgs> AdvertisementPacketReceived;
-        public event EventHandler<BTError> WatcherStopped;
+        public event EventHandler<BeaconError> WatcherStopped;
+        public event EventHandler<BeaconPacketArgs> BeaconRegionEntered;
+        public event EventHandler<BeaconPacketArgs> BeaconRegionExited;
 
-        private readonly CocoaBluetoothCentralDelegate centralDelegate;
-        private readonly CBCentralManager central;
+        private readonly CLLocationManagerDelegate _locationManagerDelegate;
+        private readonly CLLocationManager _locationManager;
+        private readonly CLBeaconRegion _clBeaconRegion;
 
-        public CocoaBluetoothPacketProvider()
+        private class UniversalBeaconLocationManagerDelegate : CLLocationManagerDelegate
+        {
+            private readonly CocoaBluetoothPacketProvider _bluetoothPacketProvider;
+            public UniversalBeaconLocationManagerDelegate(CocoaBluetoothPacketProvider bluetoothPacketProvider)
+            {
+                if(bluetoothPacketProvider is null) { throw new ArgumentNullException(nameof(bluetoothPacketProvider)); }
+                _bluetoothPacketProvider = bluetoothPacketProvider;
+            }
+            public override void RegionEntered(CLLocationManager manager, CLRegion region)
+            {
+                _bluetoothPacketProvider.BeaconRegionEntered?.Invoke(_bluetoothPacketProvider, new BeaconPacketArgs(
+                    new BeaconPacket
+                    {
+                        Region = new BeaconRegion
+                        {
+                            RegionName = region.Identifier
+                        }
+                    })
+                );
+                base.RegionEntered(manager, region);
+            }
+
+            public override void RegionLeft(CLLocationManager manager, CLRegion region)
+            {
+                _bluetoothPacketProvider.BeaconRegionExited?.Invoke(_bluetoothPacketProvider, new BeaconPacketArgs(
+                    new BeaconPacket
+                    {
+                        Region = new BeaconRegion
+                        {
+                            RegionName = region.Identifier
+                        }
+                    })
+                );
+                base.RegionLeft(manager, region);
+            }
+        }
+
+        public CocoaBluetoothPacketProvider(CLBeaconRegion beaconRegion)
         {
             Debug.WriteLine("BluetoothPacketProvider()");
 
-            centralDelegate = new CocoaBluetoothCentralDelegate();
-            central = new CBCentralManager(centralDelegate, null);
-        }
+            _locationManagerDelegate = new CLLocationManagerDelegate();
 
-        private void ScanCallback_OnAdvertisementPacketReceived(object sender, BLEAdvertisementPacketArgs e)
-        {
-            AdvertisementPacketReceived?.Invoke(this, e);
+            _locationManager = new CLLocationManager();
+            _locationManager.Delegate = _locationManagerDelegate;
+
+            _clBeaconRegion = beaconRegion;
+
+            // DEBUG ONLY, SHOULD START ON ACCEPT
+            _locationManager.RequestAlwaysAuthorization();
         }
 
         public void Start()
         {
             Debug.WriteLine("BluetoothPacketProvider:Start()");
-            centralDelegate.OnAdvertisementPacketReceived += ScanCallback_OnAdvertisementPacketReceived;
 
-            // Wait for the PoweredOn state
-
-            //if(CBCentralManagerState.PoweredOn == central.State) {
-            //    central.ScanForPeripherals(peripheralUuids: new CBUUID[] { },
-            //                                               options: new PeripheralScanningOptions { AllowDuplicatesKey = false });
-            //}
+            _locationManager.StartMonitoring(_clBeaconRegion);
+            _locationManager.StartRangingBeacons(_clBeaconRegion);
         }
 
         public void Stop()
         {
             Debug.WriteLine("BluetoothPacketProvider:Stop()");
-            centralDelegate.OnAdvertisementPacketReceived -= ScanCallback_OnAdvertisementPacketReceived;
- 
-            central.StopScan();
-            WatcherStopped?.Invoke(sender: this, e: new BTError(BTError.BluetoothError.Success));
+
+            _locationManager.StopMonitoring(_clBeaconRegion);
+            _locationManager.StopRangingBeacons(_clBeaconRegion);
+
+            WatcherStopped?.Invoke(sender: this, e: new BeaconError(BeaconError.BeaconErrorType.Success));
         }
     }
 }

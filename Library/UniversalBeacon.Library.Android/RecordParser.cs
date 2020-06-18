@@ -37,10 +37,10 @@ namespace UniversalBeacon.Library
                         results.Add(new BLENameRecord(type, data));
                         break;
                     case BLEPacketType.ManufacturerData:
-                        results.Add(new BLEManufacturerData(type, data));
+                        results.Add(new BeaconManufacturerData(type, data));
                         break;
                     case BLEPacketType.ServiceData:
-                        results.Add(new BLEAdvertisementDataSection(type, data));
+                        results.Add(new BeaconAdvertisementDataSection(type, data));
                         break;
                     case BLEPacketType.UUID16List:
                         // swap endianness

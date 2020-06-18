@@ -21,19 +21,19 @@ using System;
 
 namespace UniversalBeacon.Library.Core.Interop
 {
-    public sealed class BLEAdvertisementDataSection : BLERecord
+    public sealed class BeaconAdvertisementDataSection : BLERecord
     {
         public ushort Manufacturer { get; private set; }
 
         public byte[] Data { get; set; }
         public byte DataType { get; set; }
 
-        public BLEAdvertisementDataSection()
+        public BeaconAdvertisementDataSection()
             : base(BLEPacketType.ServiceData)
         {
         }
 
-        public BLEAdvertisementDataSection(BLEPacketType packetType, byte[] data)
+        public BeaconAdvertisementDataSection(BLEPacketType packetType, byte[] data)
             : base(packetType)
         {
             Manufacturer = BitConverter.ToUInt16(data, 0);

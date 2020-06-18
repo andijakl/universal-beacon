@@ -8,7 +8,7 @@ namespace UniversalBeacon.Library
 {
     internal class BLEScanCallback : ScanCallback
     {
-        public event EventHandler<BLEAdvertisementPacketArgs> OnAdvertisementPacketReceived;
+        public event EventHandler<BeaconPacketArgs> OnAdvertisementPacketReceived;
 
         public override void OnScanFailed([GeneratedEnum] ScanFailure errorCode)
         {
@@ -25,47 +25,20 @@ namespace UniversalBeacon.Library
                 case BluetoothDeviceType.Unknown:
                     try
                     {
-                        var p = new BLEAdvertisementPacket
+                        var p = new BeaconPacket
                         {
                             // address will be in the form "D1:36:E6:9D:46:52"
                             BluetoothAddress = result.Device.Address.ToNumericAddress(),    
                             RawSignalStrengthInDBm = (short) result.Rssi,
                             // TODO: probably needs adjustment
                             Timestamp = DateTimeOffset.FromUnixTimeMilliseconds(result.TimestampNanos / 1000),
-                            // TODO: validate this
-                            AdvertisementType = (BLEAdvertisementType) result.ScanRecord.AdvertiseFlags, 
-                            Advertisement = new BLEAdvertisement
-                            {
-                                LocalName = result.ScanRecord.DeviceName
-                            }
                         };
 
-                        if (result.ScanRecord.ServiceUuids != null)
-                        {
-                            foreach(var svc in result.ScanRecord.ServiceUuids)
-                            {
-                                var guid = new Guid(svc.Uuid.ToString());
-                                var data = result.ScanRecord.GetServiceData(svc);
-
-                                p.Advertisement.ServiceUuids.Add(guid);
-                            }
-                        }
 
                         var recordData = result.ScanRecord.GetBytes();
                         var rec = RecordParser.Parse(recordData);
 
-                        foreach (var curRec in rec)
-                        {
-                            if (curRec is BLEManufacturerData md)
-                            {
-                                p.Advertisement.ManufacturerData.Add(md);
-                            }
-                            if (curRec is BLEAdvertisementDataSection sd)
-                            {
-                                p.Advertisement.DataSections.Add(sd);
-                            }
-                        }
-                        OnAdvertisementPacketReceived?.Invoke(this, new BLEAdvertisementPacketArgs(p));
+                        OnAdvertisementPacketReceived?.Invoke(this, new BeaconPacketArgs(p));
                     }
                     catch (Exception)
                     {

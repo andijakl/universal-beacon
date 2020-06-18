@@ -21,12 +21,12 @@ using System;
 
 namespace UniversalBeacon.Library.Core.Interop
 {
-    public sealed class BLEManufacturerData : BLERecord
+    public sealed class BeaconManufacturerData : BLERecord
     {
         public ushort CompanyId { get; set; }
         public byte[] Data { get; set; }
 
-        public BLEManufacturerData(BLEPacketType packetType, byte[] data)
+        public BeaconManufacturerData(BLEPacketType packetType, byte[] data)
             : base(packetType)
         {
             CompanyId = BitConverter.ToUInt16(data, 0);
@@ -34,7 +34,7 @@ namespace UniversalBeacon.Library.Core.Interop
             Buffer.BlockCopy(data, 2, Data, 0, Data.Length);
         }
 
-        public BLEManufacturerData()
+        public BeaconManufacturerData()
             : base(BLEPacketType.ManufacturerData)
         {
         }

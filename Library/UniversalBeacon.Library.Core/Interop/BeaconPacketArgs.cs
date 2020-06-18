@@ -21,13 +21,14 @@ using System;
 
 namespace UniversalBeacon.Library.Core.Interop
 {    
-    public class BLEAdvertisementPacket
-    {
-        public BLEAdvertisement Advertisement { get; set; }
-        public BLEAdvertisementType AdvertisementType { get; set; }
 
-        public ulong BluetoothAddress { get; set; }
-        public short RawSignalStrengthInDBm { get; set; }
-        public DateTimeOffset Timestamp { get; set; }
+    public class BeaconPacketArgs : EventArgs
+    {
+        public BeaconPacket Data { get; private set; }
+
+        public BeaconPacketArgs(BeaconPacket data)
+        {
+            Data = data;
+        }
     }
 }

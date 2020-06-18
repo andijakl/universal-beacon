@@ -17,18 +17,14 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License. using System;
 
-using System;
-
 namespace UniversalBeacon.Library.Core.Interop
 {    
-
-    public class BLEAdvertisementPacketArgs : EventArgs
+    public enum BeaconType
     {
-        public BLEAdvertisementPacket Data { get; private set; }
-
-        public BLEAdvertisementPacketArgs(BLEAdvertisementPacket data)
-        {
-            Data = data;
-        }
+        ConnectableUndirected = 0,
+        ConnectableDirected = 1,
+        ScannableUndirected = 2,
+        NonConnectableUndirected = 3,
+        ScanResponse = 4
     }
 }
