@@ -31,7 +31,7 @@ namespace UniversalBeacon.Library
                             BluetoothAddress = result.Device.Address.ToNumericAddress(),    
                             RawSignalStrengthInDBm = (short) result.Rssi,
                             // TODO: probably needs adjustment
-                            Timestamp = DateTimeOffset.FromUnixTimeMilliseconds(result.TimestampNanos / 1000),
+                            Timestamp = DateTimeOffset.FromUnixTimeMilliseconds(result.TimestampNanos / 1000000),
                             // TODO: validate this
                             AdvertisementType = (BLEAdvertisementType) result.ScanRecord.AdvertiseFlags, 
                             Advertisement = new BLEAdvertisement
