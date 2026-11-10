@@ -68,6 +68,18 @@ jobs:
         with:
           user: ${{ secrets.NUGET_USER }}
 
-      # Also pushes the matching symbol package (.snupkg).
+      # Pushes each package by its full path: on Windows, dotnet nuget push does not expand
+      # wildcards with forward slashes ("artifacts/*.nupkg"). Each push also uploads the matching
+      # symbol package (.snupkg). --skip-duplicate keeps re-runs from failing for packages that
+      # are already published.
       - name: Push to nuget.org
-        run: dotnet nuget push "artifacts/*.nupkg" --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+        shell: pwsh
+        env:
+          NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
+        run: |
+          $packages = Get-ChildItem -Path artifacts -Filter *.nupkg
+          if ($packages.Count -eq 0) { throw "No packages found in artifacts." }
+          foreach ($package in $packages) {
+            dotnet nuget push $package.FullName --api-key $env:NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+            if ($LASTEXITCODE -ne 0) { throw "Pushing $($package.Name) failed." }
+          }
