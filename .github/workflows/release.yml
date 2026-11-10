@@ -1,0 +1,73 @@
+name: Release
+
+# Publishes the library to nuget.org when a version tag is pushed, e.g.:
+#   git tag v4.0.0
+#   git push origin v4.0.0
+# The package version is taken from the tag (v4.0.0 -> 4.0.0, v4.1.0-beta1 -> 4.1.0-beta1).
+#
+# Authentication uses NuGet Trusted Publishing (no stored API key):
+# https://learn.microsoft.com/nuget/nuget-org/trusted-publishing
+# Requires a trusted publishing policy on nuget.org for this repository and the workflow file
+# "release.yml", plus the repository secret NUGET_USER (nuget.org profile name, not the email address).
+
+on:
+  push:
+    tags: [ 'v*' ]
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  publish:
+    name: Publish to NuGet
+    runs-on: windows-latest
+    permissions:
+      contents: read
+      id-token: write # Request the OIDC token for Trusted Publishing
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - name: Get version from tag
+        id: version
+        shell: pwsh
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          $version = $env:TAG.Substring(1)
+          if ($version -notmatch '^\d+\.\d+\.\d+(-[0-9A-Za-z][0-9A-Za-z.-]*)?$') {
+            throw "Tag '$env:TAG' is not a valid version tag (expected e.g. v4.0.0 or v4.1.0-beta1)."
+          }
+          "version=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Install workloads
+        run: dotnet workload install maui
+
+      - name: Test
+        run: dotnet test --project tests/UniversalBeacon.Library.Tests/UniversalBeacon.Library.Tests.csproj -c Release
+
+      - name: Pack
+        run: dotnet pack src/UniversalBeacon.Library/UniversalBeacon.Library.csproj -c Release -o artifacts -p:Version=${{ steps.version.outputs.version }}
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: nuget-${{ steps.version.outputs.version }}
+          path: artifacts/*
+
+      # Request the short-lived API key right before pushing - it is valid for one hour.
+      - name: NuGet login
+        id: login
+        uses: NuGet/login@v1
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
+      # Also pushes the matching symbol package (.snupkg).
+      - name: Push to nuget.org
+        run: dotnet nuget push "artifacts/*.nupkg" --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
