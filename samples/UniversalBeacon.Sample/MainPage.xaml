@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:beacons="clr-namespace:UniversalBeacon.Library.Core.Entities;assembly=UniversalBeacon.Library"
+             xmlns:views="clr-namespace:UniversalBeacon.Sample.Views"
+             xmlns:vm="clr-namespace:UniversalBeacon.Sample.ViewModels"
+             x:Class="UniversalBeacon.Sample.MainPage"
+             x:DataType="vm:MainViewModel"
+             Title="Universal Beacon">
+
+    <ContentPage.Resources>
+        <views:BytesToHexConverter x:Key="BytesToHex" />
+
+        <Style x:Key="FrameTitle" TargetType="Label">
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+        </Style>
+        <Style x:Key="FrameValue" TargetType="Label">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="LineBreakMode" Value="CharacterWrap" />
+        </Style>
+
+        <views:FrameTemplateSelector x:Key="FrameTemplateSelector">
+            <views:FrameTemplateSelector.UidTemplate>
+                <DataTemplate x:DataType="beacons:UidEddystoneFrame">
+                    <VerticalStackLayout Padding="0,4">
+                        <Label Text="Eddystone UID" Style="{StaticResource FrameTitle}" />
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding NamespaceIdAsString, StringFormat='Namespace: {0}'}" />
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding InstanceIdAsString, StringFormat='Instance: {0}'}" />
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding RangingData, StringFormat='Tx power at 0 m: {0} dBm'}" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </views:FrameTemplateSelector.UidTemplate>
+
+            <views:FrameTemplateSelector.UrlTemplate>
+                <DataTemplate x:DataType="beacons:UrlEddystoneFrame">
+                    <VerticalStackLayout Padding="0,4">
+                        <Label Text="Eddystone URL" Style="{StaticResource FrameTitle}" />
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding CompleteUrl}" />
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding RangingData, StringFormat='Tx power at 0 m: {0} dBm'}" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </views:FrameTemplateSelector.UrlTemplate>
+
+            <views:FrameTemplateSelector.TlmTemplate>
+                <DataTemplate x:DataType="beacons:TlmEddystoneFrame">
+                    <VerticalStackLayout Padding="0,4">
+                        <Label Text="Eddystone TLM" Style="{StaticResource FrameTitle}" />
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding BatteryInMilliV, StringFormat='Battery: {0} mV'}" />
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding TemperatureInC, StringFormat='Temperature: {0:F1} °C'}" />
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding AdvertisementFrameCount, StringFormat='Advertisements sent: {0}'}" />
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding TimeSincePowerUpAsTimeSpan, StringFormat='Uptime: {0:g}'}" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </views:FrameTemplateSelector.TlmTemplate>
+
+            <views:FrameTemplateSelector.EncryptedTlmTemplate>
+                <DataTemplate x:DataType="beacons:EncryptedTlmEddystoneFrame">
+                    <VerticalStackLayout Padding="0,4">
+                        <Label Text="Eddystone TLM (encrypted)" Style="{StaticResource FrameTitle}" />
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding EncryptedDataAsString}" />
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding Salt, StringFormat='Salt: {0:X4}'}" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </views:FrameTemplateSelector.EncryptedTlmTemplate>
+
+            <views:FrameTemplateSelector.EidTemplate>
+                <DataTemplate x:DataType="beacons:EidEddystoneFrame">
+                    <VerticalStackLayout Padding="0,4">
+                        <Label Text="Eddystone EID" Style="{StaticResource FrameTitle}" />
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding EphemeralIdentifierAsString, StringFormat='Ephemeral ID: {0}'}" />
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding RangingData, StringFormat='Tx power at 0 m: {0} dBm'}" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </views:FrameTemplateSelector.EidTemplate>
+
+            <views:FrameTemplateSelector.FindHubTemplate>
+                <DataTemplate x:DataType="beacons:FindHubNetworkFrame">
+                    <VerticalStackLayout Padding="0,4">
+                        <Label Text="Find Hub Network accessory" Style="{StaticResource FrameTitle}" />
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding EphemeralIdentifierAsString, StringFormat='Ephemeral ID: {0}'}" />
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding IsUnwantedTrackingProtectionModeActive, StringFormat='Unwanted tracking protection: {0}'}" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </views:FrameTemplateSelector.FindHubTemplate>
+
+            <views:FrameTemplateSelector.ProximityTemplate>
+                <DataTemplate x:DataType="beacons:ProximityBeaconFrame">
+                    <VerticalStackLayout Padding="0,4">
+                        <Label Text="iBeacon" Style="{StaticResource FrameTitle}" />
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding UuidAsString, StringFormat='UUID: {0}'}" />
+                        <Label Style="{StaticResource FrameValue}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Major: " />
+                                    <Span Text="{Binding Major}" />
+                                    <Span Text="  Minor: " />
+                                    <Span Text="{Binding Minor}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding TxPower, StringFormat='Tx power at 1 m: {0} dBm'}" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </views:FrameTemplateSelector.ProximityTemplate>
+
+            <views:FrameTemplateSelector.UnknownTemplate>
+                <DataTemplate x:DataType="beacons:BeaconFrameBase">
+                    <VerticalStackLayout Padding="0,4">
+                        <Label Text="Unknown frame" Style="{StaticResource FrameTitle}" />
+                        <Label Style="{StaticResource FrameValue}" Text="{Binding Payload, Converter={StaticResource BytesToHex}}" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </views:FrameTemplateSelector.UnknownTemplate>
+        </views:FrameTemplateSelector>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,*" Padding="16" RowSpacing="12">
+
+        <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="12">
+            <Image Source="beacon_logo.png" HeightRequest="40" WidthRequest="40" />
+            <Label Grid.Column="1" Text="Bluetooth Beacons" FontSize="22" FontFamily="OpenSansSemibold" VerticalOptions="Center" />
+            <Button Grid.Column="2" Text="Clear" Command="{Binding ClearCommand}" />
+            <Button Grid.Column="3" Text="{Binding StartStopText}" Command="{Binding StartStopCommand}" />
+        </Grid>
+
+        <Label Grid.Row="1" Text="{Binding Status}" />
+
+        <CollectionView Grid.Row="2" ItemsSource="{Binding Beacons}" SelectionMode="None">
+            <CollectionView.EmptyView>
+                <Label Text="No beacons found yet." HorizontalOptions="Center" VerticalOptions="Center" Opacity="0.6" />
+            </CollectionView.EmptyView>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="beacons:Beacon">
+                    <Border Padding="12" StrokeShape="RoundRectangle 8"
+                            Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}">
+                        <VerticalStackLayout Spacing="2">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Text="{Binding BeaconType}" FontFamily="OpenSansSemibold" FontSize="16" />
+                                <Label Grid.Column="1" Text="{Binding Rssi, StringFormat='{0} dBm'}" />
+                            </Grid>
+                            <Label Text="{Binding BluetoothAddressAsString}" FontSize="12" Opacity="0.7" />
+                            <Label Text="{Binding Timestamp, StringFormat='Last seen: {0:T}'}" FontSize="12" Opacity="0.7" />
+                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding BeaconFrames}"
+                                                 BindableLayout.ItemTemplateSelector="{StaticResource FrameTemplateSelector}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>

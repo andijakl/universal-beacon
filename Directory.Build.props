@@ -1,0 +1,15 @@
+<Project>
+  <!-- Settings shared by all projects in this repository. -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+
+    <Authors>Andreas Jakl, Chris Tacke, Xavier Schott</Authors>
+    <Company>Andreas Jakl</Company>
+    <Copyright>Copyright 2015 - 2026 Andreas Jakl, Chris Tacke. All rights reserved.</Copyright>
+    <RepositoryUrl>https://github.com/andijakl/universal-beacon</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+</Project>

@@ -1,1 +1,0 @@
-D:\Source\GitHub\universal-beacon\Samples\WindowsBeacons\bin\ARM\Release\Upload\WindowsBeacons_3.2.0.0\WindowsBeacons_3.2.0.0_x86_x64_arm.appxbundle

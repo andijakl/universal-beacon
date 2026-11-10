@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true"></application>
+
+	<!-- Android 11 and lower -->
+	<uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
+
+	<!-- Android 12+: do NOT add android:usesPermissionFlags="neverForLocation" -
+	     with this flag, Android filters beacons (e.g., iBeacons) from the scan results. -->
+	<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+
+	<!-- Required to receive beacon scan results on all Android versions. -->
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+	<uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
+</manifest>
