@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  windows:
+    name: Library, tests, Android & Windows sample
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - name: Install workloads
+        run: dotnet workload install maui
+
+      - name: Build library
+        run: dotnet build src/UniversalBeacon.Library/UniversalBeacon.Library.csproj -c Release
+
+      - name: Test
+        run: dotnet test --project tests/UniversalBeacon.Library.Tests/UniversalBeacon.Library.Tests.csproj -c Release
+
+      - name: Pack
+        run: dotnet pack src/UniversalBeacon.Library/UniversalBeacon.Library.csproj -c Release --no-build -o artifacts
+
+      - name: Build sample (Android)
+        run: dotnet build samples/UniversalBeacon.Sample/UniversalBeacon.Sample.csproj -c Release -f net10.0-android
+
+      - name: Build sample (Windows)
+        run: dotnet build samples/UniversalBeacon.Sample/UniversalBeacon.Sample.csproj -c Release -f net10.0-windows10.0.19041.0
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: nuget
+          path: artifacts/*
+
+  apple:
+    name: iOS & Mac Catalyst sample
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - name: Install workloads
+        run: dotnet workload install maui
+
+      - name: Build sample (iOS simulator)
+        run: dotnet build samples/UniversalBeacon.Sample/UniversalBeacon.Sample.csproj -c Debug -f net10.0-ios -p:RuntimeIdentifier=iossimulator-arm64
+
+      - name: Build sample (Mac Catalyst)
+        run: dotnet build samples/UniversalBeacon.Sample/UniversalBeacon.Sample.csproj -c Debug -f net10.0-maccatalyst

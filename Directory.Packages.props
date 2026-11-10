@@ -1,0 +1,14 @@
+<Project>
+  <!-- Central package management: all NuGet versions are defined here. -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup Label="Sample app">
+    <PackageVersion Include="Microsoft.Maui.Controls" Version="10.0.110" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="10.0.14" />
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+  </ItemGroup>
+  <ItemGroup Label="Tests">
+    <PackageVersion Include="xunit.v3" Version="4.0.3" />
+  </ItemGroup>
+</Project>
