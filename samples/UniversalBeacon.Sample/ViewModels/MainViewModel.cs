@@ -45,7 +45,7 @@ public partial class MainViewModel : ObservableObject
 
         if (!await BeaconPermissions.RequestAsync())
         {
-            Status = "Permission to scan for Bluetooth devices was denied.";
+            Status = "Permission to scan for Bluetooth devices was denied. On Android, allow nearby devices and precise location.";
             return;
         }
 

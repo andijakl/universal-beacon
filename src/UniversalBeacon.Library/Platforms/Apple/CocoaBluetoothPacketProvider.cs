@@ -59,7 +59,8 @@ public class CocoaBluetoothPacketProvider : IBluetoothPacketProvider, IDisposabl
     /// <summary>
     /// Start scanning for Bluetooth LE advertisements.
     /// Scanning starts as soon as Bluetooth is powered on. If Bluetooth is not available or the
-    /// user denied access, the WatcherStopped event is raised with the according error code.
+    /// user denied access, scanning stops and the WatcherStopped event is raised with the according
+    /// error code. Call Start() again to resume scanning.
     /// </summary>
     public void Start()
     {
@@ -127,9 +128,7 @@ public class CocoaBluetoothPacketProvider : IBluetoothPacketProvider, IDisposabl
             }
 
             // Bluetooth is not (or no longer) usable.
-            var wasActive = _isScanning || _scanRequested;
-            _isScanning = false;
-            if (!wasActive) return;
+            if (!_isScanning && !_scanRequested) return;
             error = state switch
             {
                 CBManagerState.PoweredOff => BTError.BluetoothError.RadioNotAvailable,
@@ -138,6 +137,17 @@ public class CocoaBluetoothPacketProvider : IBluetoothPacketProvider, IDisposabl
                 CBManagerState.Resetting => BTError.BluetoothError.ResourceInUse,
                 _ => null
             };
+            if (error == null)
+            {
+                // Unknown state (e.g., right after creating the central manager):
+                // keep the request, scanning starts once Bluetooth is powered on.
+                return;
+            }
+
+            // Like on the other platforms, an error stops scanning - the app has to call Start() again.
+            // Otherwise, scanning would silently resume once Bluetooth becomes available.
+            _scanRequested = false;
+            _isScanning = false;
         }
 
         if (error != null)

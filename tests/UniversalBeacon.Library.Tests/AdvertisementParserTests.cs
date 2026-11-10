@@ -82,6 +82,16 @@ public class AdvertisementParserTests
         Assert.Single(BLEAdvertisement.Parse(raw).ServiceUuids);
     }
 
+    [Theory]
+    [InlineData(0)]
+    [InlineData(-2)]
+    [InlineData(3)]
+    public void UuidListRecord_InvalidUuidLength_Throws(int uuidLength)
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(
+            () => new BLEUuidListRecord(BLEPacketType.UUID16List, Hex("AAFE"), uuidLength));
+    }
+
     [Fact]
     public void Parse_Null_ReturnsEmptyAdvertisement()
     {

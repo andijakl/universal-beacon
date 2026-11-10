@@ -57,8 +57,15 @@ jobs:
         with:
           global-json-file: global.json
 
+      # The .NET for iOS / Mac Catalyst workload requires a matching Xcode version.
+      # The latest workloads (iOS 27.x) need Xcode 27, which the macOS runner image does not have yet.
+      # Workload set 10.401.0 contains iOS / Mac Catalyst 26.5.10318, which matches Xcode 26.5.
+      # Remove both pins once the runner image includes Xcode 27.
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_26.5.app
+
       - name: Install workloads
-        run: dotnet workload install maui
+        run: dotnet workload install maui --version 10.401.0
 
       - name: Build sample (iOS simulator)
         run: dotnet build samples/UniversalBeacon.Sample/UniversalBeacon.Sample.csproj -c Debug -f net10.0-ios -p:RuntimeIdentifier=iossimulator-arm64

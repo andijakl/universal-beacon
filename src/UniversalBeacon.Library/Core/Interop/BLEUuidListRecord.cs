@@ -32,9 +32,16 @@ public sealed class BLEUuidListRecord : BLERecord
     /// <param name="packetType">One of the UUID list AD types.</param>
     /// <param name="data">Raw record data.</param>
     /// <param name="uuidLength">Length of a single UUID in bytes: 2, 4 or 16.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="uuidLength"/> is not 2, 4 or 16.</exception>
     public BLEUuidListRecord(BLEPacketType packetType, byte[] data, int uuidLength)
         : base(packetType)
     {
+        if (uuidLength != 2 && uuidLength != 4 && uuidLength != 16)
+        {
+            throw new ArgumentOutOfRangeException(nameof(uuidLength), uuidLength,
+                "Bluetooth UUIDs are 2, 4 or 16 bytes long.");
+        }
+
         var uuids = new List<Guid>();
         for (var offset = 0; offset + uuidLength <= data.Length; offset += uuidLength)
         {
