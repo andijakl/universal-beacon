@@ -42,7 +42,7 @@ jobs:
           TAG: ${{ github.ref_name }}
         run: |
           $version = $env:TAG.Substring(1)
-          if ($version -notmatch '^\d+\.\d+\.\d+(-[0-9A-Za-z][0-9A-Za-z.-]*)?$') {
+          if ($version -notmatch '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$') {
             throw "Tag '$env:TAG' is not a valid version tag (expected e.g. v4.0.0 or v4.1.0-beta1)."
           }
           "version=$version" >> $env:GITHUB_OUTPUT
