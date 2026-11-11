@@ -72,13 +72,51 @@ public class Beacon : INotifyPropertyChanged
     /// Defines how the beacon will parse the individual frames to extract information from the
     /// advertisements.
     /// </summary>
-    public BeaconTypeEnum BeaconType { get; set; } = BeaconTypeEnum.Unknown;
+    public BeaconTypeEnum BeaconType
+    {
+        get => _beaconType;
+        set
+        {
+            if (_beaconType == value) return;
+            _beaconType = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private BeaconTypeEnum _beaconType = BeaconTypeEnum.Unknown;
 
     /// <summary>
     /// List of all the different frames that have been observed for this beacon so far.
     /// If a new frame with the same type is collected, it replaces the previous frame.
+    ///
+    /// Besides the parsed beacon frames, this also contains manufacturer data
+    /// (<see cref="ManufacturerDataFrame"/>) and service data (<see cref="ServiceDataFrame"/>)
+    /// that does not belong to a known beacon format - one frame per company ID / service UUID.
     /// </summary>
     public ObservableCollection<BeaconFrameBase> BeaconFrames { get; set; } = [];
+
+    private string? _localName;
+
+    /// <summary>
+    /// The most recent local name advertised by the device, if any.
+    /// Many devices only send the name in scan responses (active scanning).
+    /// </summary>
+    public string? LocalName
+    {
+        get => _localName;
+        set
+        {
+            if (_localName == value) return;
+            _localName = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// All service UUIDs advertised by the device so far (16-, 32- and 128-bit UUIDs,
+    /// expanded to 128 bit). Use <see cref="BluetoothUuids.ToShortString"/> to display them.
+    /// </summary>
+    public ObservableCollection<Guid> ServiceUuids { get; } = [];
 
     private short _rssi;
 
@@ -197,19 +235,32 @@ public class Beacon : INotifyPropertyChanged
         var advertisement = btAdv.Advertisement;
         if (advertisement == null) return;
 
+        if (!string.IsNullOrEmpty(advertisement.LocalName))
+        {
+            LocalName = advertisement.LocalName;
+        }
+        foreach (var serviceUuid in advertisement.ServiceUuids)
+        {
+            if (!ServiceUuids.Contains(serviceUuid)) ServiceUuids.Add(serviceUuid);
+        }
+
         // Eddystone beacons are identified via the service UUID and / or the service data;
         // iBeacons are identified via the manufacturer data.
-        if (BeaconType == BeaconTypeEnum.Unknown && IsEddystoneAdvertisement(advertisement))
+        // Some beacons alternate between iBeacon and Eddystone advertisements - parse
+        // Eddystone frames whenever they are present, not only for Eddystone-type beacons.
+        var isEddystoneAdvertisement = IsEddystoneAdvertisement(advertisement);
+        if (BeaconType == BeaconTypeEnum.Unknown && isEddystoneAdvertisement)
         {
             BeaconType = BeaconTypeEnum.Eddystone;
         }
 
-        if (BeaconType == BeaconTypeEnum.Eddystone)
+        if (isEddystoneAdvertisement || BeaconType == BeaconTypeEnum.Eddystone)
         {
             ParseEddystoneData(advertisement);
         }
 
         ParseManufacturerData(advertisement);
+        ParseOtherServiceData(advertisement);
     }
 
     private static bool IsEddystoneAdvertisement(BLEAdvertisement advertisement)
@@ -234,7 +285,22 @@ public class Beacon : INotifyPropertyChanged
         // Manufacturer data - used by Proximity Beacon type (iBeacon)
         foreach (var manufacturerData in advertisement.ManufacturerData)
         {
-            if (!BeaconFrameHelper.IsProximityBeaconPayload(manufacturerData.CompanyId, manufacturerData.Data)) continue;
+            if (!BeaconFrameHelper.IsProximityBeaconPayload(manufacturerData.CompanyId, manufacturerData.Data))
+            {
+                // Other manufacturer data - keep the raw data, one frame per company ID.
+                var companyId = manufacturerData.CompanyId;
+                var rawFrame = new ManufacturerDataFrame(companyId, manufacturerData.Data);
+                var existingRawFrame = FindFrame(f => f is ManufacturerDataFrame m && m.CompanyId == companyId);
+                if (existingRawFrame != null)
+                {
+                    existingRawFrame.Update(rawFrame);
+                }
+                else
+                {
+                    BeaconFrames.Add(rawFrame);
+                }
+                continue;
+            }
 
             BeaconType = BeaconTypeEnum.iBeacon;
             var beaconFrame = new ProximityBeaconFrame(manufacturerData.Data);
@@ -273,6 +339,45 @@ public class Beacon : INotifyPropertyChanged
             {
                 // We didn't know this beacon frame so far - add it to the list of known frames.
                 BeaconFrames.Add(beaconFrame);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Keep the raw service data of all services other than Eddystone, one frame per service UUID.
+    /// </summary>
+    private void ParseOtherServiceData(BLEAdvertisement advertisement)
+    {
+        foreach (var dataSection in advertisement.DataSections)
+        {
+            var uuidLength = dataSection.DataType switch
+            {
+                (byte)BLEPacketType.ServiceData => 2,
+                (byte)BLEPacketType.ServiceData32 => 4,
+                (byte)BLEPacketType.ServiceData128 => 16,
+                _ => 0
+            };
+            if (uuidLength == 0 || dataSection.Data.Length < uuidLength) continue;
+
+            // The service UUID is transmitted in little-endian order.
+            var uuidBytes = new byte[uuidLength];
+            for (var i = 0; i < uuidLength; i++)
+            {
+                uuidBytes[i] = dataSection.Data[uuidLength - 1 - i];
+            }
+            var serviceUuid = ByteHelpers.GuidFromBluetoothUuid(uuidBytes);
+            if (serviceUuid == null || serviceUuid.Value == EddystoneGuid) continue;
+
+            var data = ByteHelpers.Slice(dataSection.Data, uuidLength, dataSection.Data.Length - uuidLength);
+            var rawFrame = new ServiceDataFrame(serviceUuid.Value, data);
+            var existingFrame = FindFrame(f => f is ServiceDataFrame s && s.ServiceUuid == serviceUuid.Value);
+            if (existingFrame != null)
+            {
+                existingFrame.Update(rawFrame);
+            }
+            else
+            {
+                BeaconFrames.Add(rawFrame);
             }
         }
     }

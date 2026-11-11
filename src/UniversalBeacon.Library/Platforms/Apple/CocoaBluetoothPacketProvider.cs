@@ -225,13 +225,6 @@ public class CocoaBluetoothPacketProvider : IBluetoothPacketProvider, IDisposabl
                     _ => BLEPacketType.ServiceData128
                 };
                 advertisement.DataSections.Add(new BLEAdvertisementDataSection(packetType, sectionData));
-
-                // CoreBluetooth only lists the UUID in the service data, not necessarily in the UUID list.
-                var guid = ToGuid(uuid);
-                if (guid != null && !advertisement.ServiceUuids.Contains(guid.Value))
-                {
-                    advertisement.ServiceUuids.Add(guid.Value);
-                }
             }
         }
 

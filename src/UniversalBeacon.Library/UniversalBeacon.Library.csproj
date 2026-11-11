@@ -43,7 +43,7 @@
   <!-- NuGet package -->
   <PropertyGroup>
     <PackageId>UniversalBeaconLibrary</PackageId>
-    <Version>4.0.0</Version>
+    <Version>4.1.0</Version>
     <Title>Universal Bluetooth Beacon Library</Title>
     <Product>Universal Beacon Library</Product>
     <Description>Manage Bluetooth Beacons on Android, iOS, macOS and Windows. Manages received Bluetooth LE advertisements, clusters them into individual beacons and parses the payloads according to the Eddystone specification (UID, URL, TLM, encrypted TLM, EID), the Find Hub Network accessory frames, as well as beacons comparable to the iBeacon / Proximity Beacon format by Apple.</Description>

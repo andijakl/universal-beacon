@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:beacons="clr-namespace:UniversalBeacon.Library.Core.Entities;assembly=UniversalBeacon.Library"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
              xmlns:views="clr-namespace:UniversalBeacon.Sample.Views"
              xmlns:vm="clr-namespace:UniversalBeacon.Sample.ViewModels"
              x:Class="UniversalBeacon.Sample.MainPage"
@@ -10,6 +11,9 @@
 
     <ContentPage.Resources>
         <views:BytesToHexConverter x:Key="BytesToHex" />
+        <views:CompanyIdToTextConverter x:Key="CompanyIdToText" />
+        <views:ServiceUuidToTextConverter x:Key="ServiceUuidToText" />
+        <views:IsNotEmptyConverter x:Key="IsNotEmpty" />
 
         <Style x:Key="FrameTitle" TargetType="Label">
             <Setter Property="FontFamily" Value="OpenSansSemibold" />
@@ -104,6 +108,40 @@
                 </DataTemplate>
             </views:FrameTemplateSelector.ProximityTemplate>
 
+            <views:FrameTemplateSelector.ManufacturerDataTemplate>
+                <DataTemplate x:DataType="beacons:ManufacturerDataFrame">
+                    <VerticalStackLayout Padding="0,4">
+                        <Label Text="Manufacturer data" Style="{StaticResource FrameTitle}" />
+                        <Label Style="{StaticResource FrameValue}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding CompanyId, Converter={StaticResource CompanyIdToText}}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding DataAsString}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </views:FrameTemplateSelector.ManufacturerDataTemplate>
+
+            <views:FrameTemplateSelector.ServiceDataTemplate>
+                <DataTemplate x:DataType="beacons:ServiceDataFrame">
+                    <VerticalStackLayout Padding="0,4">
+                        <Label Text="Service data" Style="{StaticResource FrameTitle}" />
+                        <Label Style="{StaticResource FrameValue}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding ServiceUuid, Converter={StaticResource ServiceUuidToText}}" />
+                                    <Span Text=": " />
+                                    <Span Text="{Binding DataAsString}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </views:FrameTemplateSelector.ServiceDataTemplate>
+
             <views:FrameTemplateSelector.UnknownTemplate>
                 <DataTemplate x:DataType="beacons:BeaconFrameBase">
                     <VerticalStackLayout Padding="0,4">
@@ -124,11 +162,18 @@
             <Button Grid.Column="3" Text="{Binding StartStopText}" Command="{Binding StartStopCommand}" />
         </Grid>
 
-        <Label Grid.Row="1" Text="{Binding Status}" />
+        <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+            <Label Text="{Binding Status}" VerticalOptions="Center" />
+            <Label Grid.Column="1" Text="Beacons only" VerticalOptions="Center" />
+            <Switch Grid.Column="2" IsToggled="{Binding ShowBeaconsOnly}" VerticalOptions="Center" />
+        </Grid>
 
-        <CollectionView Grid.Row="2" ItemsSource="{Binding Beacons}" SelectionMode="None">
+        <!-- KeepScrollOffset: with the default (KeepItemsInView), MAUI on Windows scrolls back to the
+             first item whenever a device is added or removed. -->
+        <CollectionView Grid.Row="2" ItemsSource="{Binding VisibleBeacons}" SelectionMode="None"
+                        ItemsUpdatingScrollMode="KeepScrollOffset">
             <CollectionView.EmptyView>
-                <Label Text="No beacons found yet." HorizontalOptions="Center" VerticalOptions="Center" Opacity="0.6" />
+                <Label Text="No devices found yet." HorizontalOptions="Center" VerticalOptions="Center" Opacity="0.6" />
             </CollectionView.EmptyView>
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
@@ -142,8 +187,20 @@
                                 <Label Text="{Binding BeaconType}" FontFamily="OpenSansSemibold" FontSize="16" />
                                 <Label Grid.Column="1" Text="{Binding Rssi, StringFormat='{0} dBm'}" />
                             </Grid>
+                            <Label Text="{Binding LocalName}" IsVisible="{Binding LocalName, Converter={StaticResource IsNotEmpty}}" />
                             <Label Text="{Binding BluetoothAddressAsString}" FontSize="12" Opacity="0.7" />
                             <Label Text="{Binding Timestamp, StringFormat='Last seen: {0:T}'}" FontSize="12" Opacity="0.7" />
+                            <!-- Advertised service UUIDs -->
+                            <FlexLayout Wrap="Wrap" BindableLayout.ItemsSource="{Binding ServiceUuids}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="sys:Guid">
+                                        <Border Margin="0,2,6,2" Padding="6,1" StrokeShape="RoundRectangle 4"
+                                                Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}">
+                                            <Label Text="{Binding ., Converter={StaticResource ServiceUuidToText}}" FontSize="12" />
+                                        </Border>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </FlexLayout>
                             <VerticalStackLayout BindableLayout.ItemsSource="{Binding BeaconFrames}"
                                                  BindableLayout.ItemTemplateSelector="{StaticResource FrameTemplateSelector}" />
                         </VerticalStackLayout>

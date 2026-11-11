@@ -14,6 +14,8 @@ public class FrameTemplateSelector : DataTemplateSelector
     public DataTemplate? EidTemplate { get; set; }
     public DataTemplate? FindHubTemplate { get; set; }
     public DataTemplate? ProximityTemplate { get; set; }
+    public DataTemplate? ManufacturerDataTemplate { get; set; }
+    public DataTemplate? ServiceDataTemplate { get; set; }
     public DataTemplate? UnknownTemplate { get; set; }
 
     protected override DataTemplate? OnSelectTemplate(object item, BindableObject container) => item switch
@@ -25,6 +27,8 @@ public class FrameTemplateSelector : DataTemplateSelector
         EidEddystoneFrame => EidTemplate,
         FindHubNetworkFrame => FindHubTemplate,
         ProximityBeaconFrame => ProximityTemplate,
+        ManufacturerDataFrame => ManufacturerDataTemplate,
+        ServiceDataFrame => ServiceDataTemplate,
         _ => UnknownTemplate
     };
 }

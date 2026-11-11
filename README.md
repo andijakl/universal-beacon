@@ -75,6 +75,9 @@ Note: for using Apple iBeacon technology in your services (in order to make your
   - Minor ID
   - Tx power
 - Raw payload for all other beacons
+- Raw advertisement details for all other Bluetooth LE devices:
+  - Local name and advertised service UUIDs
+  - Manufacturer data (company ID + data) and service data (service UUID + data)
 - Parser for raw Bluetooth LE advertising data, e.g., to build your own packet provider
 
 
@@ -155,6 +158,12 @@ _beaconManager.BeaconAdded += (sender, beacon) =>
             case ProximityBeaconFrame proximity:
                 Debug.WriteLine($"iBeacon: {proximity.UuidAsString}, major {proximity.Major}, minor {proximity.Minor}");
                 break;
+            case ManufacturerDataFrame manufacturerData:
+                Debug.WriteLine($"Manufacturer data: {manufacturerData.CompanyIdAsString}: {manufacturerData.DataAsString}");
+                break;
+            case ServiceDataFrame serviceData:
+                Debug.WriteLine($"Service data: {serviceData.ServiceUuidAsString}: {serviceData.DataAsString}");
+                break;
             default:
                 Debug.WriteLine($"Unknown frame: {Convert.ToHexString(beaconFrame.Payload ?? [])}");
                 break;
@@ -166,6 +175,8 @@ _beaconManager.Start();
 
 The `BluetoothBeacons` collection of the `BeaconManager`, as well as all beacons and frames, implement change notifications - you can directly bind them to your UI. Use `RemoveStaleBeacons()` to remove beacons that are no longer in range.
 
+The manager collects all Bluetooth LE devices, not only beacons. Devices that don't match a known beacon format have the `BeaconType` `Unknown`; their `LocalName`, `ServiceUuids` as well as `ManufacturerDataFrame` and `ServiceDataFrame` frames give access to the raw advertisement contents. Most phones, laptops and headphones change their Bluetooth address regularly for privacy - remove stale devices regularly if you show all devices.
+
 The provider reports errors - e.g., if Bluetooth is turned off or the user denied access - through its `WatcherStopped` event.
 
 Not using one of the supported platforms? Implement `IBluetoothPacketProvider` yourself. If your platform gives you the raw advertising data, `BLEAdvertisement.Parse()` converts it for the library.
@@ -174,7 +185,7 @@ Not using one of the supported platforms? Implement `IBluetoothPacketProvider` y
 
 ## Example App
 
-The [UniversalBeacon.Sample](samples/UniversalBeacon.Sample) .NET MAUI app runs on Android, iOS, Mac Catalyst and Windows. It continuously scans for Bluetooth LE advertisements, clusters them into beacons and displays the parsed contents of all known frame types.
+The [UniversalBeacon.Sample](samples/UniversalBeacon.Sample) .NET MAUI app runs on Android, iOS, Mac Catalyst and Windows. It continuously scans for Bluetooth LE advertisements, clusters them into beacons and displays the parsed contents of all known frame types. For other devices, it shows the name, service UUIDs, manufacturer data and service data. Use the "Beacons only" switch to hide devices that aren't beacons; devices that haven't been seen for a minute are removed.
 
 Make sure your device has Bluetooth LE capable hardware and that Bluetooth is turned on. On Android, the app asks for the "Nearby devices" and location permissions.
 
@@ -208,7 +219,14 @@ dotnet add package UniversalBeaconLibrary
 
 ## Version History
 
-### 4.0.0 - 2026
+### 4.1.0 - 2026
+* Raw advertisement details for all devices: `LocalName`, `ServiceUuids`, plus `ManufacturerDataFrame` and `ServiceDataFrame` for data that doesn't belong to a known beacon format. Note: `BeaconFrames` of devices that aren't beacons are therefore no longer empty.
+* Eddystone frames are also parsed for beacons that alternate between iBeacon and Eddystone advertisements
+* `Beacon.BeaconType` raises change notifications; new `BluetoothUuids` helper to format 16- and 32-bit UUIDs
+* iOS / Mac Catalyst: `BLEAdvertisement.ServiceUuids` no longer contains the UUIDs of service data sections, consistent with Android and Windows
+* Example app: shows the raw advertisement details, "Beacons only" filter, removes devices that haven't been seen for a minute, keeps the scroll position on Windows
+
+### 4.0.0 - November 2026
 * Single NuGet package for Android, iOS, Mac Catalyst and Windows (.NET 10), plus .NET Standard 2.0 for platform-independent parsing
 * New iOS and Mac Catalyst support (CoreBluetooth), including Eddystone service data
 * Windows support no longer requires UWP: works for WinUI 3 / .NET MAUI, WPF, WinForms and console apps
