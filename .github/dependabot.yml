@@ -9,6 +9,13 @@ updates:
         patterns: [ "Microsoft.Maui.*", "Microsoft.Extensions.*" ]
       xunit:
         patterns: [ "xunit*" ]
+    ignore:
+      # Major versions of these packages require a new .NET version (e.g., MAUI 11 requires
+      # net11.0 target frameworks). Update them together with the target frameworks.
+      - dependency-name: "Microsoft.Maui.*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "Microsoft.Extensions.*"
+        update-types: [ "version-update:semver-major" ]
 
   - package-ecosystem: github-actions
     directory: /

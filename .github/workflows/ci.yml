@@ -22,7 +22,8 @@ jobs:
 
       - uses: actions/setup-dotnet@v6
         with:
-          global-json-file: global.json
+          # Always the newest .NET 10 SDK; global.json allows newer feature bands.
+          dotnet-version: 10.0.x
 
       - name: Install workloads
         run: dotnet workload install maui
@@ -49,15 +50,23 @@ jobs:
 
   apple:
     name: iOS & Mac Catalyst sample
-    # The latest .NET for iOS / Mac Catalyst workloads require Xcode 27, which is only available
-    # on the xcode-27 image (macOS 27, public preview). Switch to macos-latest once that includes Xcode 27.
+    # The latest .NET for iOS / Mac Catalyst workloads require the latest Xcode (27.x), which is only
+    # available on the xcode-27 image (macOS 27, public preview). Switch to macos-latest once that
+    # includes Xcode 27.
     runs-on: xcode-27
     steps:
       - uses: actions/checkout@v7
 
       - uses: actions/setup-dotnet@v6
         with:
-          global-json-file: global.json
+          # Always the newest .NET 10 SDK; global.json allows newer feature bands.
+          dotnet-version: 10.0.x
+
+      # Each .NET for iOS release requires the matching Xcode version. The runner's default Xcode
+      # often lags behind, so select the newest stable Xcode installed on the image.
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
 
       - name: Show Xcode version
         run: xcodebuild -version

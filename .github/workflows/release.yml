@@ -1,9 +1,13 @@
 name: Release
 
-# Publishes the library to nuget.org when a version tag is pushed, e.g.:
-#   git tag v4.0.0
-#   git push origin v4.0.0
-# The package version is taken from the tag (v4.0.0 -> 4.0.0, v4.1.0-beta1 -> 4.1.0-beta1).
+# Publishes the library to nuget.org and creates a GitHub release when a version tag is pushed, e.g.:
+#   git tag v4.1.0
+#   git push origin v4.1.0
+# The package version is taken from the tag (v4.1.0 -> 4.1.0, v4.2.0-beta1 -> 4.2.0-beta1).
+# The release notes are taken from the matching "### <version>" section of the version history in README.md.
+#
+# To release an existing tag again (e.g., to create a missing GitHub release), run the workflow manually
+# with the tag as input. Packages that are already on nuget.org are skipped.
 #
 # Authentication uses NuGet Trusted Publishing (no stored API key):
 # https://learn.microsoft.com/nuget/nuget-org/trusted-publishing
@@ -13,6 +17,11 @@ name: Release
 on:
   push:
     tags: [ 'v*' ]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing version tag to release, e.g. v4.0.0'
+        required: true
 
 permissions:
   contents: read
@@ -20,26 +29,28 @@ permissions:
 env:
   DOTNET_NOLOGO: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
+  TAG: ${{ inputs.tag || github.ref_name }}
 
 jobs:
   publish:
-    name: Publish to NuGet
+    name: Publish to NuGet and GitHub
     runs-on: windows-latest
     permissions:
-      contents: read
+      contents: write # Create the GitHub release
       id-token: write # Request the OIDC token for Trusted Publishing
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: refs/tags/${{ env.TAG }}
 
       - uses: actions/setup-dotnet@v6
         with:
-          global-json-file: global.json
+          # Always the newest .NET 10 SDK; global.json allows newer feature bands.
+          dotnet-version: 10.0.x
 
       - name: Get version from tag
         id: version
         shell: pwsh
-        env:
-          TAG: ${{ github.ref_name }}
         run: |
           $version = $env:TAG.Substring(1)
           if ($version -notmatch '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$') {
@@ -83,3 +94,39 @@ jobs:
             dotnet nuget push $package.FullName --api-key $env:NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
             if ($LASTEXITCODE -ne 0) { throw "Pushing $($package.Name) failed." }
           }
+
+      - name: Create GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          # Release notes: the "### <version>" section of the version history in README.md
+          $lines = Get-Content README.md
+          $heading = '^### ' + [regex]::Escape($env:VERSION) + '(\s|$)'
+          $start = -1
+          for ($i = 0; $i -lt $lines.Count; $i++) { if ($lines[$i] -match $heading) { $start = $i; break } }
+          $notes = @()
+          if ($start -ge 0) {
+            for ($i = $start + 1; $i -lt $lines.Count -and $lines[$i] -notmatch '^#{1,3} '; $i++) { $notes += $lines[$i] }
+          } else {
+            Write-Warning "No section for $env:VERSION found in the README version history."
+          }
+          $notes += ''
+          $notes += "NuGet package: https://www.nuget.org/packages/UniversalBeaconLibrary/$env:VERSION"
+          $notesFile = Join-Path $env:RUNNER_TEMP 'release-notes.md'
+          ($notes -join "`n").Trim() | Set-Content -Path $notesFile -Encoding utf8
+
+          $assets = (Get-ChildItem -Path artifacts -File).FullName
+          gh release view $env:TAG *> $null
+          if ($LASTEXITCODE -eq 0) {
+            # The release exists already (e.g., re-run) - update notes and assets.
+            gh release edit $env:TAG --notes-file $notesFile
+            if ($LASTEXITCODE -ne 0) { throw "Updating the release failed." }
+            gh release upload $env:TAG @assets --clobber
+          } else {
+            $releaseArgs = @($env:TAG, '--verify-tag', '--title', "Version $env:VERSION", '--notes-file', $notesFile)
+            if ($env:VERSION.Contains('-')) { $releaseArgs += '--prerelease' }
+            gh release create @releaseArgs @assets
+          }
+          if ($LASTEXITCODE -ne 0) { throw "Creating the GitHub release failed." }
